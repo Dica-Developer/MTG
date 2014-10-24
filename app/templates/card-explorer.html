@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form class="form-inline" role="form">
+
+      <div class="form-group">
+        <label class="sr-only" for="nameSearch">Name: </label>
+        <input id="nameSearch" class="form-control" type="search" ng-model="searchValue" placeholder="Search by card name...">
+      </div>
+
+      <div class="form-group">
+        <ui-select multiple ng-model="scope.selectedSets" style="width:300px;">
+          <ui-select-match placeholder="Select set...">
+            <setImage data-set-code="{{$item.code}}" data-size="16"></setImage>
+            {{$item.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">
+            <div ng-bind-html="set.name | highlight: $select.search"></div>
+            <set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>
+            <i>{{set.releaseDate}}</i>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <div class="form-group">
+        <label for="resultsPerPage" class="sr-only">Results per page: </label>
+        <input id="resultsPerPage" class="form-control" type="number" min="1" max="100" maxlength="3" ng-model="maxResultLength">
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="mana-checkbox w" ng-model="colors.White">
+          <span></span>
+        </label>
+        <label>
+          <input type="checkbox" class="mana-checkbox u" ng-model="colors.Blue">
+          <span></span>
+        </label>
+        <label>
+          <input type="checkbox" class="mana-checkbox b" ng-model="colors.Black">
+          <span></span>
+        </label>
+        <label>
+          <input type="checkbox" class="mana-checkbox r" ng-model="colors.Red">
+          <span></span>
+        </label>
+        <label>
+          <input type="checkbox" class="mana-checkbox g" ng-model="colors.Green">
+          <span></span>
+        </label>
+      </div>
+
+    </form>
+
+
+
+    <pagination total-items="totalItems" ng-model="currentPage" max-size="10" items-per-page="maxResultLength"
+                class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"
+                ng-change="pageChanged()"></pagination>
+
+    <div class="panel panel-default">
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
+          <h4 class="list-group-item-heading">
+            <img ng-src="http://mtgimage.com/symbol/set/{{card.setCode}}/c/24.png" tooltip="{{card.setName}}"/>
+            {{card.name}} - {{card.type}}
+            <div class="pull-right">
+              <!--<span class="mana">-->
+                <!--<img ng-src="http://mtgimage.com/symbol/mana/3.svg" width="16">-->
+              <!--</span>-->
+              <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+            </div>
+          </h4>
+        </li>
+      </ul>
+    </div>
+
+    <pagination
+      total-items="totalItems"
+      ng-model="currentPage"
+      max-size="10"
+      items-per-page="maxResultLength"
+      class="pagination-sm"
+      boundary-links="true"
+      rotate="false"
+      num-pages="numPages"
+      ng-change="pageChanged()"></pagination>
+  </div>
+</div>

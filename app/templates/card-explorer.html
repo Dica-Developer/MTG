@@ -63,11 +63,8 @@
           <h4 class="list-group-item-heading">
             <img ng-src="http://mtgimage.com/symbol/set/{{card.setCode}}/c/24.png" tooltip="{{card.setName}}"/>
             {{card.name}} - {{card.type}}
+            <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
             <div class="pull-right">
-              <!--<span class="mana">-->
-                <!--<img ng-src="http://mtgimage.com/symbol/mana/3.svg" width="16">-->
-              <!--</span>-->
-              <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
             </div>
           </h4>
         </li>

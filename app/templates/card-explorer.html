@@ -55,24 +55,41 @@
 
     <pagination total-items="totalItems" ng-model="currentPage" max-size="10" items-per-page="maxResultLength"
                 class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"
-                ng-change="pageChanged()"></pagination>
+                ng-change="pageChanged()" num-pages="numPages"></pagination>
+    <pre>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</pre>
 
-    <div class="panel panel-default">
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
-          <h4 class="list-group-item-heading">
-            <img ng-src="http://mtgimage.com/symbol/set/{{card.setCode}}/c/24.png" tooltip="{{card.setName}}"/>
-            {{card.name}} - {{card.type}}
-            <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
-            <div class="pull-right">
-              I Own:
-              <card-counter x-card-id="{{card.multiverseid}}"></card-counter>
-            </div>
-          </h4>
-        </li>
-      </ul>
+    <div class="table-responsive ">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <th>Set</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Mana Cost</th>
+          <th>I own</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
+            <td>
+              <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}" x-tip-appearance="right"></set-symbol>
+            </td>
+            <td>
+              {{card.name}}
+            </td>
+            <td>
+              {{card.type}}
+            </td>
+            <td>
+              <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+              <span ng-if="card.cmc > 0" class="badge pull-right">{{card.cmc}}</span>
+            </td>
+            <td>
+              <card-counter x-card-id="{{card.multiverseid}}" x-edit="false"></card-counter>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+    <pre>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</pre>
     <pagination
       total-items="totalItems"
       ng-model="currentPage"

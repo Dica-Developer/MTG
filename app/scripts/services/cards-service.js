@@ -14,20 +14,25 @@ angular.module('mtgApp')
 
     function fetchCards() {
       var defer = $q.defer();
-      $http.get('/data/ALL_SETS.json')
-        .success(function (response) {
+      if (cardsDb().count() === 0) {
+        $http.get('/data/ALL_SETS.json')
+          .success(function (response) {
 
-          _.each(response, function (mtgSet) {
-            var cards = _.map(mtgSet.cards, function (card) {
-              card.setCode = mtgSet.code;
-              card.setName = mtgSet.name;
-              return card;
+            _.each(response, function (mtgSet) {
+              var cards = _.map(mtgSet.cards, function (card) {
+                card.setCode = mtgSet.code;
+                card.setName = mtgSet.name;
+                return card;
+              });
+              allCards = allCards.concat(cards);
             });
-            allCards = allCards.concat(cards);
+            cardsDb.insert(allCards);
+            defer.resolve(cardsDb().get());
+            allCards = [];
           });
-          cardsDb.insert(allCards);
-          defer.resolve(cardsDb().get());
-        });
+      } else {
+        defer.resolve(cardsDb().get());
+      }
       return defer.promise;
     }
 

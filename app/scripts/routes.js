@@ -19,5 +19,31 @@ angular.module('mtgApp')
             return cards.fetchSetList();
           }]
         }
+      })
+      .state('deck-list', {
+        url: '/deck-list',
+        templateUrl: '/templates/deck-list.html',
+        controller: 'DeckListController',
+        resolve: {
+          allCards: ['cards', function (cards) {
+            return cards.fetchCards();
+          }],
+          setList: ['cards', function (cards) {
+            return cards.fetchSetList();
+          }]
+        }
+      })
+      .state('deck-builder', {
+        url: '/deck-builder/:deckId',
+        templateUrl: '/templates/deck-builder.html',
+        controller: 'DeckBuilderController',
+        resolve: {
+          allCards: ['cards', function (cards) {
+            return cards.fetchCards();
+          }],
+          setList: ['cards', function (cards) {
+            return cards.fetchSetList();
+          }]
+        }
       });
   }]);

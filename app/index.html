@@ -27,6 +27,8 @@
     <div class="container-fluid">
       <div class="header">
         <ul class="nav nav-pills pull-right">
+          <li ui-sref-active="active"><a ui-sref="card-explorer">Card Explorer</a></li>
+          <li ui-sref-active="active"><a ui-sref="deck-list">Deck List</a></li>
         </ul>
         <h3 class="text-muted">mtg</h3>
       </div>
@@ -73,6 +75,7 @@
 
     <script src="scripts/services/cards-service.js"></script>
     <script src="scripts/services/own-cards.js"></script>
+    <script src="scripts/services/deck-service.js"></script>
 
     <script src="scripts/directive/mana-cost.js"></script>
     <script src="scripts/directive/set-symbol.js"></script>
@@ -80,6 +83,9 @@
     <script src="scripts/directive/card-counter.js"></script>
 
     <script src="scripts/controllers/card-explorer-controller.js"></script>
+    <script src="scripts/controllers/deck-builder-controller.js"></script>
+    <script src="scripts/controllers/deck-list-controller.js"></script>
+    <script src="scripts/controllers/deck-detail-controller.js"></script>
 
     <!-- endbuild -->
 </body>

@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="list-group">
+      <a ng-repeat="deck in deckList" ui-sref="deck-builder({deckId: deck.options.id})" class="list-group-item">
+        {{deck.options.name}}
+      </a>
+    </div>
+    <button class="btn btn-default" ng-click="addDeck()">Add Deck</button>
+  </div>
+</div>

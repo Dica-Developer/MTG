@@ -12,6 +12,10 @@ angular.module('mtgApp')
       return cardsDb(arguments).get();
     }
 
+    function limitFilter(searchQuery, limit) {
+      return cardsDb(searchQuery).limit(limit).get();
+    }
+
     function fetchCards() {
       var defer = $q.defer();
       if (cardsDb().count() === 0) {
@@ -48,6 +52,7 @@ angular.module('mtgApp')
 
     return {
       filter: filter,
+      limitFilter: limitFilter,
       fetchCards: fetchCards,
       fetchSetList: fetchSetList
     };

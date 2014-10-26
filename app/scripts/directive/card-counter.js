@@ -7,7 +7,8 @@ angular.module('mtgApp')
       templateUrl: '/templates/card-counter.html',
       replace: true,
       scope: {
-        'cardId': '@'
+        'cardId': '@',
+        'edit': '@'
       },
       controller: ['$scope', 'ownCards', function ($scope, ownCards) {
         var id = $scope.cardId;

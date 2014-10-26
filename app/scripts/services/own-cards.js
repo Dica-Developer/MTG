@@ -6,7 +6,6 @@ angular.module('mtgApp')
     var ownCardsDb = TAFFY(storedCards);
 
     function storeDb() {
-      console.log(ownCardsDb().stringify());
       localStorageService.set('cards', ownCardsDb().stringify());
     }
 

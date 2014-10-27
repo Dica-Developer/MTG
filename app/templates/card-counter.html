@@ -1,9 +1,11 @@
-<span>
-  <button ng-if="edit" ng-disabled="count === 0" type="button" class="btn btn-default btn-xs" ng-click="removeCard($event, card.multiverseid)">
-    less <span class="glyphicon glyphicon-chevron-left"></span>
-  </button>
-  {{count}}
-  <button ng-if="edit" type="button" class="btn btn-default btn-xs" ng-click="addCard($event, card.multiverseid)">
-    <span class="glyphicon glyphicon-chevron-right"></span> more
-  </button>
-</span>
+<ul class="button-group">
+  <li>
+      <button ng-if="edit" ng-disabled="count === 0" type="button" class="button tiny" ng-click="removeCard($event, card.multiverseid)">less</button>
+  </li>
+  <li>
+    <button disabled="disabled" type="button" class="button tiny">{{count}}</button>
+  </li>
+  <li>
+    <button ng-if="edit" type="button" class="button tiny" ng-click="addCard($event, card.multiverseid)">more</button>
+  </li>
+</ul>

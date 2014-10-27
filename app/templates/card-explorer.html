@@ -1,104 +1,144 @@
 <div class="row">
-  <div class="col-xs-12">
-    <form class="form-inline" role="form">
-
-      <div class="form-group">
-        <label class="sr-only" for="nameSearch">Name: </label>
-        <input id="nameSearch" class="form-control" type="search" ng-model="searchValue" placeholder="Search by card name...">
+  <div class="large-12 columns">
+    <form>
+      <div class="row">
+        <div class="large-4 columns">
+          <label>Search by name:
+            <input type="search" placeholder="Search by card name..." ng-model="searchValue"/>
+          </label>
+        </div>
+        <div class="large-4 columns">
+          <label>Filter by color:
+            <div class="custom-mana-checkbox">
+              <label>
+                <input type="checkbox" class="mana-checkbox w" ng-model="colors.White">
+                <span></span>
+              </label>
+              <label>
+                <input type="checkbox" class="mana-checkbox u" ng-model="colors.Blue">
+                <span></span>
+              </label>
+              <label>
+                <input type="checkbox" class="mana-checkbox b" ng-model="colors.Black">
+                <span></span>
+              </label>
+              <label>
+                <input type="checkbox" class="mana-checkbox r" ng-model="colors.Red">
+                <span></span>
+              </label>
+              <label>
+                <input type="checkbox" class="mana-checkbox g" ng-model="colors.Green">
+                <span></span>
+              </label>
+            </div>
+          </label>
+        </div>
+        <div class="large-2 columns">
+          <label>Limit Results:
+            <input type="number" min="1" max="100" maxlength="3" ng-model="maxResultLength">
+          </label>
+        </div>
       </div>
-
-      <div class="form-group">
-        <ui-select multiple ng-model="scope.selectedSets" style="width:300px;">
-          <ui-select-match placeholder="Select set...">
-            <setImage data-set-code="{{$item.code}}" data-size="16"></setImage>
-            {{$item.name}}
-          </ui-select-match>
-          <ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">
-            <div ng-bind-html="set.name | highlight: $select.search"></div>
-            <set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>
-            <i>{{set.releaseDate}}</i>
-          </ui-select-choices>
-        </ui-select>
+      <div class="row">
+        <div class="large-12 column">
+          <div class="input-label">Limit to set:
+            <ui-select multiple ng-model="scope.selectedSets" theme="select2" style="width:99.9%;">
+              <ui-select-match placeholder="Select set...">
+                <set-symbol data-set-code="{{$item.code}}" data-size="24"></set-symbol>
+                {{$item.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="set.name | highlight: $select.search"></div>
+                <set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>
+                <i>{{set.releaseDate}}</i>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
       </div>
-
-      <div class="form-group">
-        <label for="resultsPerPage" class="sr-only">Results per page: </label>
-        <input id="resultsPerPage" class="form-control" type="number" min="1" max="100" maxlength="3" ng-model="maxResultLength">
-      </div>
-
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" class="mana-checkbox w" ng-model="colors.White">
-          <span></span>
-        </label>
-        <label>
-          <input type="checkbox" class="mana-checkbox u" ng-model="colors.Blue">
-          <span></span>
-        </label>
-        <label>
-          <input type="checkbox" class="mana-checkbox b" ng-model="colors.Black">
-          <span></span>
-        </label>
-        <label>
-          <input type="checkbox" class="mana-checkbox r" ng-model="colors.Red">
-          <span></span>
-        </label>
-        <label>
-          <input type="checkbox" class="mana-checkbox g" ng-model="colors.Green">
-          <span></span>
-        </label>
-      </div>
-
     </form>
+  </div>
+</div>
 
-
-
-    <pagination total-items="totalItems" ng-model="currentPage" max-size="10" items-per-page="maxResultLength"
-                class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"
-                ng-change="pageChanged()" num-pages="numPages"></pagination>
-    <pre>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</pre>
-
-    <div class="table-responsive ">
-      <table class="table table-hover table-bordered">
-        <thead>
+      <!--<div class="form-group">-->
+        <!--<ui-select multiple ng-model="scope.selectedSets" style="width:300px;">-->
+          <!--<ui-select-match placeholder="Select set...">-->
+            <!--<setImage data-set-code="{{$item.code}}" data-size="16"></setImage>-->
+            <!--{{$item.name}}-->
+          <!--</ui-select-match>-->
+          <!--<ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">-->
+            <!--<div ng-bind-html="set.name | highlight: $select.search"></div>-->
+            <!--<set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>-->
+            <!--<i>{{set.releaseDate}}</i>-->
+          <!--</ui-select-choices>-->
+        <!--</ui-select>-->
+      <!--</div>-->
+<div class="row">
+  <div class="large-12 columns">
+    <div class="pagination-centered">
+      <pagination
+        total-items="totalItems"
+        page="currentPage"
+        max-size="10"
+        boundary-links="true"
+        rotate="false"
+        num-pages="numPages"
+        items-per-page="maxResultLength"
+        class="pagination"
+        ></pagination>
+    </div>
+    <code>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</code>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <table class="large-12">
+      <thead>
+        <tr>
           <th>Set</th>
           <th>Name</th>
           <th>Type</th>
           <th>Mana Cost</th>
           <th>I own</th>
-        </thead>
-        <tbody>
-          <tr ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
-            <td>
-              <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}" x-tip-appearance="right"></set-symbol>
-            </td>
-            <td>
-              {{card.name}}
-            </td>
-            <td>
-              {{card.type}}
-            </td>
-            <td>
-              <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
-              <span ng-if="card.cmc > 0" class="badge pull-right">{{card.cmc}}</span>
-            </td>
-            <td>
-              <card-counter x-card-id="{{card.multiverseid}}" x-edit="false"></card-counter>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
+          <td>
+            <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}" x-tip-appearance="right"></set-symbol>
+          </td>
+          <td>
+            {{card.name}}
+          </td>
+          <td>
+            {{card.type}}
+          </td>
+          <td>
+            <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+            <span ng-if="card.cmc > 0" class="label secondary right">{{card.cmc}}</span>
+          </td>
+          <td>
+            <card-counter x-card-id="{{card.multiverseid}}" x-edit="false"></card-counter>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <code>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</code>
+    <div class="pagination-centered">
+      <pagination
+        total-items="totalItems"
+        page="currentPage"
+        max-size="10"
+        boundary-links="true"
+        rotate="false"
+        num-pages="numPages"
+        items-per-page="maxResultLength"
+        class="pagination"
+        ></pagination>
     </div>
-    <pre>Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}</pre>
-    <pagination
-      total-items="totalItems"
-      ng-model="currentPage"
-      max-size="10"
-      items-per-page="maxResultLength"
-      class="pagination-sm"
-      boundary-links="true"
-      rotate="false"
-      num-pages="numPages"
-      ng-change="pageChanged()"></pagination>
   </div>
 </div>

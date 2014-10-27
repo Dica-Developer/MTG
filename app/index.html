@@ -34,8 +34,12 @@
 
         <aside class="left-off-canvas-menu">
           <ul class="off-canvas-list">
+            <li><label>MTG App</label></li>
             <li><a ui-sref="card-explorer">Card Explorer</a></li>
             <li><a ui-sref="deck-list">Deck List</a></li>
+            <li><label>Decks</label></li>
+            <li ng-repeat="deck in allDecks"><a ui-sref="deck-builder({deckId: deck.options.id})">{{deck.options.name}}</a></li>
+
           </ul>
         </aside>
 

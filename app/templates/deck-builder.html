@@ -1,93 +1,136 @@
 <div class="row">
-  <div class="col-xs-12">
-    <label for="deckName" >Deck name: </label>
-    <input id="deckName" type="text" class="input-lg" style="border: none;" ng-model="deck.options.name">
+  <div class="large-12 column">
+    <label for="deckName">Deck name:
+      <input id="deckName" type="text" ng-model="deck.options.name">
+    </label>
   </div>
-  <div class="col-xs-12">
+  <div class="large-12 column">
     Cards in deck: {{deck.getCardCount()}}
-    <span class="pull-right">
+    <span class="right">
       <span class="label label-info" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;">
-        <img ng-repeat="typeIcon in type.split('-')" ng-src="http://mtgimage.com/symbol/other/{{typeIcon}}.svg" height="12" /> {{type}}: {{count}}
+        <img ng-repeat="typeIcon in type.split('-')" ng-src="http://mtgimage.com/symbol/other/{{typeIcon}}.svg"
+             style="height: 12px !important"/> {{type}}: {{count}}
       </span>
     </span>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
-    <tabset justified="true">
+  <div class="large-12 column">
+    <tabset>
       <tab heading="Cards">
+        <table class="large-12">
+          <thead>
+          <tr>
+            <th>Set</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Mana Cost</th>
+            <th>In Deck</th>
+            <th>Add/Drop</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
+              <td>
+                <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"
+                            x-tip-appearance="right"></set-symbol>
+              </td>
+              <td>
+                {{card.name}}
+              </td>
+              <td>
+                {{card.type}}
+              </td>
+              <td>
+                <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+                <span ng-if="card.cmc > 0" class="label secondary right">{{card.cmc}}</span>
+              </td>
+              <td>
+                <span class="label success">{{deck.getCountOf(card.multiverseid)}}</span>
+              </td>
+              <td>
+                <ul class="button-group">
+                  <li>
+                    <button class="button tiny" ng-click="addCard(card.multiverseid)" style="margin: 0;">Add</button>
+                  </li>
+                  <li>
+                    <button class="button tiny" ng-click="dropCard(card.multiverseid)" style="margin: 0;">Drop</button>
+                  </li>
+                  <li>
+                    <button class="button tiny" ng-click="dropAll(card.multiverseid)" style="margin: 0;">Drop All</button>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </tab>
+      <tab heading="Add Card">
+        <div class="panel-heading">
+          <label for="cardSearch">Search card: </label>
+          <input type="search" id="cardSearch" class="input-sm" ng-model="scope.currentSearch"/>
+        </div>
+        <table class="large-12">
+          <thead>
+          <tr>
+            <th>Set</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Mana Cost</th>
+            <th>In Deck</th>
+            <th>Add</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(card)">
+            <td>
+              <set-symbol x-set-code="{{cardToAdd.setCode}}" x-size="24" x-show-tip="true"
+                          x-tip-text="{{cardToAdd.setName}}"></set-symbol>
+            </td>
+            <td>
+              {{cardToAdd.name}}
+            </td>
+            <td>
+              {{cardToAdd.type}}
+            </td>
+            <td>
+              <mana-cost x-mana-cost="{{cardToAdd.manaCost}}" x-size="16"></mana-cost>
+              <span ng-if="cardToAdd.cmc > 0" class="label secondary right">{{cardToAdd.cmc}}</span>
+            </td>
+            <td>
+              <span ng-if="deck.getCountOf(cardToAdd.multiverseid) > 0" class="label success">{{deck.getCountOf(cardToAdd.multiverseid)}}</span>
+            </td>
+            <td>
+              <button class="button tiny" ng-click="addCard(cardToAdd.multiverseid)" style="margin: 0;">Add</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </tab>
+      <tab heading="Sample hand">
         <div class="row">
-          <div class="col-xs-12">
-            <div class="panel panel-default">
-              <ul class="list-group">
-                <li class="list-group-item" ng-repeat="card in cards track by $index" ng-click="showCardModal(card)">
-                  <h4 class="list-group-item-heading">
-                    <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"></set-symbol>
-                    {{card.name}} - {{card.type}}
-                    <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
-                    In deck: {{deck.getCountOf(card.multiverseid)}}
-                    <span class="pull-right">
-                      <button class="btn btn-default" ng-click="addCard(card.multiverseid)">Add</button>
-                      <button class="btn btn-default" ng-click="dropCard(card.multiverseid)">Drop</button>
-                      <button class="btn btn-default" ng-click="dropAll(card.multiverseid)">Drop All</button>
-                    </span>
-                  </h4>
-                </li>
-              </ul>
-            </div>
+          <div class="large-12 column">
+            <button class="button tiny" ng-click="shuffle()">Shuffle</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-12 column">
+            <ul class="large-block-grid-3">
+              <li ng-repeat="sampleCard in sampleHand track by $index">
+                <img ng-src="http://mtgimage.com/set/{{sampleCard.setCode}}/{{sampleCard.name}}.jpg"
+                     alt="{{sampleCard.name}}" width="150">
+              </li>
+            </ul>
           </div>
         </div>
       </tab>
-      <tab heading="Add Card">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <label for="cardSearch">Search card: </label>
-                <input type="search" id="cardSearch" class="input-sm" ng-model="scope.currentSearch" />
-              </div>
-              <ul class="list-group">
-                <li class="list-group-item" ng-repeat="cardToAdd in cardsToAdd track by $index">
-                  <h4 class="list-group-item-heading">
-                    <set-symbol x-set-code="{{cardToAdd.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{cardToAdd.setName}}"></set-symbol>
-                    {{cardToAdd.name}} - {{cardToAdd.type}}
-                    <mana-cost x-mana-cost="{{cardToAdd.manaCost}}" x-size="16"></mana-cost>
-                    <div class="pull-right">
-                      <button class="btn btn-success btn-sm" ng-click="addCard(cardToAdd.multiverseid)">Add</button>
-                      <span class="badge">{{deck.getCountOf(cardToAdd.multiverseid)}}</span>
-                    </div>
-                  </h4>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        </tab>
-        <tab heading="Sample hand">
-          <div class="row">
-            <div class="col-xs-12">
-              <button class="btn btn-default" ng-click="shuffle()">Shuffle</button>
-              <ul class="media-list">
-                <li class="media" ng-repeat="sampleCard in sampleHand track by $index">
-                  <a class="pull-left" href="#">
-                    <img ng-src="http://mtgimage.com/set/{{sampleCard.setCode}}/{{sampleCard.name}}.jpg" alt="{{sampleCard.name}}" width="150">
-                  </a>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{sampleCard.name}}</h4>
-                    <card-text x-text="{{sampleCard.text}}"></card-text>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </tab>
     </tabset>
   </div>
 </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <button class="btn btn-default" ng-click="saveDeck()">Save</button>
-    </div>
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-default" ng-click="saveDeck()">Save</button>
   </div>
+</div>
 

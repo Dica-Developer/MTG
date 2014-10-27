@@ -1,29 +1,26 @@
-<div class="modal-header">
-  <h3 class="modal-title">{{card.name}}  <div class="pull-right"><mana-cost x-mana-cost="{{card.manaCost}}" x-size="24"></mana-cost></div></h3>
-</div>
-<div class="modal-body">
+  <h3 >{{card.name}}  <div class="right"><mana-cost x-mana-cost="{{card.manaCost}}" x-size="24"></mana-cost></div></h3>
   <div class="row">
-    <div class="col-xs-6">
+    <div class="small-6 columns">
       <img class="col-xs-12" ng-src="http://mtgimage.com/set/{{card.setCode}}/{{card.name}}.jpg" alt="{{card.name}}">
     </div>
-    <div class="col-xs-6">
+    <div class="small-6 columns">
       <div class="row">
-        <div class="col-xs-12"><h4>{{card.type}}</h4></div>
+        <div class="small-12 columns"><h4>{{card.type}}</h4></div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="small-12 columns">
           <card-text data-text="{{card.text}}"></card-text>
         </div>
       </div>
       <div class="row" ng-if="card.flavor">
-        <div class="col-xs-12">
+        <div class="small-12 columns">
           <i>{{card.flavor}}</i>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="modal-footer">
-  <card-counter x-card-id="{{card.multiverseid}}" x-edit="true"></card-counter>
-  <button class="btn btn-primary" ng-click="ok()">OK</button>
-</div>
+  <div class="right">
+    <card-counter x-card-id="{{card.multiverseid}}" x-edit="true"></card-counter>
+    <button class="button tiny" ng-click="ok()">OK</button>
+  </div>
+  <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>

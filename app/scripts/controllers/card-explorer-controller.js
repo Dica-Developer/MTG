@@ -68,9 +68,12 @@ angular.module('mtgApp')
         Red: false
       };
 
-      $scope.pageChanged = function () {
+      var updateList = function () {
         $scope.cards = filteredCards.slice(($scope.currentPage - 1) * $scope.maxResultLength, $scope.currentPage * $scope.maxResultLength);
       };
+
+      $scope.$watch('currentPage', updateList);
+      $scope.$watch('maxResultLength', updateList);
 
       $scope.showCardModal = function (card) {
 

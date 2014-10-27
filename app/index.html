@@ -19,25 +19,30 @@
     <!-- endbuild -->
   </head>
   <body ng-app="mtgApp" class="antialiased">
+    <div class="off-canvas-wrap" ng-controller="MenuController">
+      <div class="inner-wrap">
+        <nav class="tab-bar">
+          <section class="left-small">
+            <a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+          </section>
 
-    <!-- Add your site or application content here -->
-    <div class="container-fluid">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li ui-sref-active="active"><a ui-sref="card-explorer">Card Explorer</a></li>
-          <li ui-sref-active="active"><a ui-sref="deck-list">Deck List</a></li>
-        </ul>
-        <h3 class="text-muted">mtg</h3>
-      </div>
+          <section class="middle tab-bar-section">
+            <h1 class="title">MTG App</h1>
+          </section>
+        </nav>
 
-      <div ui-view></div>
+        <aside class="left-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><a ui-sref="card-explorer">Card Explorer</a></li>
+            <li><a ui-sref="deck-list">Deck List</a></li>
+          </ul>
+        </aside>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <div ui-view></div>
+
+        <a class="exit-off-canvas"></a>
       </div>
     </div>
-
-
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -79,6 +84,7 @@
     <script src="scripts/directive/card-text.js"></script>
     <script src="scripts/directive/card-counter.js"></script>
 
+    <script src="scripts/controllers/menu-controller.js"></script>
     <script src="scripts/controllers/card-explorer-controller.js"></script>
     <script src="scripts/controllers/deck-builder-controller.js"></script>
     <script src="scripts/controllers/deck-list-controller.js"></script>

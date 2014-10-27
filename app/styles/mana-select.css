@@ -1,3 +1,7 @@
+.custom-mana-checkbox label {
+  display: initial;
+}
+
 .mana-checkbox {
   display:none;
 }

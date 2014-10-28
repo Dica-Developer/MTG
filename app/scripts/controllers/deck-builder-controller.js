@@ -10,36 +10,61 @@ angular.module('mtgApp')
     $scope.currentSearch = '';
     $scope.totalCardCount = $scope.deck.options.cards.length;
     $scope.sampleHand = $scope.deck.getShuffleSeven();
+    $scope.typeFilter = '';
 
-    $scope.$watch('totalCardCount', function(newValue){
-      if(newValue){
+    $scope.$watch('totalCardCount', function (newValue) {
+      if (newValue) {
         $scope.cards = $scope.deck.getFullCards();
       }
     });
 
-    $scope.addCard = function(cardId){
+    $scope.addCard = function (cardId) {
       deck.addCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
-    $scope.dropCard = function(cardId){
+    $scope.dropCard = function (cardId) {
       deck.dropCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
-    $scope.dropAll = function(cardId){
+    $scope.dropAll = function (cardId) {
       deck.dropAll(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
+    $scope.filterByType = function (type) {
+      if ($scope.typeFilter === type) {
+        $scope.typeFilter = '';
+      } else {
+        $scope.typeFilter = type;
+      }
+    };
 
-    $scope.alreadyInDeck = function(cardId){
+    $scope.$watch('typeFilter', function (newValue) {
+      if (newValue === '') {
+        $scope.cards = $scope.deck.getFullCards();
+      } else {
+        var types = newValue.split('-');
+        var fullDeck = deck.getFullCards();
+        var filteredCards = [];
+        fullDeck.forEach(function (deck) {
+          if (_.isEqual(deck.types, types)) {
+            filteredCards.push(deck);
+          }
+        });
+        $scope.cards = filteredCards;
+      }
+    });
+
+
+    $scope.alreadyInDeck = function (cardId) {
       return deck.hasCard(cardId);
     };
 
-    $scope.$watch('currentSearch', function(newValue, oldValue){
-      if(newValue && newValue !== oldValue){
-        if(newValue === ''){
+    $scope.$watch('currentSearch', function (newValue, oldValue) {
+      if (newValue && newValue !== oldValue) {
+        if (newValue === '') {
           $scope.cardsToAdd = null;
         } else {
           var regex = new RegExp(newValue, 'gi');
@@ -48,7 +73,7 @@ angular.module('mtgApp')
       }
     });
 
-    $scope.shuffle = function(){
+    $scope.shuffle = function () {
       $scope.sampleHand = $scope.deck.getShuffleSeven();
     };
 
@@ -58,7 +83,6 @@ angular.module('mtgApp')
     //  deck.addCard(random);
     //});
     //deck.updateFullCardInfo();
-
 
 
     console.log();

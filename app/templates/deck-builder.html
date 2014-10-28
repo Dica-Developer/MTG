@@ -7,7 +7,7 @@
   <div class="large-12 column">
     Cards in deck: {{deck.getCardCount()}}
     <span class="right">
-      <span class="label label-info" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;">
+      <span class="label label-info clickable" ng-class="{'success': typeFilter === type}" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;" ng-click="filterByType(type)">
         <img ng-repeat="typeIcon in type.split('-')" ng-src="http://mtgimage.com/symbol/other/{{typeIcon}}.svg"
              style="height: 12px !important"/> {{type}}: {{count}}
       </span>

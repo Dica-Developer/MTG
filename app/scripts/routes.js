@@ -45,5 +45,10 @@ angular.module('mtgApp')
             return cards.fetchSetList();
           }]
         }
+      })
+      .state('databases', {
+        url: '/databases',
+        templateUrl: '/templates/databases.html',
+        controller: 'DatabasesController'
       });
   }]);

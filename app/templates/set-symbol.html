@@ -1,5 +1,4 @@
 <span>
   <img ng-if="rarity && !showTip" ng-src="http://mtgimage.com/symbol/set/{{setCode}}/{{rarity}}/{{size}}.png">
   <img ng-if="rarity && showTip" ng-src="http://mtgimage.com/symbol/set/{{setCode}}/{{rarity}}/{{size}}.png" tooltip="{{tipText}}" tooltip-placement="{{tipAppearance}}">
-  <img ng-if="!rarity" ng-src="/images/yeoman.png" width="{{size}}" tooltip="{{tipText}}" tooltip-placement="{{tipAppearance}}">
 </span>

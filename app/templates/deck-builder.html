@@ -42,7 +42,7 @@
           <tbody>
             <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse" ng-click="showCardModal(card)" class="clickable">
               <td>
-                <set-symbol x-set-code="{{card.setCode}}" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"
+                <set-symbol x-card="card" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"
                             x-tip-appearance="right"></set-symbol>
               </td>
               <td>
@@ -107,7 +107,7 @@
           <tbody>
           <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)" class="clickable">
             <td>
-              <set-symbol x-set-code="{{cardToAdd.setCode}}" x-size="24" x-show-tip="true"
+              <set-symbol x-card="cardToAdd" x-size="24" x-show-tip="true"
                           x-tip-text="{{cardToAdd.setName}}"></set-symbol>
             </td>
             <td>

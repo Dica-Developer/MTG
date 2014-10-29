@@ -77,12 +77,6 @@ angular.module('mtgApp')
     };
 
 
-    //_.range(20).forEach(function(){
-    //  var random = Math.round(Math.random() * 1000);
-    //  deck.addCard(random);
-    //});
-    //deck.updateFullCardInfo();
 
 
-    console.log();
   }]);

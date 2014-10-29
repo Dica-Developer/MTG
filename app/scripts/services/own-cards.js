@@ -53,11 +53,17 @@ angular.module('mtgApp')
       }
     }
 
+    function importData(cardData){
+      ownCardsDb.insert(cardData);
+      storeDb();
+    }
+
     return {
       getAll: getAll,
       getById: getById,
       getCountOf: getCountOf,
       addCard: addCard,
-      removeCard: removeCard
+      removeCard: removeCard,
+      importData: importData
     };
   }]);

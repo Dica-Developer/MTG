@@ -20,17 +20,20 @@ angular.module('mtgApp')
       }
     });
 
-    $scope.addCard = function (cardId) {
+    $scope.addCard = function (event, cardId) {
+      event.stopPropagation();
       deck.addCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
-    $scope.dropCard = function (cardId) {
+    $scope.dropCard = function (event, cardId) {
+      event.stopPropagation();
       deck.dropCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
-    $scope.dropAll = function (cardId) {
+    $scope.dropAll = function (event, cardId) {
+      event.stopPropagation();
       deck.dropAll(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };

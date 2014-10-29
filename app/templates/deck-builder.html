@@ -56,13 +56,13 @@
               <td>
                 <ul class="button-group">
                   <li>
-                    <button class="button tiny" ng-click="addCard(card.multiverseid)" style="margin: 0;">Add</button>
+                    <button class="button tiny" ng-click="addCard($event,card.multiverseid)" style="margin: 0;">Add</button>
                   </li>
                   <li>
-                    <button class="button tiny" ng-click="dropCard(card.multiverseid)" style="margin: 0;">Drop</button>
+                    <button class="button tiny" ng-click="dropCard($event, card.multiverseid)" style="margin: 0;">Drop</button>
                   </li>
                   <li>
-                    <button class="button tiny" ng-click="dropAll(card.multiverseid)" style="margin: 0;">Drop All</button>
+                    <button class="button tiny" ng-click="dropAll($event, card.multiverseid)" style="margin: 0;">Drop All</button>
                   </li>
                 </ul>
               </td>
@@ -116,7 +116,7 @@
               <span ng-if="deck.getCountOf(cardToAdd.multiverseid) > 0" class="label success">{{deck.getCountOf(cardToAdd.multiverseid)}}</span>
             </td>
             <td>
-              <button class="button tiny" ng-click="addCard(cardToAdd.multiverseid)" style="margin: 0;">Add</button>
+              <button class="button tiny" ng-click="addCard($event, cardToAdd.multiverseid)" style="margin: 0;">Add</button>
             </td>
           </tr>
           </tbody>

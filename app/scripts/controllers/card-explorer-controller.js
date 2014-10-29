@@ -33,7 +33,6 @@ angular.module('mtgApp')
   })
   .controller('CardModalController', ['$scope', '$modalInstance', 'card', function ($scope, $modalInstance, card) {
     $scope.card = card;
-    $scope.test = 'test-me';
 
     $scope.ok = function () {
       $modalInstance.close();

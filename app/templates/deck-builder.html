@@ -36,7 +36,7 @@
             </th>
             <th>In Deck</th>
             <th>I own</th>
-            <th>Add/Drop</th>
+            <th>Add/Drop/Sideboard</th>
           </tr>
           </thead>
           <tbody>
@@ -56,23 +56,24 @@
                 <span ng-if="card.cmc > 0" class="label secondary right">{{card.cmc}}</span>
               </td>
               <td>
-                <span class="label success">{{deck.getCountOf(card.multiverseid)}}</span>
+                <span class="label secondary">{{deck.getCountOf(card.multiverseid)}}</span>
               </td>
               <td>
                 <own-card-count x-card-id="{{card.multiverseid}}"></own-card-count>
               </td>
               <td>
-                <ul class="button-group">
-                  <li>
-                    <button class="button tiny" ng-click="addCard($event,card.multiverseid)" style="margin: 0;">Add</button>
-                  </li>
-                  <li>
-                    <button class="button tiny" ng-click="dropCard($event, card.multiverseid)" style="margin: 0;">Drop</button>
-                  </li>
-                  <li>
-                    <button class="button tiny" ng-click="dropAll($event, card.multiverseid)" style="margin: 0;">Drop All</button>
-                  </li>
-                </ul>
+                <span class="label success" tooltip="Add 1 card" tooltip-animation="false" ng-click="addCard($event,card.multiverseid)">
+                  <i class="fi-plus"></i>
+                </span>
+                <span class="label warning" tooltip="Drop 1 card" tooltip-animation="false" ng-click="dropCard($event,card.multiverseid)">
+                  <i class="fi-minus"></i>
+                </span>
+                <span class="label alert" tooltip="Drop all cards" tooltip-animation="false" ng-click="dropAll($event,card.multiverseid)">
+                  <i class="fi-x"></i>
+                </span>
+                <span class="label" tooltip="Move card to sideboard" tooltip-animation="false" ng-click="moveCardToSideboard($event,card.multiverseid)">
+                  <i class="fi-arrow-right"></i>
+                </span>
               </td>
             </tr>
           </tbody>

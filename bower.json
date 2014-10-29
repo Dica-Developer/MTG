@@ -17,7 +17,8 @@
     "angular-ui-select": "~0.8.3",
     "foundation": "~5.4.6",
     "angular-foundation": "~0.4.0",
-    "taffydb": "*"
+    "taffydb": "*",
+    "FileSaver": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

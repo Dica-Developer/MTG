@@ -26,6 +26,9 @@
           <section class="left-small">
             <a class="left-off-canvas-toggle menu-icon" ><span></span></a>
           </section>
+          <section class="right-small">
+            <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
+          </section>
 
           <section class="middle tab-bar-section">
             <h1 class="title">MTG App</h1>
@@ -40,6 +43,16 @@
             <li><label>Decks</label></li>
             <li ng-repeat="deck in allDecks"><a ui-sref="deck-builder({deckId: deck.options.id})">{{deck.options.name}}</a></li>
 
+          </ul>
+        </aside>
+
+        <aside class="right-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><label>Database</label></li>
+            <li><a ui-sref="databases">Import / Export</a></li>
+            <li><label>About</label></li>
+            <li><a ui-sref="about">About</a></li>
+            <li><a ui-sref="change-log">Change Log</a></li>
           </ul>
         </aside>
 

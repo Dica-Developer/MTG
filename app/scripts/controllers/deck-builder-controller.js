@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DeckBuilderController', ['$scope', '$stateParams', 'decks', 'cards', function ($scope, $stateParams, decks, cards) {
+  .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', function ($scope, $stateParams, $modal, decks, cards) {
     $scope.scope = $scope;
     $scope.deck = window.deck = decks.getById($stateParams.deckId);
     $scope.cards = $scope.deck.getFullCards();
@@ -76,7 +76,23 @@ angular.module('mtgApp')
       $scope.sampleHand = $scope.deck.getShuffleSeven();
     };
 
+    $scope.showCardModal = function (card) {
 
+      var modalInstance = $modal.open({
+        templateUrl: '/templates/card-modal.html',
+        controller: 'CardModalController',
+        resolve: {
+          card: function () {
+            return card;
+          },
+          showCounter: function(){
+            return false;
+          }
+        }
+      });
 
-
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      });
+    };
   }]);

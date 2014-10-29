@@ -27,6 +27,7 @@
             <th>Type</th>
             <th>Mana Cost</th>
             <th>In Deck</th>
+            <th>I own</th>
             <th>Add/Drop</th>
           </tr>
           </thead>
@@ -50,6 +51,9 @@
                 <span class="label success">{{deck.getCountOf(card.multiverseid)}}</span>
               </td>
               <td>
+                <own-card-count x-card-id="{{card.multiverseid}}"></own-card-count>
+              </td>
+              <td>
                 <ul class="button-group">
                   <li>
                     <button class="button tiny" ng-click="addCard(card.multiverseid)" style="margin: 0;">Add</button>
@@ -68,8 +72,18 @@
       </tab>
       <tab heading="Add Card">
         <div class="panel-heading">
-          <label for="cardSearch">Search card: </label>
-          <input type="search" id="cardSearch" class="input-sm" ng-model="scope.currentSearch"/>
+          <div class="row">
+            <div class="large-10 columns">
+              <label for="cardSearch">Search card:
+                <input type="search" id="cardSearch" ng-model="scope.currentSearch"/>
+              </label>
+            </div>
+            <div class="large-2 columns">
+              <label for="resultLength">Results:
+                <input type="number" id="resultLength" min="0" ng-model="scope.searchResultLimit"/>
+              </label>
+            </div>
+          </div>
         </div>
         <table class="large-12">
           <thead>
@@ -83,7 +97,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(card)">
+          <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)">
             <td>
               <set-symbol x-set-code="{{cardToAdd.setCode}}" x-size="24" x-show-tip="true"
                           x-tip-text="{{cardToAdd.setName}}"></set-symbol>

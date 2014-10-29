@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', function ($scope, $stateParams, $modal, decks, cards) {
+  .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
     $scope.scope = $scope;
+    $scope.ownCards = ownCards;
     $scope.deck = window.deck = decks.getById($stateParams.deckId);
     $scope.cards = $scope.deck.getFullCards();
     $scope.saveDeck = $scope.deck.save.bind($scope.deck);
     $scope.cardsToAdd = null;
     $scope.currentSearch = '';
+    $scope.searchResultLimit = 20;
     $scope.totalCardCount = $scope.deck.options.cards.length;
     $scope.sampleHand = $scope.deck.getShuffleSeven();
     $scope.typeFilter = '';
@@ -62,15 +64,14 @@ angular.module('mtgApp')
       return deck.hasCard(cardId);
     };
 
-    $scope.$watch('currentSearch', function (newValue, oldValue) {
+    var filterCards = function filterCards(newValue, oldValue) {
       if (newValue && newValue !== oldValue) {
-        if (newValue === '') {
-          $scope.cardsToAdd = null;
-        } else {
-          $scope.cardsToAdd = cards.limitFilter({name: {likenocase: newValue}}, 50);
-        }
+        $scope.cardsToAdd = cards.limitFilter({name: {likenocase: $scope.currentSearch}}, $scope.searchResultLimit);
       }
-    });
+    };
+
+    $scope.$watch('currentSearch', filterCards);
+    $scope.$watch('searchResultLimit', filterCards);
 
     $scope.shuffle = function () {
       $scope.sampleHand = $scope.deck.getShuffleSeven();
@@ -85,7 +86,7 @@ angular.module('mtgApp')
           card: function () {
             return card;
           },
-          showCounter: function(){
+          showCounter: function () {
             return false;
           }
         }

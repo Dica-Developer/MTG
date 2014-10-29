@@ -22,10 +22,12 @@ angular.module('mtgApp')
     $scope.typeFilter = '';
     $scope.orderPredicate = 'types';
     $scope.orderReverse = false;
+    $scope.sideboard = $scope.deck.getFullSideboard();
 
     $scope.$watch('totalCardCount', function (newValue) {
       if (newValue) {
         $scope.cards = $scope.deck.getFullCards();
+        $scope.sideboard = $scope.deck.getFullSideboard();
       }
     });
 
@@ -44,6 +46,18 @@ angular.module('mtgApp')
     $scope.dropAll = function (event, cardId) {
       event.stopPropagation();
       $scope.deck.dropAll(cardId);
+      $scope.totalCardCount = $scope.deck.options.cards.length;
+    };
+
+    $scope.moveCardToSideboard = function (event, cardId) {
+      event.stopPropagation();
+      $scope.deck.moveCardToSideboard(cardId);
+      $scope.totalCardCount = $scope.deck.options.cards.length;
+    };
+
+    $scope.moveCardToMain = function (event, cardId) {
+      event.stopPropagation();
+      $scope.deck.moveCardToMain(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 

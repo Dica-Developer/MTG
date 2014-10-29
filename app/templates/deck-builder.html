@@ -78,6 +78,48 @@
           </tbody>
         </table>
       </tab>
+      <tab heading="Sideboard">
+        <div class="row">
+          <div class="large-12 column">
+            <table class="large-12">
+              <thead>
+              <tr>
+                <th>Set</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Mana Cost</th>
+                <th>In Deck</th>
+                <th>Add</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="sbCard in sideboard | cardTypeFilter:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
+                <td>
+                  <set-symbol x-card="sbCard" x-size="24" x-show-tip="true"
+                              x-tip-text="{{cardToAdd.setName}}"></set-symbol>
+                </td>
+                <td>
+                  {{sbCard.name}}
+                </td>
+                <td>
+                  {{sbCard.type}}
+                </td>
+                <td>
+                  <mana-cost x-mana-cost="{{sbCard.manaCost}}" x-size="16"></mana-cost>
+                  <span ng-if="sbCard.cmc > 0" class="label secondary right">{{sbCard.cmc}}</span>
+                </td>
+                <td>
+                  <span ng-if="deck.getCountOf(sbCard.multiverseid) > 0" class="label success">{{deck.getCountOf(sbCard.multiverseid)}}</span>
+                </td>
+                <td>
+                  <button class="button tiny" ng-click="moveCardToMain($event, sbCard.multiverseid)" style="margin: 0;">Main Deck</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </tab>
       <tab heading="Add Card">
         <div class="panel-heading">
           <div class="row">

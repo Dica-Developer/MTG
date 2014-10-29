@@ -18,9 +18,11 @@ angular.module('mtgApp')
         id: options.id || generateUUID(),
         name: options.name || '',
         colors: options.colors || [],
-        cards: options.cards || []
+        cards: options.cards || [],
+        sideboard: options.sideboard || []
       };
       this.cardsFull = [];
+      this.sideboardFull = [];
       this.updateFullCardInfo();
     }
 
@@ -49,6 +51,22 @@ angular.module('mtgApp')
       this.updateFullCardInfo();
     };
 
+    Deck.prototype.addCardToSideBoard = function (cardId) {
+      this.options.sideboard.push(cardId);
+      this.updateFullCardInfo();
+    };
+
+    Deck.prototype.dropCardFromSideBoard = function (cardId) {
+      var cardIndex = _.lastIndexOf(this.options.sideboard, cardId);
+      this.options.sideboard.splice(cardIndex, 1);
+      this.updateFullCardInfo();
+    };
+
+    Deck.prototype.dropAllFromSideboard = function (cardId) {
+      this.options.cards = _.without(this.options.sideboard, cardId);
+      this.updateFullCardInfo();
+    };
+
     Deck.prototype.setName = function (name) {
       this.options.name = name;
     };
@@ -69,8 +87,28 @@ angular.module('mtgApp')
       return this.options.cards;
     };
 
+    Deck.prototype.getSideboard = function () {
+      return this.options.cards;
+    };
+
     Deck.prototype.getFullCards = function () {
       return this.cardsFull;
+    };
+
+    Deck.prototype.getFullSideboard = function () {
+      return this.sideboardFull;
+    };
+
+    Deck.prototype.moveCardToSideboard = function (cardId) {
+      var cardIndex = _.lastIndexOf(this.options.cards, cardId);
+      var card = this.options.cards.splice(cardIndex, 1);
+      this.addCardToSideBoard(card[0]);
+    };
+
+    Deck.prototype.moveCardToMain = function (cardId) {
+      var cardIndex = _.lastIndexOf(this.options.sideboard, cardId);
+      var card = this.options.sideboard.splice(cardIndex, 1);
+      this.addCard(card[0]);
     };
 
     Deck.prototype.getManaCurve = function () {
@@ -109,6 +147,7 @@ angular.module('mtgApp')
 
     Deck.prototype.updateFullCardInfo = function () {
       this.cardsFull = cards.filter({multiverseid: _.uniq(this.options.cards)});
+      this.sideboardFull = cards.filter({multiverseid: _.uniq(this.options.sideboard)});
     };
 
 

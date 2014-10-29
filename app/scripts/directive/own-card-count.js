@@ -4,7 +4,7 @@ angular.module('mtgApp')
   .directive('ownCardCount', ['$compile', 'ownCards', function ($compile, ownCards) {
     return {
       restrict: 'E',
-      template: '<span class="label">{{count}}</span>',
+      template: '<span class="label secondary">{{count}}</span>',
       replace: true,
       scope: {
         'cardId': '@'

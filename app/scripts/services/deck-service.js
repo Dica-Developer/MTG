@@ -139,9 +139,35 @@ angular.module('mtgApp')
       return deck;
     }
 
+    function exportData() {
+      var deckIds = localStorageService.get('decks'),
+        decks = {};
+      if (deckIds) {
+        deckIds.forEach(function (deckId) {
+          decks[deckId] = localStorageService.get('deck-' + deckId);
+        });
+      }
+      return decks;
+    }
+
+    function importData(decks) {
+      _.each(decks, function (deckOptions) {
+        var deck = new Deck(deckOptions);
+        deck.save();
+      });
+    }
+
+    function count(){
+      var decks = localStorageService.get('decks');
+      return decks ? decks.length : 0;
+    }
+
     return {
       getAll: getAll,
       getById: getById,
-      addNew: addNew
+      addNew: addNew,
+      exportData: exportData,
+      importData: importData,
+      count: count
     };
   }]);

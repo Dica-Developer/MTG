@@ -40,7 +40,7 @@
           </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse" ng-click="showCardModal(card)" class="clickable">
+            <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(card)" class="clickable">
               <td>
                 <set-symbol x-card="card" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"
                             x-tip-appearance="right"></set-symbol>

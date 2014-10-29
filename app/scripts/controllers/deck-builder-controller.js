@@ -1,6 +1,13 @@
 'use strict';
 
 angular.module('mtgApp')
+  .filter('cardTypeFilter', [function () {
+    return function (items, filter) {
+      return items.filter(function (item) {
+        return filter === '' || _.isEqual(item.types, filter.split('-'));
+      });
+    };
+  }])
   .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
     $scope.scope = $scope;
     $scope.ownCards = ownCards;
@@ -47,23 +54,6 @@ angular.module('mtgApp')
         $scope.typeFilter = type;
       }
     };
-
-    $scope.$watch('typeFilter', function (newValue) {
-      if (newValue === '') {
-        $scope.cards = $scope.deck.getFullCards();
-      } else {
-        var types = newValue.split('-');
-        var fullDeck = $scope.deck.getFullCards();
-        var filteredCards = [];
-        fullDeck.forEach(function (deck) {
-          if (_.isEqual(deck.types, types)) {
-            filteredCards.push(deck);
-          }
-        });
-        $scope.cards = filteredCards;
-      }
-    });
-
 
     $scope.alreadyInDeck = function (cardId) {
       return $scope.deck.hasCard(cardId);

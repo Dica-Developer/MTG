@@ -7,7 +7,7 @@
             <input type="search" placeholder="Search by card name..." ng-model="searchValue"/>
           </label>
         </div>
-        <div class="large-4 columns">
+        <div class="large-3 columns">
           <label>Filter by color:
             <div class="custom-mana-checkbox">
               <label>
@@ -31,6 +31,11 @@
                 <span></span>
               </label>
             </div>
+          </label>
+        </div>
+        <div class="large-2 columns">
+          <label>Combind Mana Cost:
+            <input type="number" min="1" max="30" maxlength="2" ng-model="combinedManaCost">
           </label>
         </div>
         <div class="large-2 columns">

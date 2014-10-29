@@ -59,6 +59,7 @@ angular.module('mtgApp')
       $scope.currentPage = 1;
       $scope.cards = [];
       $scope.totalItems = 0;
+      $scope.combinedManaCost = 0;
       $scope.colors = {
         White: false,
         Black: false,
@@ -95,6 +96,7 @@ angular.module('mtgApp')
         var searchQuery = {};
         var name = $scope.searchValue;
         var mtgSets = $scope.selectedSets;
+        var cmc = $scope.combinedManaCost;
 
         if (name !== '') {
           searchQuery.name = {
@@ -108,6 +110,10 @@ angular.module('mtgApp')
             setsQueries.push(mtgSet.code);
           });
           searchQuery.setCode = setsQueries;
+        }
+
+        if (cmc > 0) {
+          searchQuery.cmc = cmc;
         }
 
         var colorQueries = {hasAll: []};
@@ -129,6 +135,7 @@ angular.module('mtgApp')
 
       $scope.$watch('searchValue', filterCards);
       $scope.$watch('selectedSets', filterCards);
+      $scope.$watch('combinedManaCost', filterCards);
       $scope.$watch('colors', filterCards, true);
     }
   ]);

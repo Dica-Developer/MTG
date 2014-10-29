@@ -29,11 +29,10 @@ angular.module('mtgApp')
               $scope.rarity = 'c';
             }
             if(cardRarityAbbr[card.rarity]){
-              $scope.rarity = cardRarityAbbr[card.rarity]
+              $scope.rarity = cardRarityAbbr[card.rarity];
             }
           }
         }, true);
-
       }]
     };
   });

@@ -10,7 +10,7 @@ angular.module('mtgApp')
         'cardId': '@'
       },
       link: function (scope) {
-        scope.$watch('cardId', function (newValue, oldValue) {
+        scope.$watch('cardId', function (newValue) {
           if (newValue) {
             scope.count = ownCards.getCountOf(newValue);
           }

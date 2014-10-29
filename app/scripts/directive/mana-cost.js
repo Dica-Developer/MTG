@@ -33,7 +33,7 @@ angular.module('mtgApp')
 
         scope.$watch('manaCost', function (newValue) {
           element.empty();
-          if(typeof newValue !== 'undefined'){
+          if (typeof newValue !== 'undefined') {
             var manaCost = newValue.toLowerCase().match(SYMBOLS_REGEX);
             if (manaCost) {
               manaCost.forEach(function (mana) {

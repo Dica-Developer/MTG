@@ -31,13 +31,13 @@ angular.module('mtgApp')
         };
 
         $scope.$watch(getCount, function (newValue, oldValue) {
-          if(newValue !== oldValue){
+          if (newValue !== oldValue) {
             $scope.count = newValue;
           }
         });
 
-        $scope.$watch('cardId', function(newValue, oldValue){
-          if(newValue && newValue !== oldValue){
+        $scope.$watch('cardId', function (newValue, oldValue) {
+          if (newValue && newValue !== oldValue) {
             id = newValue;
             $scope.count = ownCards.getCountOf(id);
           }

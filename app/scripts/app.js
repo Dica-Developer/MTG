@@ -1,7 +1,7 @@
 'use strict';
 
 //important for working with node-webkit
-if(typeof _ === 'undefined'){
+if (typeof _ === 'undefined') {
   window._ = require('lodash');
 }
 

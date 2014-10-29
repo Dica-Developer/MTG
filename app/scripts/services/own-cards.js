@@ -53,7 +53,7 @@ angular.module('mtgApp')
       }
     }
 
-    function importData(cardData){
+    function importData(cardData) {
       ownCardsDb.insert(cardData);
       storeDb();
     }

@@ -11,11 +11,11 @@ angular.module('mtgApp')
       },
       link: function (scope, element) {
 
-        scope.$watch('text', function(){
+        scope.$watch('text', function () {
           element.empty();
 
-          var newText = scope.text.replace(SYMBOLS_REGEX_WITH_BRACES, function(match){
-            return '<mana-cost x-mana-cost="'+ match +'" x-size="16"></mana-cost>';
+          var newText = scope.text.replace(SYMBOLS_REGEX_WITH_BRACES, function (match) {
+            return '<mana-cost x-mana-cost="' + match + '" x-size="16"></mana-cost>';
           });
           element.append(newText);
           $compile(element.contents())(scope);

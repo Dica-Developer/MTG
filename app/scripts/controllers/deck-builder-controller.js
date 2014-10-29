@@ -4,7 +4,7 @@ angular.module('mtgApp')
   .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
     $scope.scope = $scope;
     $scope.ownCards = ownCards;
-    $scope.deck = window.deck = decks.getById($stateParams.deckId);
+    $scope.deck = decks.getById($stateParams.deckId);
     $scope.cards = $scope.deck.getFullCards();
     $scope.saveDeck = $scope.deck.save.bind($scope.deck);
     $scope.cardsToAdd = null;
@@ -22,19 +22,19 @@ angular.module('mtgApp')
 
     $scope.addCard = function (event, cardId) {
       event.stopPropagation();
-      deck.addCard(cardId);
+      $scope.deck.addCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
     $scope.dropCard = function (event, cardId) {
       event.stopPropagation();
-      deck.dropCard(cardId);
+      $scope.deck.dropCard(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
     $scope.dropAll = function (event, cardId) {
       event.stopPropagation();
-      deck.dropAll(cardId);
+      $scope.deck.dropAll(cardId);
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
@@ -51,7 +51,7 @@ angular.module('mtgApp')
         $scope.cards = $scope.deck.getFullCards();
       } else {
         var types = newValue.split('-');
-        var fullDeck = deck.getFullCards();
+        var fullDeck = $scope.deck.getFullCards();
         var filteredCards = [];
         fullDeck.forEach(function (deck) {
           if (_.isEqual(deck.types, types)) {
@@ -64,7 +64,7 @@ angular.module('mtgApp')
 
 
     $scope.alreadyInDeck = function (cardId) {
-      return deck.hasCard(cardId);
+      return $scope.deck.hasCard(cardId);
     };
 
     var filterCards = function filterCards(newValue, oldValue) {

@@ -12,4 +12,4 @@ angular.module('mtgApp')
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
-  }])
+  }]);

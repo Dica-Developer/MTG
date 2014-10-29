@@ -73,7 +73,7 @@ angular.module('mtgApp')
             card: function () {
               return card;
             },
-            showCounter: function(){
+            showCounter: function () {
               return true;
             }
           }

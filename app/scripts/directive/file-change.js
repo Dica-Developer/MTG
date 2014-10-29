@@ -1,13 +1,15 @@
+'use strict';
+
 angular
   .module('mtgApp')
-  .directive('fileChange', ['$parse', function($parse) {
+  .directive('fileChange', ['$parse', function ($parse) {
     return {
       restrict: 'A',
       link: function ($scope, element, attrs) {
-        var attrHandler = $parse(attrs['fileChange']);
+        var attrHandler = $parse(attrs.fileChange);
         var handler = function (event) {
           $scope.$apply(function () {
-            attrHandler($scope, { $event: event, files: event.target.files });
+            attrHandler($scope, {$event: event, files: event.target.files});
           });
         };
         element[0].addEventListener('change', handler, false);

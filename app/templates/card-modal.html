@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <div class="right">
+  <div ng-if="showCounter" class="right">
     <card-counter x-card-id="{{card.multiverseid}}" x-edit="true"></card-counter>
     <button class="button tiny" ng-click="ok()">OK</button>
   </div>

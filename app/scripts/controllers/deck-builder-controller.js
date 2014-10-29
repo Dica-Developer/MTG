@@ -13,6 +13,8 @@ angular.module('mtgApp')
     $scope.totalCardCount = $scope.deck.options.cards.length;
     $scope.sampleHand = $scope.deck.getShuffleSeven();
     $scope.typeFilter = '';
+    $scope.orderPredicate = 'types';
+    $scope.orderReverse = false;
 
     $scope.$watch('totalCardCount', function (newValue) {
       if (newValue) {

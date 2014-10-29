@@ -98,9 +98,8 @@ angular.module('mtgApp')
         var mtgSets = $scope.selectedSets;
 
         if (name !== '') {
-          var regex = new RegExp(name, 'gi');
           searchQuery.name = {
-            regex: regex
+            likenocase: name
           };
         }
 

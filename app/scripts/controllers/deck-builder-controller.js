@@ -67,8 +67,7 @@ angular.module('mtgApp')
         if (newValue === '') {
           $scope.cardsToAdd = null;
         } else {
-          var regex = new RegExp(newValue, 'gi');
-          $scope.cardsToAdd = cards.limitFilter({name: {regex: regex}}, 50);
+          $scope.cardsToAdd = cards.limitFilter({name: {likenocase: newValue}}, 50);
         }
       }
     });

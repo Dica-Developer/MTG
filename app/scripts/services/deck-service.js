@@ -12,7 +12,7 @@ angular.module('mtgApp')
       });
     }, tmpDecks = {};
 
-    function Deck (options){
+    function Deck(options) {
       this.options = {
         id: options.id || generateUUID(),
         name: options.name || '',
@@ -23,7 +23,7 @@ angular.module('mtgApp')
       this.updateFullCardInfo();
     }
 
-    Deck.prototype.save = function(){
+    Deck.prototype.save = function () {
       var deckIds = localStorageService.get('decks') || [];
       if (!_.contains(deckIds, this.options.id)) {
         deckIds.push(this.options.id);
@@ -32,73 +32,73 @@ angular.module('mtgApp')
       localStorageService.set('deck-' + this.options.id, this.options);
     };
 
-    Deck.prototype.addCard = function(cardId){
+    Deck.prototype.addCard = function (cardId) {
       this.options.cards.push(cardId);
       this.updateFullCardInfo();
     };
 
-    Deck.prototype.dropCard = function(cardId){
+    Deck.prototype.dropCard = function (cardId) {
       var cardIndex = _.lastIndexOf(this.options.cards, cardId);
       this.options.cards.splice(cardIndex, 1);
       this.updateFullCardInfo();
     };
 
-    Deck.prototype.dropAll = function(cardId){
+    Deck.prototype.dropAll = function (cardId) {
       this.options.cards = _.without(this.options.cards, cardId);
       this.updateFullCardInfo();
     };
 
-    Deck.prototype.setName = function(name){
+    Deck.prototype.setName = function (name) {
       this.options.name = name;
     };
 
-    Deck.prototype.setType = function(type){
+    Deck.prototype.setType = function (type) {
       this.options.type = type;
     };
 
-    Deck.prototype.getColors = function(){
+    Deck.prototype.getColors = function () {
       return this.options.colors;
     };
 
-    Deck.prototype.remove = function(){
+    Deck.prototype.remove = function () {
 
     };
 
-    Deck.prototype.getCards = function(){
+    Deck.prototype.getCards = function () {
       return this.options.cards;
     };
 
-    Deck.prototype.getFullCards = function(){
+    Deck.prototype.getFullCards = function () {
       return this.cardsFull;
     };
 
-    Deck.prototype.getManaCurve = function(){
+    Deck.prototype.getManaCurve = function () {
       return _.countBy(this.cardsFull, 'cmc');
     };
 
-    Deck.prototype.getShuffleSeven = function(){
+    Deck.prototype.getShuffleSeven = function () {
       return _.sample(this.getFullCards(), 7);
     };
 
-    Deck.prototype.getCountOf = function(cardId){
-      return this.options.cards.filter(function(card){
+    Deck.prototype.getCountOf = function (cardId) {
+      return this.options.cards.filter(function (card) {
         return card === cardId;
       }).length;
     };
 
-    Deck.prototype.getCardCount = function(){
+    Deck.prototype.getCardCount = function () {
       return this.options.cards.length;
     };
 
-    Deck.prototype.hasCard = function(cardId){
+    Deck.prototype.hasCard = function (cardId) {
       return _.contains(this.options.cards, cardId);
     };
 
-    Deck.prototype.getCountByCardType = function(){
+    Deck.prototype.getCountByCardType = function () {
       var types = {},
         _this = this;
-      this.cardsFull.forEach(function(card){
-        if(!types[card.types.join('-')]){
+      this.cardsFull.forEach(function (card) {
+        if (!types[card.types.join('-')]) {
           types[card.types.join('-')] = 0;
         }
         types[card.types.join('-')] = types[card.types.join('-')] + _this.getCountOf(card.multiverseid);
@@ -106,7 +106,7 @@ angular.module('mtgApp')
       return types;
     };
 
-    Deck.prototype.updateFullCardInfo = function(){
+    Deck.prototype.updateFullCardInfo = function () {
       this.cardsFull = cards.filter({multiverseid: _.uniq(this.options.cards)});
     };
 
@@ -114,8 +114,8 @@ angular.module('mtgApp')
     function getAll() {
       var deckIds = localStorageService.get('decks'),
         decks = [];
-      if(deckIds){
-        deckIds.forEach(function(deckId){
+      if (deckIds) {
+        deckIds.forEach(function (deckId) {
           var deckOptions = localStorageService.get('deck-' + deckId);
           decks.push(new Deck(deckOptions));
         });
@@ -123,9 +123,9 @@ angular.module('mtgApp')
       return decks;
     }
 
-    function getById (id){
+    function getById(id) {
       var deck = tmpDecks[id] || null;
-      if(!deck){
+      if (!deck) {
         var deckOptions = localStorageService.get('deck-' + id);
         deck = new Deck(deckOptions);
       }
@@ -133,7 +133,7 @@ angular.module('mtgApp')
       return deck;
     }
 
-    function addNew(){
+    function addNew() {
       var deck = new Deck({});
       tmpDecks[deck.options.id] = deck;
       return deck;

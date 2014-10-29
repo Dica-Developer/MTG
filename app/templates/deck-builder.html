@@ -22,10 +22,18 @@
         <table class="large-12">
           <thead>
           <tr>
-            <th ng-click="orderPredicate = 'setCode'; orderReverse=!orderReverse" class="clickable">Set <i ng-if="orderPredicate === 'setCode'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i></th>
-            <th ng-click="orderPredicate = 'name'; orderReverse=!orderReverse" class="clickable">Name <i ng-if="orderPredicate === 'name'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i></th>
-            <th ng-click="orderPredicate = 'types'; orderReverse=!orderReverse" class="clickable">Type <i ng-if="orderPredicate === 'types'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i></th>
-            <th ng-click="orderPredicate = 'cmc'; orderReverse=!orderReverse" class="clickable">Mana Cost <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i></th>
+            <th ng-click="orderPredicate = 'setCode'; orderReverse=!orderReverse" class="clickable">
+              Set <i ng-if="orderPredicate === 'setCode'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'name'; orderReverse=!orderReverse" class="clickable">
+              Name <i ng-if="orderPredicate === 'name'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'types'; orderReverse=!orderReverse" class="clickable">
+              Type <i ng-if="orderPredicate === 'types'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'cmc'; orderReverse=!orderReverse" class="clickable">
+              Mana Cost <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
             <th>In Deck</th>
             <th>I own</th>
             <th>Add/Drop</th>

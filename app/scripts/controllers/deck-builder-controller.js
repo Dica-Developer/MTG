@@ -49,6 +49,24 @@ angular.module('mtgApp')
       $scope.totalCardCount = $scope.deck.options.cards.length;
     };
 
+    $scope.addCardToSideBoard = function (event, cardId) {
+      event.stopPropagation();
+      $scope.deck.addCardToSideBoard(cardId);
+      $scope.totalCardCount = $scope.deck.options.cards.length;
+    };
+
+    $scope.dropCardFromSideBoard = function (event, cardId) {
+      event.stopPropagation();
+      $scope.deck.dropCardFromSideBoard(cardId);
+      $scope.totalCardCount = $scope.deck.options.cards.length;
+    };
+
+    $scope.dropAllFromSideboard = function (event, cardId) {
+      event.stopPropagation();
+      $scope.deck.dropAllFromSideboard(cardId);
+      $scope.totalCardCount = $scope.deck.options.cards.length;
+    };
+
     $scope.moveCardToSideboard = function (event, cardId) {
       event.stopPropagation();
       $scope.deck.moveCardToSideboard(cardId);

@@ -13,6 +13,7 @@ angular.module('mtgApp')
         var otherSymbols = [
           't',
           'q',
+          'c',
           'artifact',
           'creature',
           'enchantment',

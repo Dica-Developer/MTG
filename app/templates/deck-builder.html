@@ -5,7 +5,8 @@
     </label>
   </div>
   <div class="large-12 column">
-    Cards in deck: {{deck.getCardCount()}}
+    Main deck (<i class="fi-crown"></i>): <span class="label" ng-class="{'warning': (deck.getCardCount() !== 60)}">{{deck.getCardCount()}}</span>
+    Sideboard (<i class="fi-shield"></i>): <span class="label" ng-class="{'warning': (deck.getSideboardCount() !== 15)}">{{deck.getSideboardCount()}}</span>
     <span class="right">
       <span class="label label-info clickable" ng-class="{'success': typeFilter === type}" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;" ng-click="filterByType(type)">
         <img ng-repeat="typeIcon in type.split('-')" ng-src="http://mtgimage.com/symbol/other/{{typeIcon}}.svg"
@@ -32,34 +33,34 @@
               Type <i ng-if="orderPredicate === 'types'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
             </th>
             <th ng-click="orderPredicate = 'cmc'; orderReverse=!orderReverse" class="clickable">
-              Mana Cost <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+              Mana <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
             </th>
-            <th>In Deck</th>
-            <th>I own</th>
-            <th>Add/Drop/Sideboard</th>
+            <th>Count</th>
+            <th>Action</th>
           </tr>
           </thead>
           <tbody>
             <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(card)" class="clickable">
               <td>
-                <set-symbol x-card="card" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}"
-                            x-tip-appearance="right"></set-symbol>
+                <set-symbol data-card="card" data-size="24" data-show-tip="true" data-tip-text="{{card.setName}}"
+                            data-tip-appearance="right"></set-symbol>
               </td>
               <td>
                 {{card.name}}
+                <span class="right">
+                  <own-card-count data-card-id="{{card.multiverseid}}"></own-card-count>
+                </span>
               </td>
               <td>
                 {{card.type}}
               </td>
               <td>
-                <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+                <mana-cost data-mana-cost="{{card.manaCost}}" data-size="16"></mana-cost>
                 <span ng-if="card.cmc > 0" class="label secondary right">{{card.cmc}}</span>
               </td>
               <td>
-                <span class="label secondary">{{deck.getCountOf(card.multiverseid)}}</span>
-              </td>
-              <td>
-                <own-card-count x-card-id="{{card.multiverseid}}"></own-card-count>
+                <span class="label secondary"><i class="fi-crown"></i> {{deck.getCountOf(card.multiverseid)}}</span>
+                <span class="label secondary"><i class="fi-shield"></i> {{deck.getSideboardCountOf(card.multiverseid)}}</span>
               </td>
               <td>
                 <span class="label success" tooltip="Add 1 card" tooltip-animation="false" ng-click="addCard($event,card.multiverseid)">
@@ -85,34 +86,57 @@
             <table class="large-12">
               <thead>
               <tr>
-                <th>Set</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Mana Cost</th>
-                <th>In Deck</th>
-                <th>Add</th>
+                <th ng-click="orderPredicate = 'setCode'; orderReverse=!orderReverse" class="clickable">
+                  Set <i ng-if="orderPredicate === 'setCode'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+                </th>
+                <th ng-click="orderPredicate = 'name'; orderReverse=!orderReverse" class="clickable">
+                  Name <i ng-if="orderPredicate === 'name'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+                </th>
+                <th ng-click="orderPredicate = 'types'; orderReverse=!orderReverse" class="clickable">
+                  Type <i ng-if="orderPredicate === 'types'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+                </th>
+                <th ng-click="orderPredicate = 'cmc'; orderReverse=!orderReverse" class="clickable">
+                  Mana <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+                </th>
+                <th>Count</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat="sbCard in sideboard | cardTypeFilter:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
+              <tr ng-repeat="sbCard in sideboard | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
                 <td>
-                  <set-symbol x-card="sbCard" x-size="24" x-show-tip="true" x-tip-text="{{sbCard.setName}}" x-tip-appearance="right"></set-symbol>
+                  <set-symbol data-card="sbCard" data-size="24" data-show-tip="true" data-tip-text="{{sbCard.setName}}" data-tip-appearance="right"></set-symbol>
                 </td>
                 <td>
                   {{sbCard.name}}
+                  <span class="right">
+                    <own-card-count data-card-id="{{sbCard.multiverseid}}"></own-card-count>
+                  </span>
                 </td>
                 <td>
                   {{sbCard.type}}
                 </td>
                 <td>
-                  <mana-cost x-mana-cost="{{sbCard.manaCost}}" x-size="16"></mana-cost>
+                  <mana-cost data-mana-cost="{{sbCard.manaCost}}" data-size="16"></mana-cost>
                   <span ng-if="sbCard.cmc > 0" class="label secondary right">{{sbCard.cmc}}</span>
                 </td>
                 <td>
-                  <span ng-if="deck.getCountOf(sbCard.multiverseid) > 0" class="label success">{{deck.getCountOf(sbCard.multiverseid)}}</span>
+                  <span class="label secondary"><i class="fi-crown"></i> {{deck.getCountOf(sbCard.multiverseid)}}</span>
+                  <span class="label secondary"><i class="fi-shield"></i> {{deck.getSideboardCountOf(sbCard.multiverseid)}}</span>
                 </td>
                 <td>
-                  <button class="button tiny" ng-click="moveCardToMain($event, sbCard.multiverseid)" style="margin: 0;">Main Deck</button>
+                  <span class="label success" tooltip="Add 1 card" tooltip-animation="false" ng-click="addCardToSideBoard($event,sbCard.multiverseid)">
+                    <i class="fi-plus"></i>
+                  </span>
+                  <span class="label warning" tooltip="Drop 1 card" tooltip-animation="false" ng-click="dropCardFromSideBoard($event,sbCard.multiverseid)">
+                    <i class="fi-minus"></i>
+                  </span>
+                  <span class="label alert" tooltip="Drop all cards" tooltip-animation="false" ng-click="dropAllFromSideboard($event,sbCard.multiverseid)">
+                    <i class="fi-x"></i>
+                  </span>
+                  <span class="label" tooltip="Move card to main deck" tooltip-animation="false" ng-click="moveCardToMain($event,sbCard.multiverseid)">
+                    <i class="fi-arrow-right"></i>
+                  </span>
                 </td>
               </tr>
               </tbody>
@@ -138,35 +162,52 @@
         <table class="large-12">
           <thead>
           <tr>
-            <th>Set</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Mana Cost</th>
-            <th>In Deck</th>
-            <th>Add</th>
+            <th ng-click="orderPredicate = 'setCode'; orderReverse=!orderReverse" class="clickable">
+              Set <i ng-if="orderPredicate === 'setCode'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'name'; orderReverse=!orderReverse" class="clickable">
+              Name <i ng-if="orderPredicate === 'name'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'types'; orderReverse=!orderReverse" class="clickable">
+              Type <i ng-if="orderPredicate === 'types'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th ng-click="orderPredicate = 'cmc'; orderReverse=!orderReverse" class="clickable">
+              Mana <i ng-if="orderPredicate === 'cmc'" class="right" ng-class="{'fi-arrow-down': !orderReverse, 'fi-arrow-up': orderReverse}"></i>
+            </th>
+            <th>Deck</th>
+            <th>Sideboard</th>
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)" class="clickable">
+          <tr ng-repeat="cardToAdd in cardsToAdd | orderBy:orderPredicate:orderReverse" ng-click="showCardModal(cardToAdd)" class="clickable">
             <td>
-              <set-symbol x-card="cardToAdd" x-size="24" x-show-tip="true"
-                          x-tip-text="{{cardToAdd.setName}}" x-tip-appearance="right"></set-symbol>
+              <set-symbol data-card="cardToAdd" data-size="24" data-show-tip="true"
+                          data-tip-text="{{cardToAdd.setName}}" data-tip-appearance="right"></set-symbol>
             </td>
             <td>
               {{cardToAdd.name}}
+              <span class="right">
+                <own-card-count data-card-id="{{cardToAdd.multiverseid}}"></own-card-count>
+              </span>
             </td>
             <td>
               {{cardToAdd.type}}
             </td>
             <td>
-              <mana-cost x-mana-cost="{{cardToAdd.manaCost}}" x-size="16"></mana-cost>
+              <mana-cost data-mana-cost="{{cardToAdd.manaCost}}" data-size="16"></mana-cost>
               <span ng-if="cardToAdd.cmc > 0" class="label secondary right">{{cardToAdd.cmc}}</span>
             </td>
             <td>
-              <span ng-if="deck.getCountOf(cardToAdd.multiverseid) > 0" class="label success">{{deck.getCountOf(cardToAdd.multiverseid)}}</span>
+              <span class="label secondary">{{deck.getCountOf(cardToAdd.multiverseid)}}</span>
+              <span class="label success right" tooltip="Add 1 card" tooltip-animation="false" ng-click="addCard($event,cardToAdd.multiverseid)">
+                <i class="fi-plus"></i>
+              </span>
             </td>
             <td>
-              <button class="button tiny" ng-click="addCard($event, cardToAdd.multiverseid)" style="margin: 0;">Add</button>
+              <span class="label secondary">{{deck.getSideboardCountOf(cardToAdd.multiverseid)}}</span>
+              <span class="label success right" tooltip="Add 1 card" tooltip-animation="false" ng-click="addCardToSideBoard($event,cardToAdd.multiverseid)">
+                <i class="fi-plus"></i>
+              </span>
             </td>
           </tr>
           </tbody>
@@ -193,8 +234,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-default" ng-click="saveDeck()">Save</button>
+  <div class="large-12 column">
+    <button class="button tiny success right" ng-click="saveDeck()">Save</button>
   </div>
 </div>
 

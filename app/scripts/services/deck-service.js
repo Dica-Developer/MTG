@@ -113,8 +113,18 @@ angular.module('mtgApp')
       }).length;
     };
 
+    Deck.prototype.getSideboardCountOf = function (cardId) {
+      return this.options.sideboard.filter(function (card) {
+        return card === cardId;
+      }).length;
+    };
+
     Deck.prototype.getCardCount = function () {
       return this.options.cards.length;
+    };
+
+    Deck.prototype.getSideboardCount = function () {
+      return this.options.sideboard.length;
     };
 
     Deck.prototype.hasCard = function (cardId) {

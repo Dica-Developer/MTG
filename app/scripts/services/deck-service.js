@@ -100,7 +100,16 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.getManaCurve = function () {
-      return _.countBy(this.cardsFull, 'cmc');
+      var generatedCurve =  _.countBy(this.cardsFull, 'cmc');
+      _.range(1, 8).forEach(function(number){
+        if(!generatedCurve[number]){
+          generatedCurve[number] = 0;
+        }
+      });
+      if(!generatedCurve.undefined){
+        delete generatedCurve.undefined;
+      }
+      return generatedCurve;
     };
 
     Deck.prototype.getShuffleSeven = function () {

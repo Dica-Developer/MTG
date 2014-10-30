@@ -24,7 +24,8 @@ angular
     'mm.foundation',
     'ui.router',
     'ui.select',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'tc.chartjs'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider

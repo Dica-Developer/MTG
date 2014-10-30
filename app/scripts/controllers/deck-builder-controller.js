@@ -24,10 +24,15 @@ angular.module('mtgApp')
     $scope.orderReverse = false;
     $scope.sideboard = $scope.deck.getFullSideboard();
 
+    var updateManaCurve = null;
+
+    window.deck = $scope.deck;
+
     $scope.$watch('totalCardCount', function (newValue) {
       if (newValue) {
         $scope.cards = $scope.deck.getFullCards();
         $scope.sideboard = $scope.deck.getFullSideboard();
+        updateManaCurve()
       }
     });
 
@@ -123,4 +128,42 @@ angular.module('mtgApp')
         $scope.selected = selectedItem;
       });
     };
+
+    $scope.manaCostData = {
+      labels: [],
+      datasets: []
+    };
+
+    $scope.manaCostOptions = {
+      responsive: true,
+      scaleBeginAtZero : true,
+      scaleShowGridLines : true,
+      scaleGridLineColor : "rgba(0,0,0,.05)",
+      scaleGridLineWidth : 1,
+      barShowStroke : true,
+      barStrokeWidth : 2,
+      barValueSpacing : 5,
+      barDatasetSpacing : 1
+    };
+
+    updateManaCurve = function(){
+      $scope.manaCostData.labels = [];
+      $scope.manaCostData.datasets = [];
+      var dataSet = {
+        label: 'My First dataset',
+        fillColor: 'rgba(220,220,220,0.5)',
+        strokeColor: 'rgba(220,220,220,0.8)',
+        highlightFill: 'rgba(220,220,220,0.75)',
+        highlightStroke: 'rgba(220,220,220,1)',
+        data: []
+      };
+      _.each($scope.deck.getManaCurve(), function(count, mana){
+        if(mana !== 'undefined'){
+          $scope.manaCostData.labels.push('CMC ' + mana);
+          dataSet.data.push(count)
+        }
+      });
+      $scope.manaCostData.datasets.push(dataSet);
+    };
+
   }]);

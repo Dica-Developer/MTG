@@ -79,18 +79,6 @@ angular.module('mtgApp')
       return this.options.colors;
     };
 
-    Deck.prototype.remove = function () {
-
-    };
-
-    Deck.prototype.getCards = function () {
-      return this.options.cards;
-    };
-
-    Deck.prototype.getSideboard = function () {
-      return this.options.cards;
-    };
-
     Deck.prototype.getFullCards = function () {
       return this.cardsFull;
     };

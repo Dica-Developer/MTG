@@ -96,8 +96,7 @@
               <tbody>
               <tr ng-repeat="sbCard in sideboard | cardTypeFilter:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
                 <td>
-                  <set-symbol x-card="sbCard" x-size="24" x-show-tip="true"
-                              x-tip-text="{{cardToAdd.setName}}"></set-symbol>
+                  <set-symbol x-card="sbCard" x-size="24" x-show-tip="true" x-tip-text="{{sbCard.setName}}" x-tip-appearance="right"></set-symbol>
                 </td>
                 <td>
                   {{sbCard.name}}
@@ -151,7 +150,7 @@
           <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)" class="clickable">
             <td>
               <set-symbol x-card="cardToAdd" x-size="24" x-show-tip="true"
-                          x-tip-text="{{cardToAdd.setName}}"></set-symbol>
+                          x-tip-text="{{cardToAdd.setName}}" x-tip-appearance="right"></set-symbol>
             </td>
             <td>
               {{cardToAdd.name}}

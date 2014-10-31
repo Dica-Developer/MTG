@@ -162,6 +162,30 @@ angular.module('mtgApp')
       this.sideboardFull = cards.filter({multiverseid: _.uniq(this.options.sideboard)});
     };
 
+    Deck.prototype.getLegalities = function () {
+      var legaleties = {
+        'Standard': 'Legal',
+        'Modern': 'Legal',
+        'Vintage': 'Legal',
+        'Legacy': 'Legal',
+        'Commander': 'Legal'
+      };
+      var allCards = this.cardsFull.concat(this.sideboardFull);
+      var allCardLegalities = _.pluck(allCards, 'legalities');
+      allCardLegalities.forEach(function(cardLegaleties){
+        _.each(cardLegaleties, function(legalety, type){
+          if(legaleties[type]){
+            if (legalety === 'Banned') {
+              legaleties[type] = legalety;
+            } else if (legalety === 'Restricted' && legaleties[type] !== 'Banned') {
+              legaleties[type] = legalety;
+            }
+          }
+        });
+      });
+      return legaleties;
+    };
+
 
     function getAll() {
       var deckIds = localStorageService.get('decks'),

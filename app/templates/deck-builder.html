@@ -14,6 +14,13 @@
       </span>
     </span>
   </div>
+  <div class="large-12 column">
+    <span class="right">
+      <span class="label" ng-repeat="(type, legal) in deck.getLegalities()" style="margin: 0 1px;" ng-class="{'success': (legal === 'Legal'), 'warning': (legal === 'Restricted'), 'alert': (legal === 'Banned')}">
+        {{type}}
+      </span>
+    </span>
+  </div>
 </div>
 
 <div class="row">

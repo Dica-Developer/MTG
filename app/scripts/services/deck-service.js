@@ -113,7 +113,12 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.getShuffleSeven = function () {
-      return _.sample(this.getFullCards(), 7);
+      var cardIds = _.sample(this.options.cards, 7),
+        sample = [];
+      cardIds.forEach(function(cardId){
+        sample.push(cards.filter({multiverseid: cardId})[0]);
+      });
+      return sample;
     };
 
     Deck.prototype.getCountOf = function (cardId) {

@@ -100,7 +100,7 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.getManaCurve = function () {
-      var generatedCurve =  _.countBy(this.cardsFull, 'cmc');
+      var generatedCurve = _.countBy(this.cardsFull, 'cmc');
       _.range(1, 8).forEach(function(number){
         if(!generatedCurve[number]){
           generatedCurve[number] = 0;

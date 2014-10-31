@@ -32,7 +32,7 @@ angular.module('mtgApp')
       if (newValue) {
         $scope.cards = $scope.deck.getFullCards();
         $scope.sideboard = $scope.deck.getFullSideboard();
-        updateManaCurve()
+        updateManaCurve();
       }
     });
 
@@ -136,31 +136,31 @@ angular.module('mtgApp')
 
     $scope.manaCostOptions = {
       responsive: true,
-      scaleBeginAtZero : true,
-      scaleShowGridLines : true,
-      scaleGridLineColor : "rgba(0,0,0,.05)",
-      scaleGridLineWidth : 1,
-      barShowStroke : true,
-      barStrokeWidth : 2,
-      barValueSpacing : 5,
-      barDatasetSpacing : 1
+      scaleBeginAtZero: true,
+      scaleShowGridLines: true,
+      scaleGridLineColor: 'rgba(0,0,0,.05)',
+      scaleGridLineWidth: 1,
+      barShowStroke: true,
+      barStrokeWidth: 2,
+      barValueSpacing: 5,
+      barDatasetSpacing: 1
     };
 
-    updateManaCurve = function(){
+    updateManaCurve = function () {
       $scope.manaCostData.labels = [];
       $scope.manaCostData.datasets = [];
       var dataSet = {
-        label: 'My First dataset',
+        label: '',
         fillColor: 'rgba(220,220,220,0.5)',
         strokeColor: 'rgba(220,220,220,0.8)',
         highlightFill: 'rgba(220,220,220,0.75)',
         highlightStroke: 'rgba(220,220,220,1)',
         data: []
       };
-      _.each($scope.deck.getManaCurve(), function(count, mana){
-        if(mana !== 'undefined'){
+      _.each($scope.deck.getManaCurve(), function (count, mana) {
+        if (mana !== 'undefined') {
           $scope.manaCostData.labels.push('CMC ' + mana);
-          dataSet.data.push(count)
+          dataSet.data.push(count);
         }
       });
       $scope.manaCostData.datasets.push(dataSet);

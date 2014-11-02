@@ -36,6 +36,7 @@ angular.module('mtgApp')
               allCards = allCards.concat(cards);
             });
             cardsDb.insert(allCards);
+            cardsDb.sort('name');
             defer.resolve(cardsDb().get());
             allCards = [];
           });

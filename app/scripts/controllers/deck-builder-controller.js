@@ -1,13 +1,6 @@
 'use strict';
 
 angular.module('mtgApp')
-  .filter('cardTypeFilter', [function () {
-    return function (items, filter) {
-      return items.filter(function (item) {
-        return filter === '' || _.isEqual(item.types, filter.split('-'));
-      });
-    };
-  }])
   .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
     $scope.scope = $scope;
     $scope.ownCards = ownCards;

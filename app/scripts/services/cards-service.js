@@ -26,6 +26,11 @@ angular.module('mtgApp')
               var cards = _.map(mtgSet.cards, function (card) {
                 card.setCode = mtgSet.code;
                 card.setName = mtgSet.name;
+                if(card.foreignNames){
+                  card.concatNames = _.pluck(card.foreignNames, 'name').join(' - ');
+                } else {
+                  card.concatNames = card.name;
+                }
                 return card;
               });
               allCards = allCards.concat(cards);

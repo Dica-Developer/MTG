@@ -91,7 +91,7 @@ angular.module('mtgApp')
         var cmc = $scope.combinedManaCost;
 
         if (name !== '') {
-          searchQuery.name = {
+          searchQuery.concatNames = {
             likenocase: name
           };
         }

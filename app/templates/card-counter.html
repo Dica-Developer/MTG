@@ -1,5 +1,5 @@
 <span class="right">
-  <span class="label warning" ng-click="removeCard($event, card.multiverseid)"><i class="fi-minus"></i></span>
+  <span class="label warning" ng-class="{'clickable': (count > 0)}" ng-click="removeCard($event, card.multiverseid)"><i class="fi-minus"></i></span>
   <span class="label secondary">{{count}}</span>
-  <span class="label success" ng-click="addCard($event, card.multiverseid)"><i class="fi-plus"></i></span>
+  <span class="label success clickable" ng-click="addCard($event, card.multiverseid)"><i class="fi-plus"></i></span>
 </span>

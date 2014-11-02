@@ -4,11 +4,9 @@ angular.module('mtgApp')
   .controller('CardExplorerController', [
     '$scope',
     '$modal',
-    '$timeout',
     'cards',
-    'allCards',
     'setList',
-    function ($scope, $modal, $timeout, cards, allCards, setList) {
+    function ($scope, $modal, cards, setList) {
       var filteredCards = [];
       $scope.scope = $scope;
       $scope.setList = setList;

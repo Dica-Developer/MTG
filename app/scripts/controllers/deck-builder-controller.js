@@ -98,7 +98,7 @@ angular.module('mtgApp')
 
     var filterCards = function filterCards(newValue, oldValue) {
       if (newValue && newValue !== oldValue) {
-        $scope.cardsToAdd = cards.limitFilter({name: {likenocase: $scope.currentSearch}}, $scope.searchResultLimit);
+        $scope.cardsToAdd = cards.limitFilter({concatNames: {likenocase: $scope.currentSearch}}, $scope.searchResultLimit);
       }
     };
 

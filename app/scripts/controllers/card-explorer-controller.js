@@ -27,32 +27,9 @@ angular.module('mtgApp')
         Red: false
       };
 
-      var updateList = function () {
+      function updateList() {
         $scope.cards = filteredCards.slice(($scope.currentPage - 1) * $scope.maxResultLength, $scope.currentPage * $scope.maxResultLength);
-      };
-
-      $scope.$watch('currentPage', updateList);
-      $scope.$watch('maxResultLength', updateList);
-
-      $scope.showCardModal = function (card) {
-
-        var modalInstance = $modal.open({
-          templateUrl: '/templates/card-modal.html',
-          controller: 'CardModalController',
-          resolve: {
-            card: function () {
-              return card;
-            },
-            showCounter: function () {
-              return true;
-            }
-          }
-        });
-
-        modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
-        });
-      };
+      }
 
       function filterCards() {
         var searchQuery = {};
@@ -95,9 +72,32 @@ angular.module('mtgApp')
         $scope.totalItems = filteredCards.length;
       }
 
+      $scope.showCardModal = function (card) {
+
+        var modalInstance = $modal.open({
+          templateUrl: '/templates/card-modal.html',
+          controller: 'CardModalController',
+          resolve: {
+            card: function () {
+              return card;
+            },
+            showCounter: function () {
+              return true;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+        });
+      };
+
       $scope.$watch('searchValue', filterCards);
       $scope.$watch('selectedSets', filterCards);
       $scope.$watch('combinedManaCost', filterCards);
       $scope.$watch('colors', filterCards, true);
+
+      $scope.$watch('currentPage', updateList);
+      $scope.$watch('maxResultLength', updateList);
     }
   ]);

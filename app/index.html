@@ -40,10 +40,11 @@
         <aside class="left-off-canvas-menu">
           <ul class="off-canvas-list">
             <li><label>MTG App</label></li>
-            <li><a ui-sref="card-explorer">Card Explorer</a></li>
-            <li><a ui-sref="deck-list">Deck List</a></li>
+            <li ui-sref-active="active"><a ui-sref="card-explorer">Card Explorer</a></li>
+            <li ui-sref-active="active"><a ui-sref="own-cards">Own Cards</a></li>
+            <li ui-sref-active="active"><a ui-sref="deck-list">Deck List</a></li>
             <li><label>Decks</label></li>
-            <li ng-repeat="deck in allDecks"><a ui-sref="deck-builder({deckId: deck.options.id})">{{deck.options.name}}</a></li>
+            <li ui-sref-active="active" ng-repeat="deck in allDecks"><a ui-sref="deck-builder({deckId: deck.options.id})">{{deck.options.name}}</a></li>
 
           </ul>
         </aside>
@@ -51,10 +52,10 @@
         <aside class="right-off-canvas-menu">
           <ul class="off-canvas-list">
             <li><label>Database</label></li>
-            <li><a ui-sref="databases">Import / Export</a></li>
-            <li><label>About</label></li>
-            <li><a ui-sref="about">About</a></li>
-            <li><a ui-sref="change-log">Change Log</a></li>
+            <li ui-sref-active="active"><a ui-sref="databases">Import / Export</a></li>
+            <!--<li><label>About</label></li>
+            <li ui-sref-active="active"><a ui-sref="about">About</a></li>
+            <li ui-sref-active="active"><a ui-sref="change-log">Change Log</a></li>-->
           </ul>
         </aside>
 
@@ -117,6 +118,7 @@
     <script src="scripts/controllers/deck-list-controller.js"></script>
     <script src="scripts/controllers/card-modal-controller.js"></script>
     <script src="scripts/controllers/databases-controller.js"></script>
+    <script src="scripts/controllers/own-cards-controller.js"></script>
     <!-- endbuild -->
 </body>
 </html>

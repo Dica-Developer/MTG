@@ -15,3 +15,5 @@
 html, body, body > .page, .off-canvas-wrap { height:100%; }
 .off-canvas-wrap { overflow-y: scroll; }
 .inner-wrap { min-height: 100%; }
+
+.off-canvas-wrap aside li.active{ background-color: rgba(0, 0, 0, 0.35); }

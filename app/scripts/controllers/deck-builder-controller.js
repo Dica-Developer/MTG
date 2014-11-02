@@ -117,9 +117,6 @@ angular.module('mtgApp')
         resolve: {
           card: function () {
             return card;
-          },
-          showCounter: function () {
-            return false;
           }
         }
       });

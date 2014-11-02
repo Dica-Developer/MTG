@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('CardModalController', ['$scope', '$modalInstance', 'card', 'showCounter', function ($scope, $modalInstance, card, showCounter) {
+  .controller('CardModalController', ['$scope', '$modalInstance', 'card', function ($scope, $modalInstance, card) {
     $scope.card = card;
-    $scope.showCounter = showCounter;
 
     $scope.ok = function () {
       $modalInstance.close();

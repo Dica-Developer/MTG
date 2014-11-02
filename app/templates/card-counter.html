@@ -1,11 +1,5 @@
-<ul class="button-group">
-  <li>
-      <button ng-if="edit" ng-disabled="count === 0" type="button" class="button tiny" ng-click="removeCard($event, card.multiverseid)">less</button>
-  </li>
-  <li>
-    <button disabled="disabled" type="button" class="button tiny">{{count}}</button>
-  </li>
-  <li>
-    <button ng-if="edit" type="button" class="button tiny" ng-click="addCard($event, card.multiverseid)">more</button>
-  </li>
-</ul>
+<span class="right">
+  <span class="label warning" ng-class="{'clickable': (count > 0)}" ng-disabled="count === 0" ng-click="removeCard($event, card.multiverseid)"><i class="fi-minus"></i></span>
+  <span class="label secondary">{{count}}</span>
+  <span class="label success" ng-click="addCard($event, card.multiverseid)"><i class="fi-plus"></i></span>
+</span>

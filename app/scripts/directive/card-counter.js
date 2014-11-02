@@ -7,8 +7,7 @@ angular.module('mtgApp')
       templateUrl: '/templates/card-counter.html',
       replace: true,
       scope: {
-        'cardId': '@',
-        'edit': '@'
+        'cardId': '@'
       },
       controller: ['$scope', 'ownCards', function ($scope, ownCards) {
         var id = $scope.cardId;
@@ -23,7 +22,9 @@ angular.module('mtgApp')
         $scope.removeCard = function (event) {
           event.preventDefault();
           event.stopImmediatePropagation();
-          ownCards.removeCard(id);
+          if($scope.count > 0){
+            ownCards.removeCard(id);
+          }
         };
 
         var getCount = function () {

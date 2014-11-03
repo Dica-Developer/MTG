@@ -16,7 +16,7 @@ angular.module('mtgApp')
       $scope.currentPage = 1;
       $scope.cards = [];
       $scope.totalItems = 0;
-      $scope.combinedManaCost = 0;
+      $scope.combinedManaCost = -1;
       $scope.colors = {
         White: false,
         Black: false,
@@ -49,7 +49,7 @@ angular.module('mtgApp')
           searchQuery.setCode = setsQueries;
         }
 
-        if (cmc > 0) {
+        if (cmc >= 0) {
           searchQuery.cmc = cmc;
         }
 

@@ -112,8 +112,8 @@ angular.module('mtgApp')
       return generatedCurve;
     };
 
-    Deck.prototype.getShuffleSeven = function () {
-      var cardIds = _.sample(this.options.cards, 7),
+    Deck.prototype.getShuffle = function (count) {
+      var cardIds = _.sample(this.options.cards, count),
         sample = [];
       cardIds.forEach(function(cardId){
         sample.push(cards.filter({multiverseid: cardId})[0]);

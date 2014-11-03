@@ -11,13 +11,14 @@ angular.module('mtgApp')
     $scope.currentSearch = '';
     $scope.searchResultLimit = 20;
     $scope.totalCardCount = $scope.deck.options.cards.length;
-    $scope.sampleHand = $scope.deck.getShuffleSeven();
+    $scope.sampleHand = [];
     $scope.typeFilter = '';
     $scope.orderPredicate = 'types';
     $scope.orderReverse = false;
     $scope.sideboard = $scope.deck.getFullSideboard();
 
-    var updateManaCurve = null;
+    var updateManaCurve = null,
+      shuffleCount = 7;
 
     window.deck = $scope.deck;
 
@@ -99,7 +100,15 @@ angular.module('mtgApp')
     $scope.$watch('searchResultLimit', filterCards);
 
     $scope.shuffle = function () {
-      $scope.sampleHand = $scope.deck.getShuffleSeven();
+      shuffleCount = 7;
+      $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
+    };
+
+    $scope.mulligan = function () {
+      if(shuffleCount > 1){
+        shuffleCount = shuffleCount - 1;
+        $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
+      }
     };
 
     $scope.showCardModal = function (card) {

@@ -20,6 +20,19 @@ angular.module('mtgApp')
           }]
         }
       })
+      .state('own-cards', {
+        url: '/own-cards',
+        templateUrl: '/templates/own-cards.html',
+        controller: 'OwnCardsController',
+        resolve: {
+          allCards: ['cards', function (cards) {
+            return cards.fetchCards();
+          }],
+          setList: ['cards', function (cards) {
+            return cards.fetchSetList();
+          }]
+        }
+      })
       .state('deck-list', {
         url: '/deck-list',
         templateUrl: '/templates/deck-list.html',

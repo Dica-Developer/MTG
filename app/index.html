@@ -45,7 +45,6 @@
             <li ui-sref-active="active"><a ui-sref="deck-list">Deck List</a></li>
             <li><label>Decks</label></li>
             <li ui-sref-active="active" ng-repeat="deck in allDecks"><a ui-sref="deck-builder({deckId: deck.options.id})">{{deck.options.name}}</a></li>
-
           </ul>
         </aside>
 

@@ -1,3 +1,59 @@
+.clickable {
+  cursor: pointer;
+}
+aside {
+  height: 100%;
+  position: fixed;
+  display: block;
+  float: left;
+  width: 220px;
+  background: #333;
+}
+aside h3 {
+  color: #aaa;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px 10px;
+}
+aside .side-menu-nav {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+aside .side-menu-nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+aside .side-menu-nav ul ul a {
+  padding: 10px 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+aside .side-menu-nav ul a {
+  padding: 10px 10px;
+  color: #aaa;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+aside .side-menu-nav ul li,
+aside .side-menu-nav ul a {
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.page {
+  position: inherit;
+  margin: 0 0 0 220px;
+  padding: 10px 0 0 0;
+  border-left: 1px solid #e7e7e7;
+}
+.card-list .pagination {
+  margin: -5px 0;
+}
 .input-label {
   font-size: 0.875rem;
   color: #4d4d4d;
@@ -7,17 +63,6 @@
   line-height: 1.5;
   margin-bottom: 0;
 }
-
-.clickable {
-  cursor: pointer;
-}
-
-html, body, body > .page, .off-canvas-wrap { height:100%; }
-.off-canvas-wrap { overflow-y: scroll; }
-.inner-wrap { min-height: 100%; }
-
-.off-canvas-wrap aside li.active{ background-color: rgba(0, 0, 0, 0.35); }
-
 .valign-bottom {
   position: absolute;
   bottom: 0;

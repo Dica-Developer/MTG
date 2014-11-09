@@ -1,0 +1,47 @@
+aside {
+  height: 100%;
+  position: fixed;
+  display: block;
+  float: left;
+  width: 220px;
+  background: #333;
+
+  h3 {
+    color: #aaa;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 10px 10px;
+  }
+
+  .side-menu-nav {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      ul {
+        a {
+          padding: 10px 30px;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+      a {
+        padding: 10px 10px;
+        color: #aaa;
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+      }
+      li, a {
+        text-decoration: none;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

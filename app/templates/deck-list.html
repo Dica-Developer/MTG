@@ -3,6 +3,9 @@
     <div class="list-group">
       <a ng-repeat="deck in deckList" ui-sref="deck-builder({deckId: deck.options.id})" class="list-group-item">
         {{deck.options.name}}
+        <div class="pull-right">
+          <img ng-repeat="color in deck.getColors()" ng-src="http://mtgimage.com/symbol/mana/{{color}}.svg" alt="" width="26px"/>
+        </div>
       </a>
     </div>
     <button class="btn btn-default" ng-click="addDeck()">Add Deck</button>

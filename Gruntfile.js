@@ -48,6 +48,10 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
+      lessStyles: {
+        files: ['<%= yeoman.app %>/less/{,*/}*.less'],
+        tasks: ['less:dev']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -143,6 +147,18 @@ module.exports = function (grunt) {
         }]
       },
       server: '.tmp'
+    },
+
+    //LESS compiling
+    less: {
+      dev: {
+        options: {
+          paths: ['./']
+        },
+        files: {
+          '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/less/main.less'
+        }
+      }
     },
 
     // Add vendor prefixed styles

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .service('cards', ['$q', '$http', 'localStorageService', function ($q, $http) {
+  .service('cards', ['$q', '$http', function cardsService($q, $http) {
     var allCards = [],
       setList = [],
       cardsDb = TAFFY();
@@ -27,7 +27,7 @@ angular.module('mtgApp')
                 card.setCode = mtgSet.code;
                 card.setName = mtgSet.name;
                 card.concatNames = card.name;
-                if(card.foreignNames){
+                if (card.foreignNames) {
                   card.concatNames += ' ° ' + _.pluck(card.foreignNames, 'name').join(' ° ');
                 }
                 return card;
@@ -47,15 +47,20 @@ angular.module('mtgApp')
 
     function fetchSetList() {
       var defer = $q.defer();
-      $http.get('/data/SET_LIST.json')
-        .success(function (response) {
-          setList = response;
-          defer.resolve(setList);
-        });
+      if(setList.length === 0){
+        $http.get('/data/SET_LIST.json')
+          .success(function (response) {
+            setList = response;
+            defer.resolve(setList);
+          });
+      } else {
+        defer.resolve(setList);
+      }
       return defer.promise;
     }
 
     return {
+      db: cardsDb,
       filter: filter,
       limitFilter: limitFilter,
       fetchCards: fetchCards,

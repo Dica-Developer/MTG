@@ -11,13 +11,12 @@ angular.module('mtgApp')
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
       });
-    }, tmpDecks = {};
+    }, tmpDecks = {}, lastChangeTimeStamp = null;
 
     function Deck(options) {
       this.options = {
         id: options.id || generateUUID(),
         name: options.name || '',
-        colors: options.colors || [],
         cards: options.cards || [],
         sideboard: options.sideboard || []
       };
@@ -33,6 +32,7 @@ angular.module('mtgApp')
         localStorageService.set('decks', deckIds);
       }
       localStorageService.set('deck-' + this.options.id, this.options);
+      lastChangeTimeStamp = new Date().getTime();
     };
 
     Deck.prototype.addCard = function (cardId) {
@@ -71,12 +71,22 @@ angular.module('mtgApp')
       this.options.name = name;
     };
 
+    Deck.prototype.getName = function () {
+      return this.options.name;
+    };
+
     Deck.prototype.setType = function (type) {
       this.options.type = type;
     };
 
     Deck.prototype.getColors = function () {
-      return this.options.colors;
+      var colors = _.chain(this.cardsFull)
+        .pluck('colors')
+        .flatten()
+        .uniq()
+        .without(void 0)
+        .value();
+      return colors;
     };
 
     Deck.prototype.getFullCards = function () {
@@ -212,6 +222,7 @@ angular.module('mtgApp')
     function addNew() {
       var deck = new Deck({});
       tmpDecks[deck.options.id] = deck;
+      lastChangeTimeStamp = new Date().getTime();
       return deck;
     }
 
@@ -233,9 +244,8 @@ angular.module('mtgApp')
       });
     }
 
-    function count() {
-      var decks = localStorageService.get('decks');
-      return decks ? decks.length : 0;
+    function lastChange() {
+      return lastChangeTimeStamp;
     }
 
     return {
@@ -244,6 +254,6 @@ angular.module('mtgApp')
       addNew: addNew,
       exportData: exportData,
       importData: importData,
-      count: count
+      lastChange: lastChange
     };
   }]);

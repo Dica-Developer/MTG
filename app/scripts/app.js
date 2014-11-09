@@ -21,7 +21,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'mm.foundation',
+    'ui.bootstrap',
     'ui.router',
     'ui.select',
     'LocalStorageModule',

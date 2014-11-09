@@ -3,19 +3,27 @@
 angular.module('mtgApp')
   .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
     $scope.scope = $scope;
+    $scope.db = cards.db;
     $scope.ownCards = ownCards;
     $scope.deck = decks.getById($stateParams.deckId);
     $scope.cards = $scope.deck.getFullCards();
     $scope.saveDeck = $scope.deck.save.bind($scope.deck);
-    $scope.cardsToAdd = null;
-    $scope.currentSearch = '';
-    $scope.searchResultLimit = 20;
     $scope.totalCardCount = $scope.deck.options.cards.length;
     $scope.sampleHand = [];
     $scope.typeFilter = '';
     $scope.orderPredicate = 'types';
     $scope.orderReverse = false;
     $scope.sideboard = $scope.deck.getFullSideboard();
+    $scope.editname = false;
+
+    $scope.editName = function(){
+      $scope.editname = true;
+    };
+
+    $scope.saveName = function(){
+      $scope.saveDeck();
+      $scope.editname = false;
+    };
 
     var updateManaCurve = null,
       shuffleCount = 7;
@@ -116,6 +124,7 @@ angular.module('mtgApp')
       var modalInstance = $modal.open({
         templateUrl: '/templates/card-modal.html',
         controller: 'CardModalController',
+        size: 'lg',
         resolve: {
           card: function () {
             return card;
@@ -127,6 +136,24 @@ angular.module('mtgApp')
         $scope.selected = selectedItem;
       });
     };
+
+    //start add card tab
+    $scope.cardsToAdd = [];
+    $scope.filteredCards = [];
+    $scope.currentSearch = '';
+    $scope.searchResultLimit = 20;
+    $scope.maxResultLength = 20;
+    $scope.currentPage = 1;
+    $scope.totalItems = 0;
+    $scope.filterCollapsed = true;
+    function updateList() {
+      $scope.cardsToAdd = $scope.filteredCards.slice(($scope.currentPage - 1) * $scope.maxResultLength, $scope.currentPage * $scope.maxResultLength);
+      $scope.totalItems = $scope.filteredCards.length;
+    }
+    $scope.$watch('currentPage', updateList);
+    $scope.$watch('maxResultLength', updateList);
+    $scope.$watch('filterUpdateTimeStamp', updateList);
+    //end add card tab
 
     $scope.manaCostData = {
       labels: [],

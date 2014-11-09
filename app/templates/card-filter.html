@@ -1,0 +1,42 @@
+<form class="form-inline" role="form">
+  <div class="custom-mana-checkbox form-group" tooltip="Filter the search results by one or more colors" tooltip-placement="bottom">
+    <label>
+      <input type="checkbox" class="mana-checkbox w" ng-model="colors.White">
+      <span></span>
+    </label>
+    <label>
+      <input type="checkbox" class="mana-checkbox u" ng-model="colors.Blue">
+      <span></span>
+    </label>
+    <label>
+      <input type="checkbox" class="mana-checkbox b" ng-model="colors.Black">
+      <span></span>
+    </label>
+    <label>
+      <input type="checkbox" class="mana-checkbox r" ng-model="colors.Red">
+      <span></span>
+    </label>
+    <label>
+      <input type="checkbox" class="mana-checkbox g" ng-model="colors.Green">
+      <span></span>
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="cmcNumberInput" class="sr-only">Combined Mana Cost:</label>
+    <input type="number" id="cmcNumberInput" class="form-control" min="-1" max="30" maxlength="2" ng-model="scope.combinedManaCost" tooltip="Filter by the Combined Mana Cost (-1 shows all)" tooltip-placement="bottom">
+  </div>
+  <div class="form-group" ng-if="setList">
+    <label class="sr-only" >Filter by set:</label>
+    <ui-select multiple ng-model="scope.selectedSets" theme="bootstrap" style="width: 300px">
+      <ui-select-match placeholder="Select set...">
+        <set-symbol data-set-code="{{$item.code}}" data-size="24"></set-symbol>
+        {{$item.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">
+        <div ng-bind-html="set.name | highlight: $select.search"></div>
+        <set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>
+        <i>{{set.releaseDate}}</i>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+</form>

@@ -8,31 +8,29 @@ angular.module('mtgApp')
       templateUrl: '/templates/set-symbol.html',
       replace: true,
       scope: {
-        'card': '=',
-        'size': '@',
-        'showTip': '@',
-        'tipText': '@',
-        'tipAppearance': '@'
+        'setCode': '@',
+        'size': '@'
       },
       controller: ['$scope', function ($scope) {
-        var cardRarityAbbr = {
-          'Common': 'c',
-          'Uncommon': 'u',
-          'Rare': 'r',
-          'Mythic Rare': 'm',
-          'Special': 's'
-        };
-        $scope.$watch('card', function (card) {
-          if(card){
-            $scope.setCode = card.setCode;
-            if(_.contains(card.types, 'Land')){
-              $scope.rarity = 'c';
-            }
-            if(cardRarityAbbr[card.rarity]){
-              $scope.rarity = cardRarityAbbr[card.rarity];
-            }
+        function update() {
+          var rarity = '';
+          switch ($scope.setCode) {
+          case 'V14':
+            rarity = 'm';
+            break;
+          case 'VAN':
+          case 'TSB':
+            rarity = 's';
+            break;
+          default :
+            rarity = 'c';
+            break;
           }
-        }, true);
+          $scope.rarity = rarity;
+        }
+
+
+        $scope.$watch('setCode', update);
       }]
     };
   });

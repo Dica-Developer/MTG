@@ -66,19 +66,16 @@
           <tbody>
             <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(card)" class="clickable">
               <td>
-                <set-symbol data-card="card" data-size="24" data-show-tip="true" data-tip-text="{{card.setName}}"
-                            data-tip-appearance="right"></set-symbol>
+                <card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
               <td>
                 <own-card-count data-card-id="{{card.multiverseid}}"></own-card-count>
                 {{card.name}}
-                <span class="pull-right">
-                  <span ng-if="card.power && card.toughness">
-                    <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 20px !important;"/>
-                    {{card.power}} /
-                    <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 20px !important;"/>
-                    {{card.toughness}}
-                  </span>
+                <span class="pull-right" ng-if="card.power && card.toughness">
+                  <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 20px !important;"/>
+                  {{card.power}} /
+                  <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 20px !important;"/>
+                  {{card.toughness}}
                 </span>
               </td>
               <td>
@@ -224,7 +221,7 @@
             <tbody>
             <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)" class="clickable">
               <td>
-                <set-symbol x-card="cardToAdd" x-size="24" x-show-tip="true" x-tip-text="{{cardToAdd.setName}}" x-tip-appearance="right"></set-symbol>
+                <card-set-symbol data-card="cardToAdd" data-size="24" data-tip-text="{{cardToAdd.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
               <td>
                 {{cardToAdd.name}}

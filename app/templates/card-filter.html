@@ -29,12 +29,11 @@
     <label class="sr-only" >Filter by set:</label>
     <ui-select multiple ng-model="scope.selectedSets" theme="bootstrap" style="width: 300px">
       <ui-select-match placeholder="Select set...">
-        <set-symbol data-set-code="{{$item.code}}" data-size="24"></set-symbol>
-        {{$item.name}}
+        <set-symbol data-set-code="{{$item.code}}" data-size="18"></set-symbol> {{$item.name}}
       </ui-select-match>
       <ui-select-choices repeat="set in setList | propsFilter: {name: $select.search}">
         <div ng-bind-html="set.name | highlight: $select.search"></div>
-        <set-symbol data-set-code="{{set.code}}" data-size="16"></set-symbol>
+        <set-symbol data-set-code="{{set.code}}" data-size="22"></set-symbol>
         <i>{{set.releaseDate}}</i>
       </ui-select-choices>
     </ui-select>

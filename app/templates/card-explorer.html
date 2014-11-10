@@ -41,7 +41,7 @@
         <tbody>
           <tr ng-repeat="card in cards track by $index" ng-click="showCardModal(card)" class="clickable">
             <td>
-              <set-symbol x-card="card" x-size="24" x-show-tip="true" x-tip-text="{{card.setName}}" x-tip-appearance="right"></set-symbol>
+              <card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>
             </td>
             <td>
               {{card.name}}

@@ -56,7 +56,6 @@ angular.module('mtgApp')
           searchQuery.colors = colorQueries;
         }
 
-        $scope.currentPage = 1;
         $scope.filteredCards = $scope.db(searchQuery).get();
         $scope.filterUpdated = new Date().getTime();
       }

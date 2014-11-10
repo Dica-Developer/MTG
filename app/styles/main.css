@@ -87,6 +87,12 @@ aside .side-menu-nav ul a {
 .mana-checkbox.r + span:before {
   content: url('http://mtgimage.com/symbol/mana/r/32.png');
 }
+.mana {
+  position: relative;
+}
+.mana img {
+  margin: 0 1px;
+}
 .input-label {
   font-size: 0.875rem;
   color: #4d4d4d;

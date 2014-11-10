@@ -50,7 +50,9 @@ angular.module('mtgApp')
       if(setList.length === 0){
         $http.get('/data/SET_LIST.json')
           .success(function (response) {
-            setList = response;
+            setList = _.sortBy(response, function(cardSet){
+              return new Date(cardSet.releaseDate);
+            });
             defer.resolve(setList);
           });
       } else {

@@ -27,22 +27,15 @@ angular.module('mtgApp')
 
       $scope.showCardModal = function (card) {
 
-        var modalInstance = $modal.open({
+        $modal.open({
           templateUrl: '/templates/card-modal.html',
           controller: 'CardModalController',
           size: 'lg',
           resolve: {
             card: function () {
               return card;
-            },
-            showCounter: function () {
-              return true;
             }
           }
-        });
-
-        modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
         });
       };
 

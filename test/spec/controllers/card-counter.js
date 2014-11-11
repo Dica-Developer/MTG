@@ -18,7 +18,7 @@ describe('Controller: CardCounterController', function () {
       $scope: scope,
       ownCards: ownCards
     });
-    event = jasmine.createSpyObj('event', ['preventDefault', 'stopImmediatePropagation'])
+    event = jasmine.createSpyObj('event', ['preventDefault', 'stopImmediatePropagation']);
   }));
 
   it('should have correct initial values', function () {

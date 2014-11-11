@@ -1,3 +1,4 @@
+/*global TAFFY*/
 'use strict';
 
 describe('Controller: CardFilterController', function () {

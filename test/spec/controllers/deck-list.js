@@ -24,11 +24,11 @@ describe('Controller: DeckListController', function () {
   }));
 
   it('$scope.addNew should call decks.addNew() and $state.go', function () {
-    spyOn(decks, 'addNew').andCallThrough();
+    spyOn(decks, 'addNew').and.callThrough();
     spyOn($state, 'go');
     scope.addDeck();
     expect(decks.addNew).toHaveBeenCalled();
     expect($state.go).toHaveBeenCalled();
-    expect($state.go.mostRecentCall.args[0]).toBe('deck-builder');
+    expect($state.go.calls.mostRecent().args[0]).toBe('deck-builder');
   });
 });

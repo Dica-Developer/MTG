@@ -44,7 +44,7 @@ describe('Controller: CardFilterController', function () {
   });
 
   it('should query db with correct card name', function () {
-    spyOn(scope, 'db').andCallThrough();
+    spyOn(scope, 'db').and.callThrough();
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     $rootScope.$apply(function(){
@@ -55,7 +55,7 @@ describe('Controller: CardFilterController', function () {
   });
 
   it('should query db with correct set code', function () {
-    spyOn(scope, 'db').andCallThrough();
+    spyOn(scope, 'db').and.callThrough();
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     $rootScope.$apply(function(){
@@ -66,7 +66,7 @@ describe('Controller: CardFilterController', function () {
   });
 
   it('should query db with correct color', function () {
-    spyOn(scope, 'db').andCallThrough();
+    spyOn(scope, 'db').and.callThrough();
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     $rootScope.$apply(function(){
@@ -78,7 +78,7 @@ describe('Controller: CardFilterController', function () {
   });
 
   it('should query db with correct cmc', function () {
-    spyOn(scope, 'db').andCallThrough();
+    spyOn(scope, 'db').and.callThrough();
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     $rootScope.$apply(function(){
@@ -89,7 +89,7 @@ describe('Controller: CardFilterController', function () {
   });
 
   it('should query db with correct value', function () {
-    spyOn(scope, 'db').andCallThrough();
+    spyOn(scope, 'db').and.callThrough();
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     scope.cardName = 'Test Creature';

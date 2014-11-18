@@ -19,7 +19,7 @@ describe('Directive: cardText', function() {
     expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/w.svg');
   });
 
-  it('Should add style text in ()', function(){
+  it('Should style text in ()', function(){
     $rootScope.cardText = 'Some Card text with (text in braces)';
     var element = $compile('<card-text data-text="{{cardText}}"></card-text>')($rootScope);
     $rootScope.$digest();

@@ -23,12 +23,22 @@ describe('Directive: manaCost', function () {
   });
 
   it('Should add correct symbol for mana', function () {
-    var manaSymbols = ['W', 'U', 'B', 'R', 'G', 'X', 'P', 'S','T', 'Q', 'C'];
+    var manaSymbols = ['W', 'U', 'B', 'R', 'G', 'X', 'P', 'S'];
     manaSymbols.forEach(function (symbol) {
       $rootScope.symbol = symbol;
       var element = $compile('<mana-cost x-mana-cost="{{symbol}}" x-size="16"></mana-cost>')($rootScope);
       $rootScope.$digest();
       expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/' + symbol.toLowerCase() + '.svg');
+    });
+  });
+
+  it('Should add correct other symbols', function () {
+    var manaSymbols = ['T', 'Q', 'C'];
+    manaSymbols.forEach(function (symbol) {
+      $rootScope.symbol = symbol;
+      var element = $compile('<mana-cost x-mana-cost="{{symbol}}" x-size="16"></mana-cost>')($rootScope);
+      $rootScope.$digest();
+      expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/other/' + symbol.toLowerCase() + '.svg');
     });
   });
 

@@ -13,7 +13,9 @@ describe('Controller: DeckListController', function () {
   beforeEach(inject(function ($injector) {
     $rootScope = $injector.get('$rootScope');
     decks = $injector.get('decks');
-    $state = $injector.get('$state');
+    $state = {
+      go: function(){}
+    };
     var $controller = $injector.get('$controller');
     scope = $rootScope.$new();
     $controller('DeckListController', {

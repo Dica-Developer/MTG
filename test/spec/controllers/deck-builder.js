@@ -31,7 +31,6 @@ describe('Controller: DeckBuilderController', function () {
   }));
 
   afterEach(function(){
-    console.log(JSON.stringify(window.localStorage, null, 2));
     window.localStorage.clear();
   });
 

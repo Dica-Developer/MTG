@@ -98,15 +98,6 @@ angular.module('mtgApp')
       return $scope.deck.hasCard(cardId);
     };
 
-    var filterCards = function filterCards(newValue, oldValue) {
-      if (newValue && newValue !== oldValue) {
-        $scope.cardsToAdd = cards.limitFilter({concatNames: {likenocase: $scope.currentSearch}}, $scope.searchResultLimit);
-      }
-    };
-
-    $scope.$watch('currentSearch', filterCards);
-    $scope.$watch('searchResultLimit', filterCards);
-
     $scope.shuffle = function () {
       shuffleCount = 7;
       $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
@@ -121,7 +112,7 @@ angular.module('mtgApp')
 
     $scope.showCardModal = function (card) {
 
-      var modalInstance = $modal.open({
+      $modal.open({
         templateUrl: '/templates/card-modal.html',
         controller: 'CardModalController',
         size: 'lg',
@@ -130,10 +121,6 @@ angular.module('mtgApp')
             return card;
           }
         }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
       });
     };
 

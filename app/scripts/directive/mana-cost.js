@@ -10,7 +10,7 @@ angular.module('mtgApp')
         manaCost: '@'
       },
       link: function (scope, element, attr) {
-        var otherSymbols = [
+        /*var otherSymbols = [
           't',
           'q',
           'c',
@@ -30,21 +30,22 @@ angular.module('mtgApp')
         ];
         var isOtherSymbol = function (mana) {
           return _.contains(otherSymbols, mana);
-        };
+        };*/
 
         scope.$watch('manaCost', function (newValue) {
           element.empty();
+          /*istanbul ignore else*/
           if (typeof newValue !== 'undefined') {
             var manaCost = newValue.toLowerCase().match(SYMBOLS_REGEX);
             if (manaCost) {
               manaCost.forEach(function (mana) {
                 mana = mana.replace('/', '');
                 var image = null;
-                if (isOtherSymbol(mana)) {
+                /*if (isOtherSymbol(mana)) {
                   image = angular.element('<img ng-src="http://mtgimage.com/symbol/other/' + mana + '.svg" width="' + attr.size + '" />');
-                } else {
+                } else {*/
                   image = angular.element('<img ng-src="http://mtgimage.com/symbol/mana/' + mana + '.svg" width="' + attr.size + '" />');
-                }
+                //}
                 element.append(image);
               });
             }

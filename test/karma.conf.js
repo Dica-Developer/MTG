@@ -40,11 +40,13 @@ module.exports = function(config) {
       'bower_components/metisMenu/dist/metisMenu.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/**/*.js',
+      'app/templates/*.html'
     ],
 
     preprocessors: {
-      'app/scripts/**/*.js': ['coverage']
+      'app/scripts/**/*.js': ['coverage'],
+      'app/templates/*.html': ['ng-html2js']
     },
 
     reporters: ['dots', 'coverage'],
@@ -52,6 +54,11 @@ module.exports = function(config) {
     coverageReporter: {
       type: 'html',
       dir: 'test/coverage/'
+    },
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app',
+      moduleName: 'templates'
     },
 
     // list of files / patterns to exclude

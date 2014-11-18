@@ -24,11 +24,12 @@ angular.module('mtgApp')
         $scope.$watch('card', function (card) {
           if(card){
             $scope.setCode = card.setCode;
-            if(_.contains(card.types, 'Land')){
-              $scope.rarity = 'c';
-            }
+            $scope.rarity = 'c';
             if(cardRarityAbbr[card.rarity]){
               $scope.rarity = cardRarityAbbr[card.rarity];
+            }
+            if(_.contains(card.types, 'Land')){
+              $scope.rarity = 'c';
             }
           }
         }, true);

@@ -64,7 +64,7 @@
           </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(card)" class="clickable">
+            <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardType:typeFilter" ng-click="showCardModal(card)" class="clickable">
               <td>
                 <card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
@@ -120,7 +120,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="sbCard in sideboard | orderBy:orderPredicate:orderReverse | cardTypeFilter:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
+            <tr ng-repeat="sbCard in sideboard | orderBy:orderPredicate:orderReverse | cardType:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
               <td>
                 <card-set-symbol data-card="sbCard" data-size="24" data-tip-text="{{sbCard.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>

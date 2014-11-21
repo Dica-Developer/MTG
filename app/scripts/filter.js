@@ -25,7 +25,7 @@ angular.module('mtgApp')
   .filter('cardType', [function () {
     return function (items, filter) {
       return items.filter(function (item) {
-        return filter === '' || _.isEqual(item.types, filter.split('-'));
+        return _.isEmpty(filter) || _.isEqual(item.types, filter.split('-'));
       });
     };
   }]);

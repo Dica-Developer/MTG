@@ -22,7 +22,7 @@ angular.module('mtgApp')
       return out;
     };
   })
-  .filter('cardTypeFilter', [function () {
+  .filter('cardType', [function () {
     return function (items, filter) {
       return items.filter(function (item) {
         return filter === '' || _.isEqual(item.types, filter.split('-'));

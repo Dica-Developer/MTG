@@ -4,12 +4,13 @@ describe('Service: decks', function () {
 
   beforeEach(module('mtgApp'));
 
-  var decks, cards;
+  var decks, cards, localStorageService;
 
-  beforeEach(inject(function (_decks_, _cards_) {
+  beforeEach(inject(function (_decks_, _cards_, _localStorageService_) {
     cards = _cards_;
     cards.db.insert(cardsExcerpt);
     decks = _decks_;
+    localStorageService = _localStorageService_;
   }));
 
   it('should have correct API', function () {
@@ -429,8 +430,61 @@ describe('Service: decks', function () {
         expect(manaCurve['6']).toBe(0);
         expect(manaCurve['7']).toBe(0);
       });
+    });
+
+    describe('deck.save', function(){
+
+      it('Should call localStorageService.get decks to fetch already existing decks', function(){
+        spyOn(localStorageService, 'get');
+        spyOn(localStorageService, 'set');
+
+        deck.save();
+
+        expect(localStorageService.get).toHaveBeenCalledWith('decks');
+      });
+
+      it('Should call localStorageService.set decks if deck is not already in deck list', function(){
+        spyOn(localStorageService, 'get');
+        spyOn(localStorageService, 'set');
+
+        deck.save();
+
+        var callArgs = localStorageService.set.calls.allArgs();
+        expect(callArgs[0]).toEqual(['decks', [ deck.options.id ]]);
+      });
+
+      it('Should call localStorageService.set decks if deck is not already in deck list', function(){
+        spyOn(localStorageService, 'get');
+        spyOn(localStorageService, 'set');
+
+        deck.save();
+
+        var callArgs = localStorageService.set.calls.allArgs();
+        expect(localStorageService.set.calls.count()).toBe(2);
+        expect(callArgs[0]).toEqual(['decks', [ deck.options.id ]]);
+      });
+
+      it('Should call localStorageService.set only ones if deck is is already present', function(){
+        spyOn(localStorageService, 'get').and.returnValue([deck.options.id]);
+        spyOn(localStorageService, 'set');
+
+        deck.save();
+
+        expect(localStorageService.set.calls.count()).toBe(1);
+      });
+
+      it('Should set save the correct values', function(){
+        spyOn(localStorageService, 'get').and.returnValue([deck.options.id]);
+        spyOn(localStorageService, 'set');
+
+        deck.save();
+
+        var callArgs = localStorageService.set.calls.allArgs();
+        expect(callArgs[0]).toEqual(['deck-' + deck.options.id, deck.options]);
+      });
 
     });
+
   });
 
 });

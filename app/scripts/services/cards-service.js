@@ -8,8 +8,8 @@ angular.module('mtgApp')
 
     window.cardsDb = cardsDb;
 
-    function filter() {
-      return cardsDb(arguments).get();
+    function filter(search) {
+      return cardsDb(search).get();
     }
 
     function limitFilter(searchQuery, limit) {

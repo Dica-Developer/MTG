@@ -7,6 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -14,6 +15,12 @@ module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  function getCurrentBrowserCoverageFolder(){
+    var fs = require('fs');
+    var directories = fs.readdirSync('test/coverage');
+    return directories[0];
+  }
 
   // Configurable paths for the application
   var appConfig = {
@@ -385,6 +392,12 @@ module.exports = function (grunt) {
         coverage_dir: 'test/coverage',
         force: false
       }
+    },
+    codeclimate: {
+      options: {
+        file: 'test/coverage/' + getCurrentBrowserCoverageFolder() + '/lcov.info',
+        token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
+      }
     }
   });
 
@@ -423,7 +436,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma:travis',
-    'coveralls'
+    'coveralls',
+    'codeclimate'
   ]);
 
   grunt.registerTask('build', [

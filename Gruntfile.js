@@ -16,12 +16,6 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
-  function getCurrentBrowserCoverageFolder(){
-    var fs = require('fs');
-    var directories = fs.readdirSync('test/coverage');
-    return directories[0];
-  }
-
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -395,10 +389,15 @@ module.exports = function (grunt) {
     },
     codeclimate: {
       options: {
-        file: 'test/coverage/' + getCurrentBrowserCoverageFolder() + '/lcov.info',
         token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
       }
     }
+  });
+
+  grunt.registerTask('setCodeClimateData', function(){
+    var fs = require('fs');
+    var directories = fs.readdirSync('test/coverage');
+    grunt.config.set('codeclimate.options.file', 'test/coverage/' + directories[0] + '/lcov.info');
   });
 
 
@@ -437,6 +436,7 @@ module.exports = function (grunt) {
     'connect:test',
     'karma:travis',
     'coveralls',
+    'setCodeClimateData',
     'codeclimate'
   ]);
 

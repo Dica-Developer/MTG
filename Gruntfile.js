@@ -373,6 +373,14 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+    coveralls: {
+      options: {
+        debug: false,
+        /*jshint camelcase:false*/
+        coverage_dir: 'test/coverage',
+        force: false
+      }
     }
   });
 
@@ -403,6 +411,15 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma'
+  ]);
+
+  grunt.registerTask('travis', [
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'connect:test',
+    'karma',
+    'coveralls'
   ]);
 
   grunt.registerTask('build', [

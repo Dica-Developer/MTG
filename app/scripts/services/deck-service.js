@@ -63,7 +63,7 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.dropAllFromSideboard = function (cardId) {
-      this.options.cards = _.without(this.options.sideboard, cardId);
+      this.options.sideboard = _.without(this.options.sideboard, cardId);
       this.updateFullCardInfo();
     };
 

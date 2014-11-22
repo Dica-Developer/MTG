@@ -372,6 +372,10 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'test/karma.conf.js',
         singleRun: true
+      },
+      travis: {
+        configFile: 'test/travis.karma.conf.js',
+        singleRun: true
       }
     },
     coveralls: {
@@ -410,7 +414,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma:unit'
   ]);
 
   grunt.registerTask('travis', [
@@ -418,7 +422,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma',
+    'karma:travis',
     'coveralls'
   ]);
 

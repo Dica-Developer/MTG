@@ -15,7 +15,7 @@ angular.module('mtgApp')
         importData = JSON.parse(data);
         if (field) {
           if (field === 'card') {
-            importData = _.has(importData, field) ? importData[field] : importData['ownCards'];
+            importData = _.has(importData, field) ? importData[field] : importData.ownCards;
           } else {
             importData = importData[field];
           }

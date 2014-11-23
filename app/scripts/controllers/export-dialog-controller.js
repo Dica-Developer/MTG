@@ -14,7 +14,7 @@ angular.module('mtgApp')
           name: deck.name,
           id: deck.id,
           selected: true
-        }
+        };
       }) : null;
 
       $scope.decksToExport = function(){

@@ -15,7 +15,7 @@ angular.module('mtgApp')
           id: deck.id,
           selected: true,
           exists: decks.existsByName
-        }
+        };
       });
 
       $scope.decksToImport = function(){

@@ -248,12 +248,22 @@ angular.module('mtgApp')
       return lastChangeTimeStamp;
     }
 
+    function existsByName(name){
+      var decks = getAll();
+      var filteredDecks = decks.filter(function(deck){
+        return deck.getName() === name;
+      });
+
+      return filteredDecks.length > 0;
+    }
+
     return {
       getAll: getAll,
       getById: getById,
       addNew: addNew,
       exportData: exportData,
       importData: importData,
-      lastChange: lastChange
+      lastChange: lastChange,
+      existsByName: existsByName
     };
   }]);

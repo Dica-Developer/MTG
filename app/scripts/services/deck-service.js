@@ -257,6 +257,17 @@ angular.module('mtgApp')
       return filteredDecks.length > 0;
     }
 
+    function removeDeck (deckId){
+      var deckIds = localStorageService.get('decks');
+      deckIds = _.without(deckIds, deckId);
+      localStorageService.set('decks', deckIds);
+      localStorageService.remove('deck-' + deckId);
+      if(tmpDecks[deckId]){
+        delete tmpDecks[deckId];
+      }
+      lastChangeTimeStamp = new Date().getTime();
+    }
+
     return {
       getAll: getAll,
       getById: getById,
@@ -264,6 +275,7 @@ angular.module('mtgApp')
       exportData: exportData,
       importData: importData,
       lastChange: lastChange,
-      existsByName: existsByName
+      existsByName: existsByName,
+      removeDeck: removeDeck
     };
   }]);

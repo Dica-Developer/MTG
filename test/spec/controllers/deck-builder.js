@@ -1,3 +1,5 @@
+/*global cardsExcerpt*/
+
 'use strict';
 
 describe('Controller: DeckBuilderController', function () {
@@ -69,76 +71,76 @@ describe('Controller: DeckBuilderController', function () {
   describe('Card actions', function(){
 
     it('$scope.addCard should call $scope.deck.addCard and update $scope.totalCardCount', function(){
-      spyOn(deck, 'addCard').and.callThrough();
+      spyOn(newDeck, 'addCard').and.callThrough();
       expect(scope.totalCardCount).toBe(0);
       scope.addCard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.addCard).toHaveBeenCalledWith(94);
+      expect(newDeck.addCard).toHaveBeenCalledWith(94);
       expect(scope.totalCardCount).toBe(1);
     });
 
     it('$scope.dropCard should call $scope.deck.dropCard and update $scope.totalCardCount', function(){
       scope.addCard(fakeEvent, 94);
-      spyOn(deck, 'dropCard').and.callThrough();
+      spyOn(newDeck, 'dropCard').and.callThrough();
       expect(scope.totalCardCount).toBe(1);
       scope.dropCard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.dropCard).toHaveBeenCalledWith(94);
+      expect(newDeck.dropCard).toHaveBeenCalledWith(94);
       expect(scope.totalCardCount).toBe(0);
     });
 
     it('$scope.dropAll should call $scope.deck.dropAll and update $scope.totalCardCount', function(){
       scope.addCard(fakeEvent, 94);
       scope.addCard(fakeEvent, 94);
-      spyOn(deck, 'dropAll').and.callThrough();
+      spyOn(newDeck, 'dropAll').and.callThrough();
       expect(scope.totalCardCount).toBe(2);
       scope.dropAll(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.dropAll).toHaveBeenCalledWith(94);
+      expect(newDeck.dropAll).toHaveBeenCalledWith(94);
       expect(scope.totalCardCount).toBe(0);
     });
 
     it('$scope.addCardToSideBoard should call $scope.deck.addCardToSideBoard', function(){
-      spyOn(deck, 'addCardToSideBoard');
+      spyOn(newDeck, 'addCardToSideBoard');
       scope.addCardToSideBoard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.addCardToSideBoard).toHaveBeenCalledWith(94);
+      expect(newDeck.addCardToSideBoard).toHaveBeenCalledWith(94);
     });
 
     it('$scope.dropCardFromSideBoard should call $scope.deck.dropCardFromSideBoard', function(){
-      spyOn(deck, 'dropCardFromSideBoard');
+      spyOn(newDeck, 'dropCardFromSideBoard');
       scope.dropCardFromSideBoard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.dropCardFromSideBoard).toHaveBeenCalledWith(94);
+      expect(newDeck.dropCardFromSideBoard).toHaveBeenCalledWith(94);
     });
 
     it('$scope.dropAllFromSideboard should call $scope.deck.dropAllFromSideboard', function(){
-      spyOn(deck, 'dropAllFromSideboard');
+      spyOn(newDeck, 'dropAllFromSideboard');
       scope.dropAllFromSideboard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.dropAllFromSideboard).toHaveBeenCalledWith(94);
+      expect(newDeck.dropAllFromSideboard).toHaveBeenCalledWith(94);
     });
 
     it('$scope.moveCardToSideboard should call $scope.deck.moveCardToSideboard', function(){
-      spyOn(deck, 'moveCardToSideboard');
+      spyOn(newDeck, 'moveCardToSideboard');
       scope.moveCardToSideboard(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.moveCardToSideboard).toHaveBeenCalledWith(94);
+      expect(newDeck.moveCardToSideboard).toHaveBeenCalledWith(94);
     });
 
     it('$scope.moveCardToMain should call $scope.deck.moveCardToMain', function(){
-      spyOn(deck, 'moveCardToMain');
+      spyOn(newDeck, 'moveCardToMain');
       scope.moveCardToMain(fakeEvent, 94);
 
       expect(fakeEvent.stopPropagation).toHaveBeenCalled();
-      expect(deck.moveCardToMain).toHaveBeenCalledWith(94);
+      expect(newDeck.moveCardToMain).toHaveBeenCalledWith(94);
     });
   });
 

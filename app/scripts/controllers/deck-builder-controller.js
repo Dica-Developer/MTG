@@ -28,8 +28,6 @@ angular.module('mtgApp')
     var updateManaCurve = null,
       shuffleCount = 7;
 
-    window.deck = $scope.deck;
-
     $scope.$watch('totalCardCount', function (newValue) {
       if (newValue) {
         $scope.cards = $scope.deck.getFullCards();

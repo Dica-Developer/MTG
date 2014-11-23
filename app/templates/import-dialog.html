@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h3 class="modal-title">Importing
+    <span ng-if="cards">{{cards.length}} cards</span>
+    <span ng-if="cards && decksToImport() > 0"> and </span>
+    <span ng-if="decksToImport() > 0">{{decksToImport()}}
+      <ng-pluralize count="decksToImport()" when="{'1': 'deck', 'other': 'decks'}"> </ng-pluralize></span>!
+  </h3>
+</div>
+<div class="modal-body import-dialog">
+  <h4>Decks to import... <span class="pull-right">
+    <small>
+      <a class="clickable" ng-click="selectAll()">all</a> /
+      <a class="clickable" ng-click="deselectAll()">none</a>
+    </small>
+  </span></h4>
+  <ul class="list-group">
+    <li ng-repeat="deck in decks" class="list-group-item" ng-class="{'list-group-item-warning': deck.exists(deck.name)}">
+      <input type="checkbox" ng-model="deck.selected" id="{{deck.id}}">
+      <label ng-if="!deck.rename" for="{{deck.id}}">
+        {{ deck.name }}
+      </label>
+      <input ng-if="deck.rename" type="text" class="form-control input-sm no-transition half-width" ng-model="deck.name">
+      <i ng-if="deck.rename" ng-click="deck.rename = false" class="fa fa-save clickable" tooltip="Save name" tooltip-placement="right" tooltip-append-to-body="true"></i>
+      <i ng-if="!deck.rename" ng-click="deck.rename = true" class="fa fa-edit clickable" tooltip="Change name" tooltip-placement="right" tooltip-append-to-body="true"></i>
+      <span class="pull-right" ng-if="deck.exists(deck.name)">
+        <i class="fa fa-warning" tooltip="Deck with name '{{deck.name}}' already exists." tooltip-placement="left" tooltip-append-to-body="true"></i>
+      </span>
+    </li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

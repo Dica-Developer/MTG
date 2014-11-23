@@ -1,13 +1,31 @@
 <div class="row">
-  <div class="large-6 columns">
-    <label>Import Databases:
-      <input type="file" file-change="getAsText($event, files)">
-    </label>
+  <div class="col-xs-12">
+    <h3>Import / Export</h3>
   </div>
-  <div class="large-6 columns">
-    <label>Export Databases:
-      <button type="button" class="button tiny" ng-click="downloadData()">Download</button>
-    </label>
+</div>
+
+<div class="row">
+  <div class="col-xs-6">
+    <h4>Import</h4>
+    <div class="btn-group" role="group" aria-label="...">
+      <span class="btn btn-default btn-file">
+          All... <input type="file" file-change="importComplete($event, files)">
+      </span>
+      <span class="btn btn-default btn-file">
+          Cards only... <input type="file" file-change="importCards($event, files)">
+      </span>
+      <span class="btn btn-default btn-file">
+          Decks only... <input type="file" file-change="importDecks($event, files)">
+      </span>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <h4>Export</h4>
+    <div class="btn-group" role="group" aria-label="...">
+      <button class="btn btn-default" ng-click="exportComplete()">All... </button>
+      <button class="btn btn-default" ng-click="exportCards()">Cards only... </button>
+      <button class="btn btn-default" ng-click="exportDecks()">Decks only... </button>
+    </div>
   </div>
 </div>
 

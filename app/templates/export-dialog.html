@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h3 class="modal-title">Exporting
+    <span ng-if="cards">{{cards.length}} cards</span>
+    <span ng-if="cards && decksToExport() > 0"> and </span>
+    <span ng-if="decksToExport() > 0">{{decksToExport()}}
+      <ng-pluralize count="decksToExport()" when="{'1': 'deck', 'other': 'decks'}"> </ng-pluralize></span>!
+  </h3>
+</div>
+<div class="modal-body export-dialog">
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="fileName">Filename: </label>
+      <input type="text" class="form-control input-sm" ng-model="fileName" id="fileName">
+    </div>
+  </div>
+  <div class="row" ng-if="decks">
+    <div class="col-xs-12">
+      <h4>Decks to export... <span class="pull-right">
+        <small>
+          <a class="clickable" ng-click="selectAll()">all</a> /
+          <a class="clickable" ng-click="deselectAll()">none</a>
+        </small>
+      </span></h4>
+      <ul class="list-group">
+        <li ng-repeat="deck in decks" class="list-group-item">
+          <input type="checkbox" ng-model="deck.selected" id="{{deck.id}}">
+          <label for="{{deck.id}}">{{ deck.name }}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

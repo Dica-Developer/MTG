@@ -106,3 +106,64 @@ aside .side-menu-nav ul a {
   position: absolute;
   bottom: 0;
 }
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.import-dialog,
+.export-dialog {
+  /* to hide the checkbox itself */
+  /* unchecked icon */
+  /* space between checkbox and label */
+  /* checked icon */
+  /* allow space for check mark */
+}
+.import-dialog input.no-transition,
+.export-dialog input.no-transition {
+  transition: inherit;
+}
+.import-dialog input.half-width,
+.export-dialog input.half-width {
+  width: 50%;
+  display: inline-block;
+}
+.import-dialog input[type=checkbox],
+.export-dialog input[type=checkbox] {
+  display: none;
+}
+.import-dialog input[type=checkbox] + label:before,
+.export-dialog input[type=checkbox] + label:before {
+  font-family: FontAwesome;
+  display: inline-block;
+}
+.import-dialog input[type=checkbox] + label:before,
+.export-dialog input[type=checkbox] + label:before {
+  content: "\f096";
+}
+.import-dialog input[type=checkbox] + label:before,
+.export-dialog input[type=checkbox] + label:before {
+  letter-spacing: 5px;
+}
+.import-dialog input[type=checkbox]:checked + label:before,
+.export-dialog input[type=checkbox]:checked + label:before {
+  content: "\f046";
+}
+.import-dialog input[type=checkbox]:checked + label:before,
+.export-dialog input[type=checkbox]:checked + label:before {
+  letter-spacing: 3px;
+}

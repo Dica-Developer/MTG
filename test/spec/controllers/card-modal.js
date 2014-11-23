@@ -1,8 +1,7 @@
 'use strict';
 
-describe('Controller: DeckListController', function () {
+describe('Controller: CardModalController', function () {
 
-  // load the controller's module
   beforeEach(module('mtgApp'));
 
   var $rootScope,

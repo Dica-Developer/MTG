@@ -1,3 +1,4 @@
+/*global _*/
 'use strict';
 
 describe('Directive: manaCost', function () {

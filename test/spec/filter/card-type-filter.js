@@ -1,3 +1,4 @@
+/*global cardsExcerpt, _*/
 'use strict';
 
 describe('Filter: cardTypeFilter', function () {

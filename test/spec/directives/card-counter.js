@@ -1,3 +1,4 @@
+/*global cardsExcerpt*/
 'use strict';
 
 describe('Directive: cardCounter', function () {

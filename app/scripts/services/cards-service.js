@@ -47,10 +47,10 @@ angular.module('mtgApp')
 
     function fetchSetList() {
       var defer = $q.defer();
-      if(setList.length === 0){
+      if (setList.length === 0) {
         $http.get('/data/SET_LIST.json')
           .success(function (response) {
-            setList = _.sortBy(response, function(cardSet){
+            setList = _.sortBy(response, function (cardSet) {
               return new Date(cardSet.releaseDate);
             });
             defer.resolve(setList);

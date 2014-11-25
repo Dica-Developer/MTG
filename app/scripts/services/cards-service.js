@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('mtgApp')
-  .service('cards', ['$q', '$http', function cardsService($q, $http) {
-    var allCards = [],
-      setList = [],
+  .service('cards', ['$q', 'data', function ($q, data) {
+    var setList = [],
       cardsDb = TAFFY();
 
     window.cardsDb = cardsDb;
@@ -16,56 +15,45 @@ angular.module('mtgApp')
       return cardsDb(searchQuery).limit(limit).get();
     }
 
-    function fetchCards() {
-      var defer = $q.defer();
+    function prepareDataBase() {
+      var defer = $q.defer(),
+        allCards = null;
       if (cardsDb().count() === 0) {
-        $http.get('/data/ALL_SETS.json')
-          .success(function (response) {
-
-            _.each(response, function (mtgSet) {
-              var cards = _.map(mtgSet.cards, function (card) {
-                card.setCode = mtgSet.code;
-                card.setName = mtgSet.name;
-                card.concatNames = card.name;
-                if (card.foreignNames) {
-                  card.concatNames += ' ° ' + _.pluck(card.foreignNames, 'name').join(' ° ');
-                }
-                return card;
-              });
-              allCards = allCards.concat(cards);
-            });
-            cardsDb.insert(allCards);
-            cardsDb.sort('name');
-            defer.resolve(cardsDb().get());
-            allCards = [];
+        _.each(data.getCardData(), function (mtgSet) {
+          var cards = _.map(mtgSet.cards, function (card) {
+            card.setCode = mtgSet.code;
+            card.setName = mtgSet.name;
+            card.foreignNames = card.foreignNames || [];
+            card.foreignNames.push({name: card.name});
+            card.concatNames = _.pluck(card.foreignNames, 'name').join(' ° ');
+            return card;
           });
+          allCards = !allCards ? cards : allCards.concat(cards);
+        });
+        defer.notify('Fill database with ' + allCards.length + ' cards.');
+        cardsDb.insert(allCards);
+        defer.notify('Presort database by card name.');
+        cardsDb.sort('name');
+        defer.resolve();
+        allCards = null;
       } else {
-        defer.resolve(cardsDb().get());
+        defer.resolve();
       }
       return defer.promise;
     }
 
-    function fetchSetList() {
-      var defer = $q.defer();
-      if (setList.length === 0) {
-        $http.get('/data/SET_LIST.json')
-          .success(function (response) {
-            setList = _.sortBy(response, function (cardSet) {
-              return new Date(cardSet.releaseDate);
-            });
-            defer.resolve(setList);
-          });
-      } else {
-        defer.resolve(setList);
+    function getSetList() {
+      if(!setList){
+        setList = data.getSetList();
       }
-      return defer.promise;
+      return setList;
     }
 
     return {
       db: cardsDb,
       filter: filter,
       limitFilter: limitFilter,
-      fetchCards: fetchCards,
-      fetchSetList: fetchSetList
+      prepareDataBase: prepareDataBase,
+      getSetList: getSetList
     };
   }]);

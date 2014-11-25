@@ -10,54 +10,22 @@ angular.module('mtgApp')
       .state('card-explorer', {
         url: '/',
         templateUrl: '/templates/card-explorer.html',
-        controller: 'CardExplorerController',
-        resolve: {
-          allCards: ['cards', function (cards) {
-            return cards.fetchCards();
-          }],
-          setList: ['cards', function (cards) {
-            return cards.fetchSetList();
-          }]
-        }
+        controller: 'CardExplorerController'
       })
       .state('own-cards', {
         url: '/own-cards',
         templateUrl: '/templates/own-cards.html',
-        controller: 'OwnCardsController',
-        resolve: {
-          allCards: ['cards', function (cards) {
-            return cards.fetchCards();
-          }],
-          setList: ['cards', function (cards) {
-            return cards.fetchSetList();
-          }]
-        }
+        controller: 'OwnCardsController'
       })
       .state('deck-list', {
         url: '/deck-list',
         templateUrl: '/templates/deck-list.html',
-        controller: 'DeckListController',
-        resolve: {
-          allCards: ['cards', function (cards) {
-            return cards.fetchCards();
-          }],
-          setList: ['cards', function (cards) {
-            return cards.fetchSetList();
-          }]
-        }
+        controller: 'DeckListController'
       })
       .state('deck-builder', {
         url: '/deck-builder/:deckId',
         templateUrl: '/templates/deck-builder.html',
-        controller: 'DeckBuilderController',
-        resolve: {
-          allCards: ['cards', function (cards) {
-            return cards.fetchCards();
-          }],
-          setList: ['cards', function (cards) {
-            return cards.fetchSetList();
-          }]
-        }
+        controller: 'DeckBuilderController'
       })
       .state('databases', {
         url: '/databases',

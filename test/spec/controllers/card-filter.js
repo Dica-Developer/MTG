@@ -16,13 +16,16 @@ describe('Controller: CardFilterController', function () {
     scope.db = TAFFY();
     $controller('CardFilterController', {
       $scope: scope,
-      cards: {
-        fetchSetList: function(){
+      data: {
+        getSetList: function(){
           return $q.when([
             {
               code: 'TEST'
             }
           ]);
+        },
+        isAvailable: function(){
+          return true;
         }
       }
     });

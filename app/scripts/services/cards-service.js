@@ -2,10 +2,7 @@
 
 angular.module('mtgApp')
   .service('cards', ['$q', 'data', function ($q, data) {
-    var setList = [],
-      cardsDb = TAFFY();
-
-    window.cardsDb = cardsDb;
+    var cardsDb = TAFFY();
 
     function filter(search) {
       return cardsDb(search).get();
@@ -42,18 +39,10 @@ angular.module('mtgApp')
       return defer.promise;
     }
 
-    function getSetList() {
-      if(!setList){
-        setList = data.getSetList();
-      }
-      return setList;
-    }
-
     return {
       db: cardsDb,
       filter: filter,
       limitFilter: limitFilter,
-      prepareDataBase: prepareDataBase,
-      getSetList: getSetList
+      prepareDataBase: prepareDataBase
     };
   }]);

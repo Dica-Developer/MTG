@@ -1,13 +1,10 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('CardFilterController', ['$scope', 'cards', function ($scope, cards) {
+  .controller('CardFilterController', ['$scope', '$timeout', 'data', function ($scope, $timeout, data) {
     $scope.scope = $scope;
     $scope.cardName = '';
     $scope.filteredCards = $scope.db().get();
-    cards.fetchSetList().then(function(data){
-      $scope.setList = data;
-    });
     $scope.filterUpdated = new Date().getTime();
     $scope.selectedSets = null;
     $scope.combinedManaCost = -1;
@@ -65,4 +62,17 @@ angular.module('mtgApp')
     $scope.$watch('selectedSets', filterCards);
     $scope.$watch('combinedManaCost', filterCards);
     $scope.$watch('colors', filterCards, true);
+
+    var getSetList = function(){
+      if(!data.isAvailable()){
+        $timeout(getSetList, 5000);
+      } else {
+        data.getSetList()
+          .then(function(setList){
+            $scope.setList = setList;
+          });
+      }
+    };
+
+    getSetList();
   }]);

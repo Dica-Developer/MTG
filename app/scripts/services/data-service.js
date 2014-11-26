@@ -27,7 +27,7 @@ angular.module('mtgApp')
 
     function isAvailable() {
       if (!nodeApp) {
-        return false;
+        return true;
       } else {
         var cardDataExist = fs.existsSync(cardDataPath);
         var setDataExist = fs.existsSync(setDataPath);
@@ -178,8 +178,15 @@ angular.module('mtgApp')
     }
 
     function getSetList(){
-      var setList = fs.readFileSync(setDataPath, {encoding: 'UTF-8'});
-      return JSON.parse(setList);
+      var defer = $q.defer();
+      fs.readFile(setDataPath, {encoding: 'UTF-8'}, function(error, content){
+        if(error){
+          defer.reject();
+        } else {
+          defer.resolve(JSON.parse(content));
+        }
+      });
+      return defer.promise;
     }
 
     return {

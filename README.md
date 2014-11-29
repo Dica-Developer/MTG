@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/dica-developer/mtg.png?label=ready&title=Ready)](https://waffle.io/dica-developer/mtg)
 MTG
 ===
 

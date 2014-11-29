@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .service('data', ['$http', '$q', function ($http, $q) {
+  .service('data', ['$http', '$q', '$log', function ($http, $q, $log) {
 
     //check if we are in the actual app or in dev mode in browser
     var nodeApp = typeof process !== 'undefined',
@@ -88,7 +88,7 @@ angular.module('mtgApp')
         fs.unlink(cardDataPath, function (error) {
           if (error) {
             removeCardDataDefer.reject();
-            console.error(error);
+            $log.error(error);
           } else {
             setProgress('cleanUp', 1);
             removeCardDataDefer.resolve();
@@ -103,7 +103,7 @@ angular.module('mtgApp')
         fs.unlink(setDataPath, function (error) {
           if (error) {
             removeSetDataDefer.reject();
-            console.error(error);
+            $log.error(error);
           } else {
             setProgress('cleanUp', 1);
             removeSetDataDefer.resolve();
@@ -128,7 +128,8 @@ angular.module('mtgApp')
         req = request(setsPath)
           .pipe(writeStream);
 
-      req.on('error', function () {
+      req.on('error', function (error) {
+        $log.error(error);
         defer.reject();
       });
 
@@ -147,12 +148,9 @@ angular.module('mtgApp')
         req = request(cardsPath)
           .pipe(writeStream);
 
-      req.on('error', function () {
+      req.on('error', function (error) {
+        $log.error(error);
         defer.reject();
-      });
-
-      req.on('data', function(data){
-        console.log(data);
       });
 
       writeStream.on('finish', function () {
@@ -169,7 +167,7 @@ angular.module('mtgApp')
         defer = $q.defer();
 
       unzipper.on('error', function (error) {
-        console.error(error);
+        $log.error(error);
         defer.reject();
       });
 
@@ -191,7 +189,7 @@ angular.module('mtgApp')
       if(fs.existsSync(cardDataPath + '.zip')){
         fs.unlink(cardDataPath + '.zip', function(error){
           if(error){
-            console.error(error);
+            $log.error(error);
             defer.reject();
           } else {
             setProgress('removeZip', 1);
@@ -228,6 +226,7 @@ angular.module('mtgApp')
       var defer = $q.defer();
       fs.readFile(setDataPath, {encoding: 'UTF-8'}, function(error, content){
         if(error){
+          $log.error(error);
           defer.reject();
         } else {
           defer.resolve(JSON.parse(content));

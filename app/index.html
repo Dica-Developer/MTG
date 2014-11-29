@@ -49,8 +49,13 @@
       </nav>
     </aside>
   </div>
-  <div class="page" ng-if="!appReady">
-    <h4>{{progress}}</h4>
+  <div class="container-fluid" ng-if="!appReady">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>{{progress.steps[progress.currentStep].description}}</h4>
+        <progressbar max="progress.overallCount" value="progress.complete"><span style="color:black; white-space:nowrap;">{{progress.complete}} / {{progress.overallCount}}</span></progressbar>
+      </div>
+    </div>
   </div>
   <div class="page" ng-if="appReady">
       <div class="container-fluid" ui-view></div>

@@ -10,7 +10,47 @@ angular.module('mtgApp')
       cardsPath = downloadsBasePath + 'AllSets-x.json.zip',
       setsPath = downloadsBasePath + 'SetList.json',
       versionsPath = downloadsBasePath + 'version-full.json',
-      overAllProgressDefer, basePath, cardDataPath, setDataPath, fs, request, path;
+      overAllProgressDefer, basePath, cardDataPath, setDataPath, fs, request, path,
+      progressSteps = {
+        steps: {
+          'cleanUp': {
+            description: 'Remove old data.',
+            count: 2,
+            complete: 0
+          },
+          'fetchData': {
+            description: 'Receive new card and set data.',
+            count: 2,
+            complete: 0
+          },
+          'unzipData': {
+            description: 'Unzipping new card data.',
+            count: 1,
+            complete: 0
+          },
+          'removeZip': {
+            description: 'Removing card zip.',
+            count: 1,
+            complete: 0
+          }
+        },
+        complete: 0,
+        currentStep: 0,
+        overallCount: 4
+      },
+      setProgress = function(step, complete){
+        complete = complete || 0;
+        progressSteps.currentStep = step;
+        var currentStep = progressSteps.steps[step],
+          oldComplete = currentStep.complete;
+
+        currentStep.complete = oldComplete + complete;
+
+        if(currentStep.complete === currentStep.count){
+          progressSteps.complete = progressSteps.complete + 1;
+        }
+        overAllProgressDefer.notify(progressSteps);
+      };
 
 
     //set required paths on startup
@@ -43,18 +83,19 @@ angular.module('mtgApp')
           removeCardDataDefer,
           removeSetDataDefer
         ];
-      overAllProgressDefer.notify('Remove old card data.');
-      overAllProgressDefer.notify('Remove old set data.');
+      setProgress('cleanUp');
       if(fs.existsSync(cardDataPath)){
         fs.unlink(cardDataPath, function (error) {
           if (error) {
             removeCardDataDefer.reject();
             console.error(error);
           } else {
+            setProgress('cleanUp', 1);
             removeCardDataDefer.resolve();
           }
         });
       } else {
+        setProgress('cleanUp', 1);
         removeCardDataDefer.resolve();
       }
 
@@ -64,10 +105,12 @@ angular.module('mtgApp')
             removeSetDataDefer.reject();
             console.error(error);
           } else {
+            setProgress('cleanUp', 1);
             removeSetDataDefer.resolve();
           }
         });
       } else {
+        setProgress('cleanUp', 1);
         removeSetDataDefer.resolve();
       }
 
@@ -79,17 +122,18 @@ angular.module('mtgApp')
     }
 
     function fetchSetDataAndWriteToDisk() {
+      setProgress('fetchData');
       var defer = $q.defer(),
         writeStream = fs.createWriteStream(setDataPath),
         req = request(setsPath)
           .pipe(writeStream);
 
-      overAllProgressDefer.notify('Fetch new set data.');
       req.on('error', function () {
         defer.reject();
       });
 
       writeStream.on('finish', function () {
+        setProgress('fetchData', 1);
         defer.resolve();
       });
 
@@ -97,12 +141,12 @@ angular.module('mtgApp')
     }
 
     function fetchCardsDataZipAndWriteToDisk() {
+      setProgress('fetchData');
       var defer = $q.defer(),
         writeStream = fs.createWriteStream(cardDataPath + '.zip'),
         req = request(cardsPath)
           .pipe(writeStream);
 
-      overAllProgressDefer.notify('Fetch new card data.');
       req.on('error', function () {
         defer.reject();
       });
@@ -112,23 +156,25 @@ angular.module('mtgApp')
       });
 
       writeStream.on('finish', function () {
+        setProgress('fetchData', 1);
         defer.resolve();
       });
       return defer.promise;
     }
 
     function unzipCardData(){
+      setProgress('unzipData');
       var DecompressZip = require('decompress-zip'),
         unzipper = new DecompressZip(cardDataPath + '.zip'),
         defer = $q.defer();
 
-      overAllProgressDefer.notify('Unzip new card data.');
       unzipper.on('error', function (error) {
         console.error(error);
         defer.reject();
       });
 
       unzipper.on('extract', function () {
+        setProgress('unzipData', 1);
         defer.resolve();
       });
 
@@ -140,14 +186,15 @@ angular.module('mtgApp')
 
     function removeCardDataZip(){
       var defer = $q.defer();
+      setProgress('removeZip');
 
-      overAllProgressDefer.notify('Remove card data zip file.');
       if(fs.existsSync(cardDataPath + '.zip')){
         fs.unlink(cardDataPath + '.zip', function(error){
           if(error){
             console.error(error);
             defer.reject();
           } else {
+            setProgress('removeZip', 1);
             defer.resolve();
           }
         });

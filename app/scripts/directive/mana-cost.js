@@ -29,9 +29,9 @@ angular.module('mtgApp')
                 mana = mana.replace('/', '');
                 var image = null;
                 if (isOtherSymbol(mana)) {
-                  image = angular.element('<img ng-src="http://mtgimage.com/symbol/other/' + mana + '.svg" width="' + attr.size + '" />');
+                  image = angular.element('<img ng-src="http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + mana + '&type=symbol" width="' + attr.size + '" />');
                 } else {
-                  image = angular.element('<img ng-src="http://mtgimage.com/symbol/mana/' + mana + '.svg" width="' + attr.size + '" />');
+                  image = angular.element('<img ng-src="http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + mana + '&type=symbol" width="' + attr.size + '" />');
                 }
                 element.append(image);
               });

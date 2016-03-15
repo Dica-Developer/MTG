@@ -218,20 +218,41 @@ angular.module('mtgApp')
     }
 
     function getCardData(){
-      var file = fs.readFileSync(cardDataPath, {encoding: 'UTF-8'});
-      return JSON.parse(file);
+        var defer = $q.defer();
+        if(!nodeApp){
+            $http.get('http://localhost:9000/data_bak/ALL_SETS.json').then(function(cardData){
+                defer.resolve(cardData.data);
+            });
+        } else {
+          fs.readFile(cardDataPath, {encoding: 'UTF-8'}, function(error, content){
+              if(error){
+                  $log.error(error);
+                  defer.reject();
+              } else {
+                  defer.resolve(JSON.parse(content));
+              }
+          });
+        }
+
+        return defer.promise;
     }
 
     function getSetList(){
       var defer = $q.defer();
-      fs.readFile(setDataPath, {encoding: 'UTF-8'}, function(error, content){
-        if(error){
-          $log.error(error);
-          defer.reject();
+        if(!nodeApp){
+            $http.get('http://localhost:9000/data_bak/SET_LIST.json').then(function(setData){
+                defer.resolve(setData.data);
+            });
         } else {
-          defer.resolve(JSON.parse(content));
+            fs.readFile(setDataPath, { encoding: 'UTF-8' }, function (error, content) {
+                if (error) {
+                    $log.error(error);
+                    defer.reject();
+                } else {
+                    defer.resolve(JSON.parse(content));
+                }
+            });
         }
-      });
       return defer.promise;
     }
 

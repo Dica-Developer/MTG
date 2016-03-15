@@ -16,23 +16,25 @@ angular.module('mtgApp')
       var defer = $q.defer(),
         allCards = null;
       if (cardsDb().count() === 0) {
-        _.each(data.getCardData(), function (mtgSet) {
-          var cards = _.map(mtgSet.cards, function (card) {
-            card.setCode = mtgSet.code;
-            card.setName = mtgSet.name;
-            card.foreignNames = card.foreignNames || [];
-            card.foreignNames.push({name: card.name});
-            card.concatNames = _.pluck(card.foreignNames, 'name').join(' ° ');
-            return card;
+          data.getCardData().then(function(cardData){
+            _.each(cardData, function (mtgSet) {
+              var cards = _.map(mtgSet.cards, function (card) {
+                card.setCode = mtgSet.code;
+                card.setName = mtgSet.name;
+                card.foreignNames = card.foreignNames || [];
+                card.foreignNames.push({name: card.name});
+                card.concatNames = _.pluck(card.foreignNames, 'name').join(' ° ');
+                return card;
+              });
+              allCards = !allCards ? cards : allCards.concat(cards);
+            });
+            defer.notify('Fill database with ' + allCards.length + ' cards.');
+            cardsDb.insert(allCards);
+            defer.notify('Presort database by card name.');
+            cardsDb.sort('name');
+            defer.resolve();
+            allCards = null;
           });
-          allCards = !allCards ? cards : allCards.concat(cards);
-        });
-        defer.notify('Fill database with ' + allCards.length + ' cards.');
-        cardsDb.insert(allCards);
-        defer.notify('Presort database by card name.');
-        cardsDb.sort('name');
-        defer.resolve();
-        allCards = null;
       } else {
         defer.resolve();
       }

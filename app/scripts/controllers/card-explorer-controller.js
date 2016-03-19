@@ -3,9 +3,9 @@
 angular.module('mtgApp')
   .controller('CardExplorerController', [
     '$scope',
-    '$modal',
+    '$uibModal',
     'cards',
-    function ($scope, $modal, cards) {
+    function ($scope, $uibModal, cards) {
       $scope.scope = $scope;
       $scope.db = cards.db;
       $scope.filteredCards = [];
@@ -21,7 +21,7 @@ angular.module('mtgApp')
       }
 
       $scope.showCardModal = function (card) {
-        $modal.open({
+        $uibModal.open({
           templateUrl: '/templates/card-modal.html',
           controller: 'CardModalController',
           size: 'lg',

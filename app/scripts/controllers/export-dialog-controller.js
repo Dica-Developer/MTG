@@ -3,10 +3,10 @@
 angular.module('mtgApp')
   .controller('ExportDialogController', [
     '$scope',
-    '$modalInstance',
+    '$uibModalInstance',
     'exportCards',
     'exportDecks',
-    function ($scope, $modalInstance, exportCards, exportDecks) {
+    function ($scope, $uibModalInstance, exportCards, exportDecks) {
       $scope.fileName = 'mtg-app-data';
       $scope.cards = exportCards;
       $scope.decks = exportDecks ? _.map(exportDecks, function (deck) {
@@ -34,10 +34,10 @@ angular.module('mtgApp')
       };
 
       $scope.ok = function () {
-        $modalInstance.close({decks: _.filter($scope.decks, 'selected'), fileName: $scope.fileName});
+        $uibModalInstance.close({decks: _.filter($scope.decks, 'selected'), fileName: $scope.fileName});
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     }]);

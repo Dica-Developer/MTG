@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('CardModalController', ['$scope', '$modalInstance', 'card', function ($scope, $modalInstance, card) {
+  .controller('CardModalController', ['$scope', '$uibModalInstance', 'card', function ($scope, $uibModalInstance, card) {
     $scope.card = card;
 
     $scope.ok = function () {
-      $modalInstance.close();
+      $uibModalInstance.close();
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
   }]);

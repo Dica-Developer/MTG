@@ -28,7 +28,7 @@ angular.module('mtgApp')
 
     Deck.prototype.save = function () {
       var deckIds = localStorageService.get('decks') || [];
-      if (!_.contains(deckIds, this.options.id)) {
+      if (!_.includes(deckIds, this.options.id)) {
         deckIds.push(this.options.id);
         localStorageService.set('decks', deckIds);
       }
@@ -82,7 +82,7 @@ angular.module('mtgApp')
 
     Deck.prototype.getColors = function () {
       var colors = _.chain(this.cardsFull)
-        .pluck('colors')
+        .map('colors')
         .flatten()
         .uniq()
         .without(void 0)
@@ -124,7 +124,7 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.getShuffle = function (count) {
-      var cardIds = _.sample(this.options.cards, count),
+      var cardIds = _.sampleSize(this.options.cards, count),
         sample = [];
       cardIds.forEach(function(cardId){
         sample.push(cards.filter({multiverseid: cardId})[0]);
@@ -153,7 +153,7 @@ angular.module('mtgApp')
     };
 
     Deck.prototype.hasCard = function (cardId) {
-      return _.contains(this.options.cards, cardId);
+      return _.includes(this.options.cards, cardId);
     };
 
     Deck.prototype.getCountByCardType = function () {
@@ -182,7 +182,7 @@ angular.module('mtgApp')
         'Commander': 'Legal'
       };
       var allCards = this.cardsFull.concat(this.sideboardFull);
-      var allCardLegalities = _.pluck(allCards, 'legalities');
+      var allCardLegalities = _.map(allCards, 'legalities');
       allCardLegalities.forEach(function(cardLegaleties){
         _.each(cardLegaleties, function(legalety, type){
           if(legaleties[type]){

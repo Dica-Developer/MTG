@@ -28,7 +28,7 @@ angular.module('mtgApp')
             if(cardRarityAbbr[card.rarity]){
               $scope.rarity = cardRarityAbbr[card.rarity];
             }
-            if(_.contains(card.types, 'Land')){
+            if(_.includes(card.types, 'Land')){
               $scope.rarity = 'c';
             }
           }

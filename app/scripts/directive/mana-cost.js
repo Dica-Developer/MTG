@@ -16,7 +16,7 @@ angular.module('mtgApp')
           'c'
         ];
         var isOtherSymbol = function (mana) {
-          return _.contains(otherSymbols, mana);
+          return _.includes(otherSymbols, mana);
         };
 
         scope.$watch('manaCost', function (newValue) {

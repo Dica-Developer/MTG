@@ -3,13 +3,13 @@
 angular.module('mtgApp')
   .controller('OwnCardsController', [
     '$scope',
-    '$modal',
+    '$uibModal',
     'cards',
     'ownCards',
-    function ($scope, $modal, cards, ownCards) {
+    function ($scope, $uibModal, cards, ownCards) {
       var ownCardsTmpDB = TAFFY();
       ownCardsTmpDB.insert(cards.filter({
-        multiverseid: _.map(_.pluck(ownCards.getAll(), 'multiverseid'), Number)
+        multiverseid: _.map(_.map(ownCards.getAll(), 'multiverseid'), Number)
       }));
       $scope.scope = $scope;
       $scope.db = ownCardsTmpDB;
@@ -27,7 +27,7 @@ angular.module('mtgApp')
 
       $scope.showCardModal = function (card) {
 
-        $modal.open({
+        $uibModal.open({
           templateUrl: '/templates/card-modal.html',
           controller: 'CardModalController',
           size: 'lg',

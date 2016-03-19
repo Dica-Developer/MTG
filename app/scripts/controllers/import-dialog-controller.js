@@ -3,11 +3,11 @@
 angular.module('mtgApp')
   .controller('ImportDialogController', [
     '$scope',
-    '$modalInstance',
+    '$uibModalInstance',
     'decks',
     'importCards',
     'importDecks',
-    function ($scope, $modalInstance, decks, importCards, importDecks) {
+    function ($scope, $uibModalInstance, decks, importCards, importDecks) {
       $scope.cards = importCards;
       $scope.decks = _.map(importDecks, function (deck) {
         return {
@@ -35,10 +35,10 @@ angular.module('mtgApp')
       };
 
       $scope.ok = function () {
-        $modalInstance.close(_.filter($scope.decks, 'selected'));
+        $uibModalInstance.close(_.filter($scope.decks, 'selected'));
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     }]);

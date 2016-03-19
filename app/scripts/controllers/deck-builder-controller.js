@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DeckBuilderController', ['$scope', '$stateParams', '$modal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $modal, decks, cards, ownCards) {
+  .controller('DeckBuilderController', ['$scope', '$stateParams', '$uibModal', 'decks', 'cards', 'ownCards', function ($scope, $stateParams, $uibModal, decks, cards, ownCards) {
     $scope.scope = $scope;
     $scope.db = cards.db;
     $scope.ownCards = ownCards;
@@ -110,7 +110,7 @@ angular.module('mtgApp')
 
     $scope.showCardModal = function (card) {
 
-      $modal.open({
+      $uibModal.open({
         templateUrl: '/templates/card-modal.html',
         controller: 'CardModalController',
         size: 'lg',
@@ -146,7 +146,6 @@ angular.module('mtgApp')
     };
 
     $scope.manaCostOptions = {
-      responsive: true,
       scaleBeginAtZero: true,
       scaleShowGridLines: true,
       scaleGridLineColor: 'rgba(0,0,0,.05)',

@@ -23,7 +23,7 @@ angular.module('mtgApp')
                 card.setName = mtgSet.name;
                 card.foreignNames = card.foreignNames || [];
                 card.foreignNames.push({name: card.name});
-                card.concatNames = _.pluck(card.foreignNames, 'name').join(' ° ');
+                card.concatNames = _.map(card.foreignNames, 'name').join(' ° ');
                 return card;
               });
               allCards = !allCards ? cards : allCards.concat(cards);

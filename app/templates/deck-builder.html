@@ -42,8 +42,8 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <tabset>
-      <tab heading="Cards">
+    <uib-tabset>
+      <uib-tab heading="Cards">
         <table class="table table-hover table-condensed table-striped table-responsive table-bordered">
           <thead>
           <tr>
@@ -98,8 +98,8 @@
             </tr>
           </tbody>
         </table>
-      </tab>
-      <tab heading="Sideboard">
+      </uib-tab>
+      <uib-tab heading="Sideboard">
         <table class="table table-hover table-condensed table-striped table-responsive table-bordered">
           <thead>
             <tr>
@@ -154,8 +154,8 @@
             </tr>
           </tbody>
         </table>
-      </tab>
-      <tab heading="Add Card">
+      </uib-tab>
+      <uib-tab heading="Add Card">
         <div class="panel panel-default card-list">
           <div class="panel-heading">
             <div class="row">
@@ -251,8 +251,8 @@
             </div>
           </div>
         </div>
-      </tab>
-      <tab heading="Sample hand">
+      </uib-tab>
+      <uib-tab heading="Sample hand">
         <div class="row">
           <div class="col-xs-12">
             <button class="btn btn-default btn-sm" ng-click="shuffle()">Shuffle</button>
@@ -264,16 +264,16 @@
             <img class="img-thumbnail" ng-src="http://mtgimage.com/set/{{sampleCard.setCode}}/{{sampleCard.name}}.hq.jpg" alt="{{sampleCard.name}}" width="300">
           </div>
         </div>
-      </tab>
-      <tab heading="Meta">
+      </uib-tab>
+      <uib-tab heading="Meta">
         <div class="row">
           <div class="col-xs-6">
             <label>Mana Curve</label>
             <canvas tc-chartjs chart-type="bar" chart-data="manaCostData" chart-options="manaCostOptions"></canvas>
           </div>
         </div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </div>
 </div>
 <div class="row">

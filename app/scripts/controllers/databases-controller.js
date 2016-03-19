@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DatabasesController', ['$scope', '$modal', 'decks', 'ownCards', function ($scope, $modal, decks, ownCards) {
+  .controller('DatabasesController', ['$scope', '$uibModal', 'decks', 'ownCards', function ($scope, $uibModal, decks, ownCards) {
 
     function readFile(file, callback) {
       var reader = new FileReader();
@@ -29,7 +29,7 @@ angular.module('mtgApp')
     }
 
     function showImportDialog(cards, decks) {
-      return $modal.open({
+      return $uibModal.open({
         templateUrl: 'templates/import-dialog.html',
         controller: 'ImportDialogController',
         resolve: {
@@ -107,7 +107,7 @@ angular.module('mtgApp')
     };
 
     function showExportDialog(cards, decks) {
-      return $modal.open({
+      return $uibModal.open({
         templateUrl: 'templates/export-dialog.html',
         controller: 'ExportDialogController',
         resolve: {

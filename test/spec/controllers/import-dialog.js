@@ -36,7 +36,7 @@ describe('Controller: ImportDialogController', function () {
   it('Should set decks correct values', function(){
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       decks: decks,
       importCards: cards,
       importDecks: importDecks
@@ -51,7 +51,7 @@ describe('Controller: ImportDialogController', function () {
   it('$scope.deselectAll should set "selected" to all decks false', function () {
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       importCards: cards,
       importDecks: importDecks
     });
@@ -64,7 +64,7 @@ describe('Controller: ImportDialogController', function () {
   it('$scope.selectAll should set "selected" to all decks true', function () {
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       importCards: cards,
       importDecks: importDecks
     });
@@ -82,7 +82,7 @@ describe('Controller: ImportDialogController', function () {
   it('$scope.decksToImport should return correct length of all set with "selected = true"', function () {
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       importCards: cards,
       importDecks: importDecks
     });
@@ -94,10 +94,10 @@ describe('Controller: ImportDialogController', function () {
     expect(length).toBe(2);
   });
 
-  it('$scope.ok should call $modalInstance.close', function () {
+  it('$scope.ok should call $uibModalInstance.close', function () {
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       importCards: cards,
       importDecks: importDecks
     });
@@ -105,10 +105,10 @@ describe('Controller: ImportDialogController', function () {
     expect(modalInstance.close).toHaveBeenCalled();
   });
 
-  it('$scope.cancel should call $modalInstance.dismiss', function () {
+  it('$scope.cancel should call $uibModalInstance.dismiss', function () {
     $controller('ImportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       importCards: cards,
       importDecks: importDecks
     });

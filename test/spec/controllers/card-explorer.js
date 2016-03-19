@@ -21,7 +21,7 @@ describe('Controller: CardExplorerController', function () {
         return {multiverseid: value};
       })
       .value());
-    $modal = $injector.get('$modal');
+    $modal = $injector.get('$uibModal');
     $controller('CardExplorerController', {
       $scope: scope,
       cards: cards,

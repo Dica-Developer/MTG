@@ -24,7 +24,7 @@ describe('Controller: OwnCardsController', function () {
         })
         .value()
     );
-    $modal = $injector.get('$modal');
+    $modal = $injector.get('$uibModal');
     $controller('OwnCardsController', {
       $scope: scope,
       ownCards: ownCards,

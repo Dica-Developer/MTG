@@ -35,7 +35,7 @@ describe('Controller: ExportDialogController', function () {
   it('Should set decks correct values', function(){
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });
@@ -49,7 +49,7 @@ describe('Controller: ExportDialogController', function () {
   it('Should set decks to null', function(){
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: void 0
     });
@@ -60,7 +60,7 @@ describe('Controller: ExportDialogController', function () {
   it('$scope.deselectAll should set "selected" to all decks false', function () {
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });
@@ -73,7 +73,7 @@ describe('Controller: ExportDialogController', function () {
   it('$scope.selectAll should set "selected" to all decks true', function () {
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });
@@ -91,7 +91,7 @@ describe('Controller: ExportDialogController', function () {
   it('$scope.decksToExport should return correct length of all set with "selected = true"', function () {
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });
@@ -103,10 +103,10 @@ describe('Controller: ExportDialogController', function () {
     expect(length).toBe(2);
   });
 
-  it('$scope.ok should call $modalInstance.close', function () {
+  it('$scope.ok should call $uibModalInstance.close', function () {
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });
@@ -114,10 +114,10 @@ describe('Controller: ExportDialogController', function () {
     expect(modalInstance.close).toHaveBeenCalled();
   });
 
-  it('$scope.cancel should call $modalInstance.dismiss', function () {
+  it('$scope.cancel should call $uibModalInstance.dismiss', function () {
     $controller('ExportDialogController', {
       $scope: scope,
-      $modalInstance: modalInstance,
+      $uibModalInstance: modalInstance,
       exportCards: cards,
       exportDecks: decks
     });

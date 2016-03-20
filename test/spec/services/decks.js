@@ -75,7 +75,7 @@ describe('Service: decks', function () {
       deck.addCard(96);
       deck.addCard(48);
       var colors = deck.getColors();
-      expect(colors).toEqual(['Blue', 'Black']);
+      expect(colors).toEqual(['u', 'b']);
     });
 
     it('deck.getCountOf should return correct number of cards exist in deck with given id', function(){

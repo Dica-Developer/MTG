@@ -12,13 +12,11 @@ angular.module('mtgApp')
       link: function (scope, element, attr) {
         var otherSymbols = [
           't',
-          'q',
-          'c'
+          'q'
         ];
           var otherManaMap = {
               't': 'tap',
-              'q': 'untap',
-              'c': ''
+              'q': 'untap'
           };
         var isOtherSymbol = function (mana) {
           return _.includes(otherSymbols, mana);

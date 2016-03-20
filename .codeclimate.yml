@@ -1,0 +1,10 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - app/scripts/**/*.js
+  - test/spac/**/*.js

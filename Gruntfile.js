@@ -397,13 +397,6 @@ module.exports = function (grunt) {
       }
   });
 
-  grunt.registerTask('setCodeClimateData', function(){
-    var fs = require('fs');
-    var directories = fs.readdirSync('test/coverage');
-    grunt.config.set('codeclimate.options.file', 'test/coverage/' + directories[0] + '/lcov.info');
-  });
-
-
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -439,7 +432,6 @@ module.exports = function (grunt) {
     'connect:test',
     'karma:travis',
     'coveralls',
-    'setCodeClimateData',
     'codeclimate'
   ]);
 

@@ -6,3 +6,4 @@ dist
 bower_components
 test/coverage
 build
+app/data_bak

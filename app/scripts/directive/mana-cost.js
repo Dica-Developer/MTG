@@ -15,6 +15,11 @@ angular.module('mtgApp')
           'q',
           'c'
         ];
+          var otherManaMap = {
+              't': 'tap',
+              'q': 'untap',
+              'c': ''
+          };
         var isOtherSymbol = function (mana) {
           return _.includes(otherSymbols, mana);
         };
@@ -27,6 +32,9 @@ angular.module('mtgApp')
             if (manaCost) {
               manaCost.forEach(function (mana) {
                 mana = mana.replace('/', '');
+                  if(isOtherSymbol(mana)){
+                      mana = otherManaMap[mana];
+                  }
                 var icon = angular.element('<i class="ms ms-cost ms-' + mana + '"></i>');
                 element.append(icon);
               });

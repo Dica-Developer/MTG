@@ -1,10 +1,7 @@
 <div class="modal-header">
   <h3 >{{card.name}}
         <span ng-if="card.power && card.toughness">
-          <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 24px !important;"/>
-          {{card.power}} /
-          <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 24px !important;"/>
-          {{card.toughness}}
+          {{card.power}}/{{card.toughness}}
         </span>
     <div class="pull-right">
       <mana-cost x-mana-cost="{{card.manaCost}}" x-size="24"></mana-cost>

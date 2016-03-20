@@ -3,7 +3,7 @@
     <h3 ng-if="!editname">
       {{deck.options.name}} <i class="fa fa-pencil clickable" ng-click="editName()"></i>
       <div class="pull-right">
-        <img ng-repeat="color in deck.getColors()" ng-src="http://mtgimage.com/symbol/mana/{{color}}.svg" alt="" width="26px"/>
+        <i ng-repeat="color in deck.getColors()" class="ms ms-cost ms-{{color}} " />
       </div>
     </h3>
     <form ng-if="editname" class="form-inline" role="form">
@@ -33,8 +33,7 @@
     </div>
     <div class="well well-sm">
       <span class="label clickable" ng-class="{'label-success': typeFilter === type, 'label-info': typeFilter !== type}" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;" ng-click="filterByType(type)">
-        <img ng-repeat="typeIcon in type.split('-')" ng-src="http://mtgimage.com/symbol/other/{{typeIcon}}.svg"
-             style="height: 12px !important"/> {{type}}: {{count}}
+        <i ng-repeat="typeIcon in type.split('-')" class="ms ms-fw ms-{{typeIcon.toLowerCase()}} " /> {{type}}: {{count}}
       </span>
     </div>
   </div>

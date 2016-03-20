@@ -7,7 +7,7 @@
           <i class="fa fa-fw fa-times-circle text-danger" ng-click="removeDeck($event, deck.options.id)"></i>
           {{deck.options.name}}
           <div class="pull-right">
-            <img ng-repeat="color in deck.getColors()" ng-src="http://mtgimage.com/symbol/mana/{{color}}.svg" alt="" width="26px"/>
+            <i ng-repeat="color in deck.getColors()" class="ms ms-cost ms-{{color}} " />
           </div>
         </a>
       </h4>

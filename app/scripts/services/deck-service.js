@@ -86,6 +86,24 @@ angular.module('mtgApp')
         .flatten()
         .uniq()
         .without(void 0)
+          .map(function(color){
+              switch(color){
+              case 'White':
+                  return 'w';
+              case 'Blue':
+                  return 'u';
+              case 'Black':
+                  return 'b';
+              case 'Red':
+                  return 'r';
+              case 'Green':
+                  return 'g';
+              default:
+                  return 'c';
+              }
+              console.log(color);
+              return color;
+          })
         .value();
       return colors;
     };

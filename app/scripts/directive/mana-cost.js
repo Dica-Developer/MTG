@@ -27,13 +27,8 @@ angular.module('mtgApp')
             if (manaCost) {
               manaCost.forEach(function (mana) {
                 mana = mana.replace('/', '');
-                var image = null;
-                if (isOtherSymbol(mana)) {
-                  image = angular.element('<img ng-src="http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + mana + '&type=symbol" width="' + attr.size + '" />');
-                } else {
-                  image = angular.element('<img ng-src="http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + mana + '&type=symbol" width="' + attr.size + '" />');
-                }
-                element.append(image);
+                var icon = angular.element('<i class="ms ms-cost ms-' + mana + '"></i>');
+                element.append(icon);
               });
             }
             $compile(element)(scope);

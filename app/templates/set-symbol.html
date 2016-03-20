@@ -1,3 +1,7 @@
 <span>
-  <img ng-src="http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set={{setCode}}&size=small&rarity={{rarity}}" style="width: {{size}}px; height: {{size}}px;" tooltip="{{tipText}}" tooltip-placement="{{tipAppearance}}">
+  <i
+      class="ss ss-{{setCode.toLowerCase()}} ss-{{rarity}} ss-{{size}}"
+      uib-tooltip="{{tipText}}"
+      uib-tooltip-placement="{{tipAppearance}}"
+  ></i>
 </span>

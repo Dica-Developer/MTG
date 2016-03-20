@@ -19,7 +19,9 @@
     "angular-bootstrap": "^1.2.4",
     "bootstrap": "^3.3.6",
     "metisMenu": "^2.4.3",
-    "font-awesome": "fontawesome#^4.5.0"
+    "font-awesome": "fontawesome#^4.5.0",
+    "keyrune": "*",
+    "mana": "*"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.2",

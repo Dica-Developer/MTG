@@ -66,7 +66,7 @@
           <tbody>
             <tr ng-repeat="card in cards | orderBy:orderPredicate:orderReverse | cardType:typeFilter" ng-click="showCardModal(card)" class="clickable">
               <td>
-                <card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>
+                <card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
               <td>
                 <own-card-count data-card-id="{{card.multiverseid}}"></own-card-count>
@@ -122,7 +122,7 @@
           <tbody>
             <tr ng-repeat="sbCard in sideboard | orderBy:orderPredicate:orderReverse | cardType:typeFilter" ng-click="showCardModal(sbCard)" class="clickable">
               <td>
-                <card-set-symbol data-card="sbCard" data-size="24" data-tip-text="{{sbCard.setName}}" data-tip-appearance="right"></card-set-symbol>
+                <card-set-symbol data-card="sbCard" data-size="2x" data-tip-text="{{sbCard.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
               <td>
                 <own-card-count data-card-id="{{sbCard.multiverseid}}"></own-card-count>
@@ -198,7 +198,7 @@
             <tbody>
             <tr ng-repeat="cardToAdd in cardsToAdd track by $index" ng-click="showCardModal(cardToAdd)" class="clickable">
               <td>
-                <card-set-symbol data-card="cardToAdd" data-size="24" data-tip-text="{{cardToAdd.setName}}" data-tip-appearance="right"></card-set-symbol>
+                <card-set-symbol data-card="cardToAdd" data-size="2x" data-tip-text="{{cardToAdd.setName}}" data-tip-appearance="right"></card-set-symbol>
               </td>
               <td>
                 {{cardToAdd.name}}

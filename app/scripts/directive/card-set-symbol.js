@@ -14,22 +14,12 @@ angular.module('mtgApp')
         'tipAppearance': '@'
       },
       controller: ['$scope', function ($scope) {
-        var cardRarityAbbr = {
-          'Common': 'c',
-          'Uncommon': 'u',
-          'Rare': 'r',
-          'Mythic Rare': 'm',
-          'Special': 's'
-        };
         $scope.$watch('card', function (card) {
           if(card){
             $scope.setCode = card.setCode;
-            $scope.rarity = 'c';
-            if(cardRarityAbbr[card.rarity]){
-              $scope.rarity = cardRarityAbbr[card.rarity];
-            }
+            $scope.rarity = card.rarity.toLowerCase();
             if(_.includes(card.types, 'Land')){
-              $scope.rarity = 'c';
+              $scope.rarity = 'common';
             }
           }
         }, true);

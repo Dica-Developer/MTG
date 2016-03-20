@@ -234,7 +234,7 @@
           <div class="panel-footer">
             Page: {{currentPage}} / {{numPages}} Cards: {{(currentPage - 1) * maxResultLength}} - {{currentPage * maxResultLength}} / {{totalItems}}
             <div class="pull-right">
-              <pagination
+              <uib-pagination
                 total-items="totalItems"
                 ng-model="currentPage"
                 max-size="5"
@@ -247,7 +247,7 @@
                 rotate="false"
                 items-per-page="maxResultLength"
                 num-pages="numPages">
-              </pagination>
+              </uib-pagination>
             </div>
           </div>
         </div>

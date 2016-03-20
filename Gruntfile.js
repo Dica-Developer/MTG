@@ -386,24 +386,8 @@ module.exports = function (grunt) {
           coverageDir: 'test/coverage/travis',
         force: false
       }
-    },
-      codeclimate: {
-          main: {
-              options: {
-                  file: 'test/coverage/travis/lcov.info',
-                  token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
-              }
-          }
-      }
+    }
   });
-
-    grunt.registerTask('setCodeClimateData', function(){
-        var fs = require('fs');
-        var directories = fs.readdirSync('test/coverage/travis');
-        console.log(directories);
-        grunt.config.set('codeclimate.main.options.file', 'test/coverage/' + directories[0] + '/lcov.info');
-        console.log(grunt.config.data.codeclimate);
-    });
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -439,9 +423,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma:travis',
-    'coveralls',
-    'setCodeClimateData',
-    'codeclimate'
+    'coveralls'
   ]);
 
   grunt.registerTask('build', [

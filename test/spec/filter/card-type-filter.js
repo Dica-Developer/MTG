@@ -16,7 +16,7 @@ describe('Filter: cardTypeFilter', function () {
     var filterResult = cardTypeFilter(cardsExcerpt, 'Sorcery');
     expect(filterResult.length).toBe(5);
     filterResult.forEach(function(card){
-      expect(_.contains(card.types, 'Sorcery'));
+      expect(_.includes(card.types, 'Sorcery'));
     });
   });
 

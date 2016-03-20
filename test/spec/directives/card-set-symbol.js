@@ -46,29 +46,29 @@ describe('Directive: cardSetSymbol', function() {
   });
 
   it('Should set rarity to c (common) if it is a land', function() {
-    $rootScope.card = _.findWhere(cardsExcerpt, {multiverseid: 279});
+    $rootScope.card = _.find(cardsExcerpt, {multiverseid: 279});
     var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/c.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
   });
 
   it('Should set correct rarity', function() {
-    $rootScope.card = _.findWhere(cardsExcerpt, {rarity: 'Rare'});
+    $rootScope.card = _.find(cardsExcerpt, {rarity: 'Rare'});
     var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/r.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=r');
 
-    $rootScope.card = _.findWhere(cardsExcerpt, {rarity: 'Common'});
+    $rootScope.card = _.find(cardsExcerpt, {rarity: 'Common'});
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/c.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
 
-    $rootScope.card = _.findWhere(cardsExcerpt, {rarity: 'Uncommon'});
+    $rootScope.card = _.find(cardsExcerpt, {rarity: 'Uncommon'});
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/u.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=u');
   });
 
   it('Should set rarity to c (Common) if card has no rarity field', function() {
-    $rootScope.card = _.findWhere(cardsExcerpt, {rarity: 'Rare'});
+    $rootScope.card = _.find(cardsExcerpt, {rarity: 'Rare'});
     delete $rootScope.card.rarity;
     var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();

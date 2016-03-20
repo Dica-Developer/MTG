@@ -72,10 +72,7 @@
                 <own-card-count data-card-id="{{card.multiverseid}}"></own-card-count>
                 {{card.name}}
                 <span class="pull-right" ng-if="card.power && card.toughness">
-                  <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 20px !important;"/>
-                  {{card.power}} /
-                  <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 20px !important;"/>
-                  {{card.toughness}}
+                  {{card.power}}/{{card.toughness}}
                 </span>
               </td>
               <td>
@@ -128,10 +125,7 @@
                 <own-card-count data-card-id="{{sbCard.multiverseid}}"></own-card-count>
                 {{sbCard.name}}
                 <span class="pull-right" ng-if="sbCard.power && sbCard.toughness">
-                  <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 20px !important;"/>
-                  {{sbCard.power}} /
-                  <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 20px !important;"/>
-                  {{sbCard.toughness}}
+                  {{sbCard.power}}/{{sbCard.toughness}}
                 </span>
               </td>
               <td>
@@ -203,10 +197,7 @@
               <td>
                 {{cardToAdd.name}}
               <span class="pull-right" ng-if="card.power && card.toughness">
-                <img ng-src="http://mtgimage.com/symbol/other/power.svg" style="height: 20px !important;"/>
-                {{cardToAdd.power}} /
-                <img ng-src="http://mtgimage.com/symbol/other/toughness.svg" style="height: 20px !important;"/>
-                {{cardToAdd.toughness}}
+                {{cardToAdd.power}}/{{cardToAdd.toughness}}
               </span>
               </td>
               <td>

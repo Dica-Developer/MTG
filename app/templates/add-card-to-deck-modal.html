@@ -9,7 +9,7 @@
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="card in cards track by $index">
             <h4 class="list-group-item-heading">
-              <img ng-src="http://mtgimage.com/symbol/set/{{card.setCode}}/c/24.png" tooltip="{{card.setName}}"/>
+              <i class="ss ss-{{card.setCode}} ss-common" uib-tooltip="{{card.setName}}"/>
               {{card.name}} - {{card.type}}
               <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
               <div class="pull-right">

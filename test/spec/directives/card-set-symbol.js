@@ -14,64 +14,46 @@ describe('Directive: cardSetSymbol', function() {
     $rootScope.card = cardsExcerpt[0];
   }));
 
-  it('Should add the correct image path', function() {
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
+  it('Should add the correct class', function() {
+    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=u');
+    expect(element.find('i').attr('class')).toBe('ss ss-fw ss-lea ss-uncommon ss-2x');
   });
 
   it('Should add the correct tooltip text and placement', function() {
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
+    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('tooltip')).toBe('Limited Edition Alpha');
-    expect(element.find('img').attr('tooltip-placement')).toBe('right');
-  });
-
-  it('Should set the correct dimension', function() {
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
-    $rootScope.$digest();
-    expect(element.find('img').width()).toBe(24);
-    expect(element.find('img').height()).toBe(24);
-  });
-
-  it('Should add no image path if card is undefined or null', function() {
-    $rootScope.card = null;
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
-    $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBeUndefined();
-
-    delete $rootScope.card;
-    $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBeUndefined();
+    expect(element.find('i').attr('uib-tooltip')).toBe('Limited Edition Alpha');
+    expect(element.find('i').attr('uib-tooltip-placement')).toBe('right');
   });
 
   it('Should set rarity to c (common) if it is a land', function() {
     $rootScope.card = _.find(cardsExcerpt, {multiverseid: 279});
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
+    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
+    expect(element.find('i').hasClass('ss-common')).toBe(true);
   });
 
   it('Should set correct rarity', function() {
     $rootScope.card = _.find(cardsExcerpt, {rarity: 'Rare'});
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
+    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=r');
+    expect(element.find('i').hasClass('ss-rare')).toBe(true);
 
     $rootScope.card = _.find(cardsExcerpt, {rarity: 'Common'});
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
+    expect(element.find('i').hasClass('ss-common')).toBe(true);
 
     $rootScope.card = _.find(cardsExcerpt, {rarity: 'Uncommon'});
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=u');
+    expect(element.find('i').hasClass('ss-uncommon')).toBe(true);
   });
 
   it('Should set rarity to c (Common) if card has no rarity field', function() {
     $rootScope.card = _.find(cardsExcerpt, {rarity: 'Rare'});
     delete $rootScope.card.rarity;
-    var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
+    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
+    expect(element.find('i').hasClass('ss-common')).toBe(true);
   });
 });

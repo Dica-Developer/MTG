@@ -14,21 +14,21 @@ describe('Directive: cardText', function() {
 
   it('Should set rarity per default to c (Common)', function(){
     $rootScope.setCode = 'M15';
-    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
+    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="2x"></set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=M15&size=small&rarity=c');
+    expect(element.find('i').hasClass('ss-common')).toBe(true);
   });
 
   it('Should set rarity to m (Mythic Rare) for V14 (From the Vault: Annihilation)', function(){
     $rootScope.setCode = 'V14';
-    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
+    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="2x"></set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=V14&size=small&rarity=m');
+    expect(element.find('i').hasClass('ss-mythic')).toBe(true);
   });
 
-  it('Should set rarity to s (Special) for VAN (Vanguard) and TSB (Timespiral "Timeshifted")', function(){
+  xit('Should set rarity to s (Special) for VAN (Vanguard) and TSB (Timespiral "Timeshifted")', function(){
     $rootScope.setCode = 'VAN';
-    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
+    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="2x"></set-symbol>')($rootScope);
     $rootScope.$digest();
     expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=VAN&size=small&rarity=s');
     $rootScope.setCode = 'TSB';
@@ -36,17 +36,4 @@ describe('Directive: cardText', function() {
     expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=TSB&size=small&rarity=s');
   });
 
-  it('Should set correct dimensions', function(){
-    $rootScope.setCode = 'M14';
-    var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
-    $rootScope.$digest();
-    expect(element.find('img').width()).toBe(22);
-    expect(element.find('img').height()).toBe(22);
-
-    element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="13"></set-symbol>')($rootScope);
-    $rootScope.$digest();
-    expect(element.find('img').width()).toBe(13);
-    expect(element.find('img').height()).toBe(13);
-
-  });
 });

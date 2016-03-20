@@ -17,7 +17,7 @@ angular.module('mtgApp')
         $scope.$watch('card', function (card) {
           if(card){
             $scope.setCode = card.setCode;
-            $scope.rarity = card.rarity.toLowerCase();
+            $scope.rarity = card.rarity ? card.rarity.toLowerCase() : 'common';
             if(_.includes(card.types, 'Land')){
               $scope.rarity = 'common';
             }

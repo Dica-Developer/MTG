@@ -15,11 +15,11 @@ angular.module('mtgApp')
         function update() {
           var rarity = '';
           switch ($scope.setCode) {
-          case 'v14':
+          case 'V14':
             rarity = 'mythic';
             break;
-          case 'van':
-          case 'tsb':
+          case 'VAN':
+          case 'TSB':
             rarity = 's';
             break;
           default :

@@ -431,8 +431,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma:travis',
-    'coveralls',
-    'codeclimate'
+    'coveralls'
   ]);
 
   grunt.registerTask('build', [

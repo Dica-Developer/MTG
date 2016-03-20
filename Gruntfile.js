@@ -383,15 +383,14 @@ module.exports = function (grunt) {
     coveralls: {
       options: {
         debug: false,
-        /*jshint camelcase:false*/
-        coverage_dir: 'test/coverage',
+          coverageDir: 'test/coverage/travis',
         force: false
       }
     },
       codeclimate: {
           main: {
               options: {
-                  file: 'test/coverage/lcov.info',
+                  file: 'test/coverage/travis/**/lcov.info',
                   token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
               }
           }

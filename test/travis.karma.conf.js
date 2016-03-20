@@ -52,8 +52,8 @@ module.exports = function(config) {
     reporters: ['dots', 'coverage'],
 
     coverageReporter: {
-      type: 'lcov',
-      dir: 'test/coverage/'
+      type: 'lcovonly',
+      dir: 'test/coverage/travis'
     },
 
     ngHtml2JsPreprocessor: {

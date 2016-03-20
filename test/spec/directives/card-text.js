@@ -16,7 +16,7 @@ describe('Directive: cardText', function() {
     $rootScope.cardText = 'Some Card text which costs {w} mana';
     var element = $compile('<card-text data-text="{{cardText}}"></card-text>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/w.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=w&type=symbol');
   });
 
   it('Should style text in ()', function(){

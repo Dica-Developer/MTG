@@ -16,24 +16,24 @@ describe('Directive: cardText', function() {
     $rootScope.setCode = 'M15';
     var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/M15/c.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=M15&size=small&rarity=c');
   });
 
   it('Should set rarity to m (Mythic Rare) for V14 (From the Vault: Annihilation)', function(){
     $rootScope.setCode = 'V14';
     var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/V14/m.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=V14&size=small&rarity=m');
   });
 
   it('Should set rarity to s (Special) for VAN (Vanguard) and TSB (Timespiral "Timeshifted")', function(){
     $rootScope.setCode = 'VAN';
     var element = $compile('<set-symbol data-set-code="{{setCode}}" data-size="22"></set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/VAN/s.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=VAN&size=small&rarity=s');
     $rootScope.setCode = 'TSB';
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/TSB/s.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=TSB&size=small&rarity=s');
   });
 
   it('Should set correct dimensions', function(){

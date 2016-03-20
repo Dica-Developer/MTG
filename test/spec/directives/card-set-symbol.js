@@ -17,7 +17,7 @@ describe('Directive: cardSetSymbol', function() {
   it('Should add the correct image path', function() {
     var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/u.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=u');
   });
 
   it('Should add the correct tooltip text and placement', function() {
@@ -72,6 +72,6 @@ describe('Directive: cardSetSymbol', function() {
     delete $rootScope.card.rarity;
     var element = $compile('<card-set-symbol data-card="card" data-size="24" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/set/LEA/c.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=LEA&size=small&rarity=c');
   });
 });

@@ -19,7 +19,7 @@ describe('Directive: manaCost', function () {
     numbers.forEach(function (number) {
       $rootScope.manaCost = number;
       $rootScope.$digest();
-      expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/' + number + '.svg');
+      expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + number + '&type=symbol');
     });
   });
 
@@ -29,7 +29,7 @@ describe('Directive: manaCost', function () {
       $rootScope.symbol = symbol;
       var element = $compile('<mana-cost x-mana-cost="{{symbol}}" x-size="16"></mana-cost>')($rootScope);
       $rootScope.$digest();
-      expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/' + symbol.toLowerCase() + '.svg');
+      expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + symbol.toLowerCase() + '&type=symbol');
     });
   });
 
@@ -39,7 +39,7 @@ describe('Directive: manaCost', function () {
       $rootScope.symbol = symbol;
       var element = $compile('<mana-cost x-mana-cost="{{symbol}}" x-size="16"></mana-cost>')($rootScope);
       $rootScope.$digest();
-      expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/other/' + symbol.toLowerCase() + '.svg');
+      expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=' + symbol.toLowerCase() + '&type=symbol');
     });
   });
 
@@ -55,7 +55,7 @@ describe('Directive: manaCost', function () {
       $rootScope.symbol = symbol;
     var element = $compile('<mana-cost x-mana-cost="{{symbol}}" x-size="16"></mana-cost>')($rootScope);
     $rootScope.$digest();
-    expect(element.find('img').attr('ng-src')).toBe('http://mtgimage.com/symbol/mana/br.svg');
+    expect(element.find('img').attr('ng-src')).toBe('http://gatherer.wizards.com/Handlers/Image.ashx?size=medium&name=br&type=symbol');
   });
 });
 

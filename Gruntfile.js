@@ -386,11 +386,14 @@ module.exports = function (grunt) {
         force: false
       }
     },
-    codeclimate: {
-      options: {
-        token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
+      codeclimate: {
+          main: {
+              options: {
+                  file: 'test/coverage/lcov.info',
+                  token: '8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035'
+              }
+          }
       }
-    }
   });
 
   grunt.registerTask('setCodeClimateData', function(){

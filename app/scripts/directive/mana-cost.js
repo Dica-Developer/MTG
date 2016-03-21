@@ -9,7 +9,7 @@ angular.module('mtgApp')
       scope: {
         manaCost: '@'
       },
-      link: function (scope, element, attr) {
+      link: function (scope, element) {
         var otherSymbols = [
           't',
           'q'

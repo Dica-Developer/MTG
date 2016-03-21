@@ -9,11 +9,12 @@ angular.module('mtgApp')
     $scope.selectedSets = null;
     $scope.combinedManaCost = -1;
     $scope.colors = {
-      White: false,
-      Black: false,
-      Green: false,
-      Blue: false,
-      Red: false
+      W: false,
+      B: false,
+      G: false,
+      U: false,
+      R: false,
+        C: false
     };
 
     function filterCards(newValue, oldValue) {
@@ -22,6 +23,12 @@ angular.module('mtgApp')
         var name = $scope.cardName;
         var mtgSets = $scope.selectedSets;
         var cmc = $scope.combinedManaCost;
+          var colors = _.reduce($scope.colors, function(accumulator, enabled, color){
+              if(enabled) {
+                  accumulator.push(color);
+              }
+              return accumulator;
+          }, []);
 
 
         if (name !== '') {
@@ -42,16 +49,10 @@ angular.module('mtgApp')
           searchQuery.cmc = cmc;
         }
 
-        var colorQueries = {hasAll: []};
-        _.each($scope.colors, function (enabled, color) {
-          if (enabled) {
-            colorQueries.hasAll.push(color);
+          if(colors.length > 0) {
+              var regexString = new RegExp(colors.join('|'), 'g');
+              searchQuery.manaCost = { 'regex':  regexString};
           }
-        });
-
-        if (colorQueries.hasAll.length > 0) {
-          searchQuery.colors = colorQueries;
-        }
 
         $scope.filteredCards = $scope.db(searchQuery).get();
         $scope.filterUpdated = new Date().getTime();

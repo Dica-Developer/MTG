@@ -37,11 +37,12 @@ describe('Controller: CardFilterController', function () {
     expect(scope.selectedSets).toBeNull();
     expect(scope.combinedManaCost).toBe(-1);
     expect(scope.colors).toEqual({
-      White: false,
-      Black: false,
-      Green: false,
-      Blue: false,
-      Red: false
+      W: false,
+      B: false,
+      G: false,
+      U: false,
+      R: false,
+      C: false
     });
     $rootScope.$apply();
     expect(scope.setList).toEqual([{ code: 'TEST' }]);
@@ -74,10 +75,10 @@ describe('Controller: CardFilterController', function () {
     $rootScope.$apply();
     expect(scope.db).not.toHaveBeenCalledWith();
     $rootScope.$apply(function(){
-      scope.colors.White = true;
-      scope.colors.Black = true;
+      scope.colors.W = true;
+      scope.colors.B = true;
     });
-    expect(scope.db).toHaveBeenCalledWith({ colors : { hasAll : [ 'White', 'Black' ] } });
+    expect(scope.db).toHaveBeenCalledWith({ manaCost : { regex: /W|B/g }});
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 
@@ -98,10 +99,10 @@ describe('Controller: CardFilterController', function () {
     expect(scope.db).not.toHaveBeenCalledWith();
     scope.cardName = 'Test Creature';
     scope.selectedSets = [scope.setList[0]];
-    scope.colors.White = true;
+    scope.colors.W = true;
     scope.combinedManaCost = 2;
     $rootScope.$apply();
-    expect(scope.db).toHaveBeenCalledWith({ concatNames : { likenocase : 'Test Creature' }, setCode : [ 'TEST' ], cmc : 2, colors : { hasAll : [ 'White' ] } });
+    expect(scope.db).toHaveBeenCalledWith({ concatNames : { likenocase : 'Test Creature' }, setCode : [ 'TEST' ], cmc : 2, manaCost: { regex: /W/g }});
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 });

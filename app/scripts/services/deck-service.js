@@ -101,7 +101,6 @@ angular.module('mtgApp')
             default:
               return 'c';
           }
-          return color;
         })
         .value();
       return colors;

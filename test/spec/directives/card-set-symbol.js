@@ -27,13 +27,6 @@ describe('Directive: cardSetSymbol', function() {
     expect(element.find('i').attr('uib-tooltip-placement')).toBe('right');
   });
 
-  it('Should set rarity to c (common) if it is a land', function() {
-    $rootScope.card = _.find(cardsExcerpt, {multiverseid: 279});
-    var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);
-    $rootScope.$digest();
-    expect(element.find('i').hasClass('ss-common')).toBe(true);
-  });
-
   it('Should set correct rarity', function() {
     $rootScope.card = _.find(cardsExcerpt, {rarity: 'Rare'});
     var element = $compile('<card-set-symbol data-card="card" data-size="2x" data-tip-text="{{card.setName}}" data-tip-appearance="right"></card-set-symbol>')($rootScope);

@@ -86,24 +86,24 @@ angular.module('mtgApp')
         .flatten()
         .uniq()
         .without(void 0)
-          .map(function(color){
-              switch(color){
-              case 'White':
-                  return 'w';
-              case 'Blue':
-                  return 'u';
-              case 'Black':
-                  return 'b';
-              case 'Red':
-                  return 'r';
-              case 'Green':
-                  return 'g';
-              default:
-                  return 'c';
-              }
-              console.log(color);
-              return color;
-          })
+        .map(function (color) {
+          switch (color) {
+            case 'White':
+              return 'w';
+            case 'Blue':
+              return 'u';
+            case 'Black':
+              return 'b';
+            case 'Red':
+              return 'r';
+            case 'Green':
+              return 'g';
+            default:
+              return 'c';
+          }
+          console.log(color);
+          return color;
+        })
         .value();
       return colors;
     };
@@ -130,12 +130,12 @@ angular.module('mtgApp')
 
     Deck.prototype.getManaCurve = function () {
       var generatedCurve = _.countBy(this.cardsFull, 'cmc');
-      _.range(1, 8).forEach(function(number){
-        if(!generatedCurve[number]){
+      _.range(1, 8).forEach(function (number) {
+        if (!generatedCurve[number]) {
           generatedCurve[number] = 0;
         }
       });
-      if(!generatedCurve.undefined){
+      if (!generatedCurve.undefined) {
         delete generatedCurve.undefined;
       }
       return generatedCurve;
@@ -144,7 +144,7 @@ angular.module('mtgApp')
     Deck.prototype.getShuffle = function (count) {
       var cardIds = _.sampleSize(this.options.cards, count),
         sample = [];
-      cardIds.forEach(function(cardId){
+      cardIds.forEach(function (cardId) {
         sample.push(cards.filter({multiverseid: cardId})[0]);
       });
       return sample;
@@ -201,9 +201,9 @@ angular.module('mtgApp')
       };
       var allCards = this.cardsFull.concat(this.sideboardFull);
       var allCardLegalities = _.map(allCards, 'legalities');
-      allCardLegalities.forEach(function(cardLegaleties){
-        _.each(cardLegaleties, function(legalety, type){
-          if(legaleties[type]){
+      allCardLegalities.forEach(function (cardLegaleties) {
+        _.each(cardLegaleties, function (legalety, type) {
+          if (legaleties[type]) {
             if (legalety === 'Banned') {
               legaleties[type] = legalety;
             } else if (legalety === 'Restricted' && legaleties[type] !== 'Banned') {
@@ -267,21 +267,21 @@ angular.module('mtgApp')
       return lastChangeTimeStamp;
     }
 
-    function existsByName(name){
+    function existsByName(name) {
       var decks = getAll();
-      var filteredDecks = decks.filter(function(deck){
+      var filteredDecks = decks.filter(function (deck) {
         return deck.getName() === name;
       });
 
       return filteredDecks.length > 0;
     }
 
-    function removeDeck (deckId){
+    function removeDeck(deckId) {
       var deckIds = localStorageService.get('decks');
       deckIds = _.without(deckIds, deckId);
       localStorageService.set('decks', deckIds);
       localStorageService.remove('deck-' + deckId);
-      if(tmpDecks[deckId]){
+      if (tmpDecks[deckId]) {
         delete tmpDecks[deckId];
       }
       lastChangeTimeStamp = new Date().getTime();

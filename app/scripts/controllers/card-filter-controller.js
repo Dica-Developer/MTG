@@ -14,21 +14,21 @@ angular.module('mtgApp')
       G: false,
       U: false,
       R: false,
-        C: false
+      C: false
     };
 
     function filterCards(newValue, oldValue) {
-      if(newValue !== null && newValue !== oldValue){
+      if (newValue !== null && newValue !== oldValue) {
         var searchQuery = {};
         var name = $scope.cardName;
         var mtgSets = $scope.selectedSets;
         var cmc = $scope.combinedManaCost;
-          var colors = _.reduce($scope.colors, function(accumulator, enabled, color){
-              if(enabled) {
-                  accumulator.push(color);
-              }
-              return accumulator;
-          }, []);
+        var colors = _.reduce($scope.colors, function (accumulator, enabled, color) {
+          if (enabled) {
+            accumulator.push(color);
+          }
+          return accumulator;
+        }, []);
 
 
         if (name !== '') {
@@ -49,10 +49,10 @@ angular.module('mtgApp')
           searchQuery.cmc = cmc;
         }
 
-          if(colors.length > 0) {
-              var regexString = new RegExp(colors.join('|'), 'g');
-              searchQuery.manaCost = { 'regex':  regexString};
-          }
+        if (colors.length > 0) {
+          var regexString = new RegExp(colors.join('|'), 'g');
+          searchQuery.manaCost = {'regex': regexString};
+        }
 
         $scope.filteredCards = $scope.db(searchQuery).get();
         $scope.filterUpdated = new Date().getTime();
@@ -64,12 +64,12 @@ angular.module('mtgApp')
     $scope.$watch('combinedManaCost', filterCards);
     $scope.$watch('colors', filterCards, true);
 
-    var getSetList = function(){
-      if(!data.isAvailable()){
+    var getSetList = function () {
+      if (!data.isAvailable()) {
         $timeout(getSetList, 5000);
       } else {
         data.getSetList()
-          .then(function(setList){
+          .then(function (setList) {
             $scope.setList = setList;
           });
       }

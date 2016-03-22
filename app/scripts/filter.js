@@ -7,7 +7,7 @@ angular.module('mtgApp')
 
       if (angular.isArray(items)) {
         items.forEach(function (item) {
-          Object.keys(props).forEach(function(prop){
+          Object.keys(props).forEach(function (prop) {
             var text = props[prop].toLowerCase();
             if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
               out.push(item);

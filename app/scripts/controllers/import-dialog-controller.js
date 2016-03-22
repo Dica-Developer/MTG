@@ -18,7 +18,7 @@ angular.module('mtgApp')
         };
       });
 
-      $scope.decksToImport = function(){
+      $scope.decksToImport = function () {
         return _.filter($scope.decks, 'selected').length;
       };
 

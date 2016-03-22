@@ -17,7 +17,7 @@ angular.module('mtgApp')
         };
       }) : null;
 
-      $scope.decksToExport = function(){
+      $scope.decksToExport = function () {
         return _.filter($scope.decks, 'selected').length;
       };
 

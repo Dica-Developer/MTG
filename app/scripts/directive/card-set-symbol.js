@@ -15,10 +15,10 @@ angular.module('mtgApp')
       },
       controller: ['$scope', function ($scope) {
         $scope.$watch('card', function (card) {
-          if(card){
+          if (card) {
             $scope.setCode = card.setCode;
             $scope.rarity = card.rarity ? card.rarity.toLowerCase() : 'common';
-            if(_.includes(card.types, 'Land')){
+            if (_.includes(card.types, 'Land')) {
               $scope.rarity = 'common';
             }
           }

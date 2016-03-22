@@ -16,11 +16,11 @@ angular.module('mtgApp')
     $scope.sideboard = $scope.deck.getFullSideboard();
     $scope.editname = false;
 
-    $scope.editName = function(){
+    $scope.editName = function () {
       $scope.editname = true;
     };
 
-    $scope.saveName = function(){
+    $scope.saveName = function () {
       $scope.saveDeck();
       $scope.editname = false;
     };
@@ -102,7 +102,7 @@ angular.module('mtgApp')
     };
 
     $scope.mulligan = function () {
-      if(shuffleCount > 1){
+      if (shuffleCount > 1) {
         shuffleCount = shuffleCount - 1;
         $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
       }
@@ -135,6 +135,7 @@ angular.module('mtgApp')
       $scope.cardsToAdd = $scope.filteredCards.slice(($scope.currentPage - 1) * $scope.maxResultLength, $scope.currentPage * $scope.maxResultLength);
       $scope.totalItems = $scope.filteredCards.length;
     }
+
     $scope.$watch('currentPage', updateList);
     $scope.$watch('maxResultLength', updateList);
     $scope.$watch('filterUpdateTimeStamp', updateList);

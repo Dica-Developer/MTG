@@ -4,7 +4,7 @@ angular.module('mtgApp')
   .controller('DeckListController', ['$scope', '$state', 'decks', function ($scope, $state, decks) {
     $scope.deckList = decks.getAll();
 
-    $scope.removeDeck = function(event, deckId){
+    $scope.removeDeck = function (event, deckId) {
       event.preventDefault();
       event.stopImmediatePropagation();
       decks.removeDeck(deckId);

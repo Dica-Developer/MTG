@@ -38,7 +38,7 @@ angular.module('mtgApp')
         currentStep: 0,
         overallCount: 4
       },
-      setProgress = function(step, complete){
+      setProgress = function (step, complete) {
         complete = complete || 0;
         progressSteps.currentStep = step;
         var currentStep = progressSteps.steps[step],
@@ -46,7 +46,7 @@ angular.module('mtgApp')
 
         currentStep.complete = oldComplete + complete;
 
-        if(currentStep.complete === currentStep.count){
+        if (currentStep.complete === currentStep.count) {
           progressSteps.complete = progressSteps.complete + 1;
         }
         overAllProgressDefer.notify(progressSteps);
@@ -84,7 +84,7 @@ angular.module('mtgApp')
           removeSetDataDefer
         ];
       setProgress('cleanUp');
-      if(fs.existsSync(cardDataPath)){
+      if (fs.existsSync(cardDataPath)) {
         fs.unlink(cardDataPath, function (error) {
           if (error) {
             removeCardDataDefer.reject();
@@ -99,7 +99,7 @@ angular.module('mtgApp')
         removeCardDataDefer.resolve();
       }
 
-      if(fs.existsSync(setDataPath)){
+      if (fs.existsSync(setDataPath)) {
         fs.unlink(setDataPath, function (error) {
           if (error) {
             removeSetDataDefer.reject();
@@ -160,7 +160,7 @@ angular.module('mtgApp')
       return defer.promise;
     }
 
-    function unzipCardData(){
+    function unzipCardData() {
       setProgress('unzipData');
       var DecompressZip = require('decompress-zip'),
         unzipper = new DecompressZip(cardDataPath + '.zip'),
@@ -182,13 +182,13 @@ angular.module('mtgApp')
       return defer.promise;
     }
 
-    function removeCardDataZip(){
+    function removeCardDataZip() {
       var defer = $q.defer();
       setProgress('removeZip');
 
-      if(fs.existsSync(cardDataPath + '.zip')){
-        fs.unlink(cardDataPath + '.zip', function(error){
-          if(error){
+      if (fs.existsSync(cardDataPath + '.zip')) {
+        fs.unlink(cardDataPath + '.zip', function (error) {
+          if (error) {
             $log.error(error);
             defer.reject();
           } else {
@@ -203,7 +203,7 @@ angular.module('mtgApp')
       return defer.promise;
     }
 
-    function fetchAll(){
+    function fetchAll() {
       return $q.all([fetchCardsDataZipAndWriteToDisk(), fetchSetDataAndWriteToDisk()]);
     }
 
@@ -217,42 +217,42 @@ angular.module('mtgApp')
       return overAllProgressDefer.promise;
     }
 
-    function getCardData(){
-        var defer = $q.defer();
-        if(!nodeApp){
-            $http.get('http://localhost:9000/data_bak/ALL_SETS.json').then(function(cardData){
-                defer.resolve(cardData.data);
-            });
-        } else {
-          fs.readFile(cardDataPath, {encoding: 'UTF-8'}, function(error, content){
-              if(error){
-                  $log.error(error);
-                  defer.reject();
-              } else {
-                  defer.resolve(JSON.parse(content));
-              }
-          });
-        }
+    function getCardData() {
+      var defer = $q.defer();
+      if (!nodeApp) {
+        $http.get('http://localhost:9000/data_bak/ALL_SETS.json').then(function (cardData) {
+          defer.resolve(cardData.data);
+        });
+      } else {
+        fs.readFile(cardDataPath, {encoding: 'UTF-8'}, function (error, content) {
+          if (error) {
+            $log.error(error);
+            defer.reject();
+          } else {
+            defer.resolve(JSON.parse(content));
+          }
+        });
+      }
 
-        return defer.promise;
+      return defer.promise;
     }
 
-    function getSetList(){
+    function getSetList() {
       var defer = $q.defer();
-        if(!nodeApp){
-            $http.get('http://localhost:9000/data_bak/SET_LIST.json').then(function(setData){
-                defer.resolve(setData.data);
-            });
-        } else {
-            fs.readFile(setDataPath, { encoding: 'UTF-8' }, function (error, content) {
-                if (error) {
-                    $log.error(error);
-                    defer.reject();
-                } else {
-                    defer.resolve(JSON.parse(content));
-                }
-            });
-        }
+      if (!nodeApp) {
+        $http.get('http://localhost:9000/data_bak/SET_LIST.json').then(function (setData) {
+          defer.resolve(setData.data);
+        });
+      } else {
+        fs.readFile(setDataPath, {encoding: 'UTF-8'}, function (error, content) {
+          if (error) {
+            $log.error(error);
+            defer.reject();
+          } else {
+            defer.resolve(JSON.parse(content));
+          }
+        });
+      }
       return defer.promise;
     }
 

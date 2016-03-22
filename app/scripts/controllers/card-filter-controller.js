@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('CardFilterController', ['$scope', '$timeout', 'data', function ($scope, $timeout, data) {
+  .controller('CardFilterController', ['$scope', '$timeout', 'data', 'sets', function ($scope, $timeout, data, sets) {
     $scope.scope = $scope;
     $scope.cardName = '';
     $scope.filteredCards = $scope.db().get();
@@ -68,10 +68,7 @@ angular.module('mtgApp')
       if (!data.isAvailable()) {
         $timeout(getSetList, 5000);
       } else {
-        data.getSetList()
-          .then(function (setList) {
-            $scope.setList = setList;
-          });
+        $scope.setList = sets.filter();
       }
     };
 

@@ -17,15 +17,20 @@ describe('Controller: CardFilterController', function () {
     $controller('CardFilterController', {
       $scope: scope,
       data: {
-        getSetList: function(){
+        getSetList: function () {
           return $q.when([
             {
               code: 'TEST'
             }
           ]);
         },
-        isAvailable: function(){
+        isAvailable: function () {
           return true;
+        }
+      },
+      sets: {
+        filter: function () {
+          return [{code: 'TEST'}];
         }
       }
     });

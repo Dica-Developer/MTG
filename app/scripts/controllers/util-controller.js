@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('UtilController', ['$scope', 'data', 'cards', function ($scope, data, cards) {
+  .controller('UtilController', ['$q', '$scope', 'data', 'cards', 'sets', function ($q, $scope, data, cards, sets) {
     $scope.appReady = false;
     $scope.progress = '';
 
@@ -18,14 +18,12 @@ angular.module('mtgApp')
         $scope.appReady = true;
       };
 
-      cards.prepareDataBase()
-        .then(onFulfilled, handleError, updateProgress);
+      $q.all([cards.prepareDataBase(), sets.prepareDataBase()]).then(onFulfilled, handleError, updateProgress);
     }
 
 
     if (!data.isAvailable()) {
-      data.fetchData()
-        .then(prepareDatabase, handleError, updateProgress);
+      data.fetchData().then(prepareDatabase, handleError, updateProgress);
     } else {
       prepareDatabase();
     }

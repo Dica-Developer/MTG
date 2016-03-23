@@ -195,12 +195,12 @@ angular.module('mtgApp')
       var allCards = this.cardsFull.concat(this.sideboardFull);
       var allCardLegalities = _.map(allCards, 'legalities');
       allCardLegalities.forEach(function (cardLegaleties) {
-        _.each(cardLegaleties, function (legalety, type) {
-          if (legaleties[type]) {
-            if (legalety === 'Banned') {
-              legaleties[type] = legalety;
-            } else if (legalety === 'Restricted' && legaleties[type] !== 'Banned') {
-              legaleties[type] = legalety;
+        _.each(cardLegaleties, function (legalety) {
+          if (legaleties[legalety.format]) {
+            if (legalety.legality === 'Banned') {
+              legaleties[legalety.format] = legalety.legality;
+            } else if (legalety.legality === 'Restricted' && legaleties[legalety.format] !== 'Banned') {
+              legaleties[legalety.format] = legalety.legality;
             }
           }
         });

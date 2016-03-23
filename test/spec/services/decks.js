@@ -69,8 +69,8 @@ describe('Service: decks', function () {
     });
 
     it('deck.getColors should should an array with all colors used in the deck', function () {
-      deck.addCard(96);
-      deck.addCard(48);
+      deck.addCard('9d91ef4896ab4c1a5611d4d06971fc8026dd2f3f');
+      deck.addCard('d8b74ea7f050c8c05588e002f0264643fc90209b');
       var colors = deck.getColors();
       expect(colors).toEqual(['u', 'b']);
     });
@@ -148,9 +148,9 @@ describe('Service: decks', function () {
       var card2 = cardsExcerpt[1];
       expect(deck.getCountByCardType()).toEqual({});
 
-      deck.addCard(card1.multiverseid);
-      deck.addCard(card1.multiverseid);
-      deck.addCard(card2.multiverseid);
+      deck.addCard(card1.id);
+      deck.addCard(card1.id);
+      deck.addCard(card2.id);
       expect(deck.getCountByCardType()).toEqual({Creature: 2, Instant: 1});
     });
 
@@ -412,12 +412,12 @@ describe('Service: decks', function () {
         var card1 = cardsExcerpt[0];
         var card2 = cardsExcerpt[1];
         var card3 = cardsExcerpt[2];
-        deck.addCard(card1.multiverseid);
-        deck.addCard(card2.multiverseid);
-        deck.addCard(card2.multiverseid);
-        deck.addCard(card3.multiverseid);
-        deck.addCard(card3.multiverseid);
-        deck.addCard(card3.multiverseid);
+        deck.addCard(card1.id);
+        deck.addCard(card2.id);
+        deck.addCard(card2.id);
+        deck.addCard(card3.id);
+        deck.addCard(card3.id);
+        deck.addCard(card3.id);
 
         var manaCurve = deck.getManaCurve();
         expect(manaCurve['1']).toBe(1);
@@ -486,8 +486,8 @@ describe('Service: decks', function () {
     describe('deck.getLegalities', function () {
 
       it('Should return correct legality list of deck', function () {
-        deck.addCard(96);
-        deck.addCard(48);
+        deck.addCard('9d91ef4896ab4c1a5611d4d06971fc8026dd2f3f');
+        deck.addCard('d8b74ea7f050c8c05588e002f0264643fc90209b');
         expect(deck.getLegalities()).toEqual({
           Standard: 'Legal',
           Modern: 'Legal',
@@ -495,7 +495,7 @@ describe('Service: decks', function () {
           Legacy: 'Legal',
           Commander: 'Legal'
         });
-        deck.addCard(234);
+        deck.addCard('21f307b39c23f1a75c0220995acf179a68aede3b');
         expect(deck.getLegalities()).toEqual({
           Standard: 'Legal',
           Modern: 'Legal',

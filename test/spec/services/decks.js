@@ -509,4 +509,60 @@ describe('Service: decks', function () {
 
   });
 
+  describe('Decks service API', function(){
+    var deck1, deck2;
+    beforeEach(function(){
+      deck1 = decks.addNew();
+      deck1.setName('deck1');
+      deck1.save();
+
+      deck2 = decks.addNew();
+      deck2.setName('deck2');
+      deck2.save();
+    });
+
+    afterEach(function(){
+      localStorageService.clearAll();
+    });
+
+    describe('decks.existsByName', function(){
+
+      it('Should return true if a deck with given name already exists', function(){
+        expect(decks.existsByName('deck1')).toBe(true);
+      });
+
+      it('Should return false if a deck with given name doe not exists', function(){
+        expect(decks.existsByName('deck3')).toBe(false);
+      });
+
+    });
+
+    describe('decks.getById', function(){
+
+      it('Should return the correct deck', function(){
+        var id = deck1.options.id;
+        expect(decks.getById(id)).toEqual(deck1);
+      });
+
+    });
+
+    describe('decks.exportData', function(){
+
+      it('Should return a map with all stored decks', function(){
+        var decksToExport = decks.exportData();
+
+        expect(_.size(decksToExport)).toBe(2);
+      });
+
+      it('Should return an empty map is no deck available', function(){
+        localStorageService.clearAll();
+        var decksToExport = decks.exportData();
+
+        expect(decksToExport).toEqual({});
+      });
+
+    });
+
+  });
+
 });

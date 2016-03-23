@@ -19,10 +19,6 @@ angular.module('mtgApp')
             case 'EXP':
               rarity = 'mythic';
               break;
-            case 'VAN':
-            case 'TSB':
-              rarity = 's';
-              break;
             default :
               rarity = 'common';
               break;

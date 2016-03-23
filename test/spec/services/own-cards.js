@@ -113,13 +113,13 @@ describe('Service: ownCards', function () {
     var card = cardsExcerpt[0];
     spyOn(localStorageService, 'set');
 
-    var ownCard = ownCards.getById(card.multiverseid);
+    var ownCard = ownCards.getById(card.id);
     expect(ownCard).toBeUndefined();
 
-    ownCards.addCard(card.multiverseid);
+    ownCards.addCard(card.id);
 
-    ownCard = ownCards.getById(card.multiverseid);
-    expect(ownCard.multiverseid).toBe(card.multiverseid);
+    ownCard = ownCards.getById(card.id);
+    expect(ownCard.id).toBe(card.id);
   });
 
 });

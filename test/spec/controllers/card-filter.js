@@ -60,7 +60,7 @@ describe('Controller: CardFilterController', function () {
     $rootScope.$apply(function(){
       scope.cardName = 'Test Creature';
     });
-    expect(scope.db).toHaveBeenCalledWith({ concatNames : { likenocase : 'Test Creature' } });
+    expect(scope.db).toHaveBeenCalledWith({ concatNames: Object({ likenocase: 'Test Creature' }), cardColor: 0 });
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 
@@ -71,7 +71,7 @@ describe('Controller: CardFilterController', function () {
     $rootScope.$apply(function(){
       scope.selectedSets = [scope.setList[0]];
     });
-    expect(scope.db).toHaveBeenCalledWith({ setCode : [ 'TEST' ] });
+    expect(scope.db).toHaveBeenCalledWith({ setCode: [ 'TEST' ], cardColor: 0 });
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 
@@ -83,7 +83,7 @@ describe('Controller: CardFilterController', function () {
       scope.colors.W = true;
       scope.colors.B = true;
     });
-    expect(scope.db).toHaveBeenCalledWith({ manaCost : { regex: /W|B/g }});
+    expect(scope.db).toHaveBeenCalledWith({ cardColor: 5 });
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 
@@ -94,7 +94,7 @@ describe('Controller: CardFilterController', function () {
     $rootScope.$apply(function(){
       scope.combinedManaCost = 2;
     });
-    expect(scope.db).toHaveBeenCalledWith({ cmc : 2 });
+    expect(scope.db).toHaveBeenCalledWith({ cmc: 2, cardColor: 0 });
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 
@@ -107,7 +107,7 @@ describe('Controller: CardFilterController', function () {
     scope.colors.W = true;
     scope.combinedManaCost = 2;
     $rootScope.$apply();
-    expect(scope.db).toHaveBeenCalledWith({ concatNames : { likenocase : 'Test Creature' }, setCode : [ 'TEST' ], cmc : 2, manaCost: { regex: /W/g }});
+    expect(scope.db).toHaveBeenCalledWith({ concatNames : { likenocase : 'Test Creature' }, setCode : [ 'TEST' ], cmc : 2, cardColor: 1});
     expect(scope.filterUpdated).toEqual(jasmine.any(Number));
   });
 });

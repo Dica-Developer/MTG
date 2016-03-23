@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .service('cards', ['$q', 'data', function ($q, data) {
+  .service('cards', ['$q', 'data', 'cardColor', function ($q, data, cardColor) {
     var cardsDb = TAFFY();
 
     function filter(search) {
@@ -19,6 +19,7 @@ angular.module('mtgApp')
         data.getCardData().then(function (cardData) {
           _.each(cardData, function (mtgSet) {
             var cards = _.map(mtgSet.cards, function (card) {
+              card.cardColor = cardColor.getColorBitsForDb(card.manaCost);
               card.setCode = mtgSet.code;
               card.setName = mtgSet.name;
               card.foreignNames = card.foreignNames || [];

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('CardFilterController', ['$scope', '$timeout', 'data', 'sets', function ($scope, $timeout, data, sets) {
+  .controller('CardFilterController', ['$scope', '$timeout', 'data', 'cardColor', 'sets', function ($scope, $timeout, data, cardColor, sets) {
     $scope.scope = $scope;
     $scope.cardName = '';
     $scope.filteredCards = $scope.db().get();
@@ -23,12 +23,6 @@ angular.module('mtgApp')
         var name = $scope.cardName;
         var mtgSets = $scope.selectedSets;
         var cmc = $scope.combinedManaCost;
-        var colors = _.reduce($scope.colors, function (accumulator, enabled, color) {
-          if (enabled) {
-            accumulator.push(color);
-          }
-          return accumulator;
-        }, []);
 
 
         if (name !== '') {
@@ -49,10 +43,7 @@ angular.module('mtgApp')
           searchQuery.cmc = cmc;
         }
 
-        if (colors.length > 0) {
-          var regexString = new RegExp(colors.join('|'), 'g');
-          searchQuery.manaCost = {'regex': regexString};
-        }
+        searchQuery.cardColor = cardColor.getColorBitsFromMap($scope.colors);
 
         $scope.filteredCards = $scope.db(searchQuery).get();
         $scope.filterUpdated = new Date().getTime();

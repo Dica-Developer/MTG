@@ -20,7 +20,7 @@ angular.module('mtgApp')
     }
 
     function getById(id) {
-      return ownCardsDb({multiverseid: id}).get()[0];
+      return ownCardsDb({id: id}).get()[0];
     }
 
     function getCountOf(id) {
@@ -32,10 +32,10 @@ angular.module('mtgApp')
       var card = getById(id);
       if (card) {
         var count = card.count + 1;
-        ownCardsDb({multiverseid: id}).update({count: count});
+        ownCardsDb({id: id}).update({count: count});
       } else {
         ownCardsDb.insert({
-          multiverseid: id,
+          id: id,
           count: 1
         });
       }
@@ -46,9 +46,9 @@ angular.module('mtgApp')
       if (card) {
         var count = card.count - 1;
         if (count > 0) {
-          ownCardsDb({multiverseid: id}).update({count: count});
+          ownCardsDb({id: id}).update({count: count});
         } else {
-          ownCardsDb({multiverseid: id}).remove();
+          ownCardsDb({id: id}).remove();
         }
       }
     }

@@ -9,7 +9,7 @@ angular.module('mtgApp')
     function ($scope, $uibModal, cards, ownCards) {
       var ownCardsTmpDB = TAFFY();
       ownCardsTmpDB.insert(cards.filter({
-        multiverseid: _.map(_.map(ownCards.getAll(), 'multiverseid'), Number)
+        id: _.map(_.map(ownCards.getAll(), 'id'), Number)
       }));
       $scope.scope = $scope;
       $scope.db = ownCardsTmpDB;

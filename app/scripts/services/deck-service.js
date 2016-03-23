@@ -138,7 +138,7 @@ angular.module('mtgApp')
       var cardIds = _.sampleSize(this.options.cards, count),
         sample = [];
       cardIds.forEach(function (cardId) {
-        sample.push(cards.filter({multiverseid: cardId})[0]);
+        sample.push(cards.filter({id: cardId})[0]);
       });
       return sample;
     };
@@ -174,14 +174,14 @@ angular.module('mtgApp')
         if (!types[card.types.join('-')]) {
           types[card.types.join('-')] = 0;
         }
-        types[card.types.join('-')] = types[card.types.join('-')] + _this.getCountOf(card.multiverseid);
+        types[card.types.join('-')] = types[card.types.join('-')] + _this.getCountOf(card.id);
       });
       return types;
     };
 
     Deck.prototype.updateFullCardInfo = function () {
-      this.cardsFull = cards.filter({multiverseid: _.uniq(this.options.cards)});
-      this.sideboardFull = cards.filter({multiverseid: _.uniq(this.options.sideboard)});
+      this.cardsFull = cards.filter({id: _.uniq(this.options.cards)});
+      this.sideboardFull = cards.filter({id: _.uniq(this.options.sideboard)});
     };
 
     Deck.prototype.getLegalities = function () {

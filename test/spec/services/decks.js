@@ -14,22 +14,13 @@ describe('Service: decks', function () {
     localStorageService = _localStorageService_;
   }));
 
-  it('should have correct API', function () {
-    expect(decks.getAll).toBeDefined();
-    expect(decks.getById).toBeDefined();
-    expect(decks.addNew).toBeDefined();
-    expect(decks.exportData).toBeDefined();
-    expect(decks.importData).toBeDefined();
-    expect(decks.lastChange).toBeDefined();
-  });
-
-  describe('Deck', function(){
+  describe('Deck', function () {
     var deck;
-    beforeEach(function(){
+    beforeEach(function () {
       deck = decks.addNew();
     });
 
-    it('Should be defined and have default values', function(){
+    it('Should be defined and have default values', function () {
       var options = deck.options;
       expect(deck).toBeDefined();
 
@@ -57,7 +48,7 @@ describe('Service: decks', function () {
       expect(deck.sideboardFull.length).toBe(0);
     });
 
-    it('deck.setName should add given name to deck.options', function(){
+    it('deck.setName should add given name to deck.options', function () {
       var name = 'Awesome Deck';
       expect(deck.options.name).toBe('');
 
@@ -65,20 +56,26 @@ describe('Service: decks', function () {
       expect(deck.options.name).toBe(name);
     });
 
-    it('deck.getName should should return deck name', function(){
+    it('deck.getName should should return deck name', function () {
       var name = 'Awesome Deck';
       deck.options.name = name;
       expect(deck.getName()).toBe(name);
     });
 
-    it('deck.getColors should should an array with all colors used in the deck', function(){
+    it('deck.setType should set tyoe to deck', function () {
+      expect(deck.options.type).toBeUndefined();
+      deck.setType('Commander');
+      expect(deck.options.type).toBe('Commander');
+    });
+
+    it('deck.getColors should should an array with all colors used in the deck', function () {
       deck.addCard(96);
       deck.addCard(48);
       var colors = deck.getColors();
       expect(colors).toEqual(['u', 'b']);
     });
 
-    it('deck.getCountOf should return correct number of cards exist in deck with given id', function(){
+    it('deck.getCountOf should return correct number of cards exist in deck with given id', function () {
       var card1 = cardsExcerpt[0];
       var card2 = cardsExcerpt[1];
       var card3 = cardsExcerpt[2];
@@ -101,7 +98,7 @@ describe('Service: decks', function () {
 
     });
 
-    it('deck.getSideboardCountOf should return correct number of cards exist in deck side board with given id', function(){
+    it('deck.getSideboardCountOf should return correct number of cards exist in deck side board with given id', function () {
       var card1 = cardsExcerpt[0];
       var card2 = cardsExcerpt[1];
       var card3 = cardsExcerpt[2];
@@ -124,7 +121,7 @@ describe('Service: decks', function () {
 
     });
 
-    it('deck.getCardCount should return correct number of all cards in main deck', function(){
+    it('deck.getCardCount should return correct number of all cards in main deck', function () {
       var card1 = cardsExcerpt[0];
       expect(deck.getCardCount()).toBe(0);
 
@@ -135,7 +132,7 @@ describe('Service: decks', function () {
       expect(deck.getCardCount()).toBe(2);
     });
 
-    it('deck.getSideboardCount should return correct number of all cards in side board', function(){
+    it('deck.getSideboardCount should return correct number of all cards in side board', function () {
       var card1 = cardsExcerpt[0];
       expect(deck.getSideboardCount()).toBe(0);
 
@@ -146,7 +143,7 @@ describe('Service: decks', function () {
       expect(deck.getSideboardCount()).toBe(2);
     });
 
-    it('deck.getCountByCardType should return correct number of all cards in side board sorted by card type', function(){
+    it('deck.getCountByCardType should return correct number of all cards in side board sorted by card type', function () {
       var card1 = cardsExcerpt[0];
       var card2 = cardsExcerpt[1];
       expect(deck.getCountByCardType()).toEqual({});
@@ -154,12 +151,12 @@ describe('Service: decks', function () {
       deck.addCard(card1.multiverseid);
       deck.addCard(card1.multiverseid);
       deck.addCard(card2.multiverseid);
-      expect(deck.getCountByCardType()).toEqual({ Creature : 2, Instant : 1 });
+      expect(deck.getCountByCardType()).toEqual({Creature: 2, Instant: 1});
     });
 
-    describe('deck.addCard', function(){
+    describe('deck.addCard', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.addCard(card.multiverseid);
@@ -167,7 +164,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should add card id to options.cards', function(){
+      it('Should add card id to options.cards', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.addCard(card.multiverseid);
@@ -176,7 +173,7 @@ describe('Service: decks', function () {
         expect(deck.options.cards[0]).toBe(card.multiverseid);
       });
 
-      it('Should add card id to options.cards also if card id already exist', function(){
+      it('Should add card id to options.cards also if card id already exist', function () {
         var card = cardsExcerpt[0];
         deck.addCard(card.multiverseid);
         spyOn(deck, 'updateFullCardInfo');
@@ -187,9 +184,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.dropCard', function(){
+    describe('deck.dropCard', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.dropCard(card.multiverseid);
@@ -197,7 +194,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should drop card id from options.cards', function(){
+      it('Should drop card id from options.cards', function () {
         spyOn(deck, 'updateFullCardInfo');
 
         var card = cardsExcerpt[0];
@@ -210,7 +207,7 @@ describe('Service: decks', function () {
 
       });
 
-      it('Should drop only one card id if also if card is present multiple times', function(){
+      it('Should drop only one card id if also if card is present multiple times', function () {
         spyOn(deck, 'updateFullCardInfo');
         var card = cardsExcerpt[0];
         deck.addCard(card.multiverseid);
@@ -224,9 +221,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.dropAll', function(){
+    describe('deck.dropAll', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.dropAll(card.multiverseid);
@@ -234,7 +231,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should drop all cards with given id from options.cards', function(){
+      it('Should drop all cards with given id from options.cards', function () {
         spyOn(deck, 'updateFullCardInfo');
 
         var card1 = cardsExcerpt[0];
@@ -253,9 +250,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.addCardToSideBoard', function(){
+    describe('deck.addCardToSideBoard', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.addCardToSideBoard(card.multiverseid);
@@ -263,7 +260,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should add card id to options.sideboard', function(){
+      it('Should add card id to options.sideboard', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.addCardToSideBoard(card.multiverseid);
@@ -272,7 +269,7 @@ describe('Service: decks', function () {
         expect(deck.options.sideboard[0]).toBe(card.multiverseid);
       });
 
-      it('Should add card id to options.sideboard also if card id already exist', function(){
+      it('Should add card id to options.sideboard also if card id already exist', function () {
         var card = cardsExcerpt[0];
         deck.addCardToSideBoard(card.multiverseid);
         spyOn(deck, 'updateFullCardInfo');
@@ -283,9 +280,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.dropCardFromSideBoard', function(){
+    describe('deck.dropCardFromSideBoard', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.dropCardFromSideBoard(card.multiverseid);
@@ -293,7 +290,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should drop card id from options.sideboard', function(){
+      it('Should drop card id from options.sideboard', function () {
         spyOn(deck, 'updateFullCardInfo');
 
         var card = cardsExcerpt[0];
@@ -306,7 +303,7 @@ describe('Service: decks', function () {
 
       });
 
-      it('Should drop only one card id if also if card is present multiple times', function(){
+      it('Should drop only one card id if also if card is present multiple times', function () {
         spyOn(deck, 'updateFullCardInfo');
         var card = cardsExcerpt[0];
         deck.addCardToSideBoard(card.multiverseid);
@@ -320,9 +317,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.dropAllFromSideboard', function(){
+    describe('deck.dropAllFromSideboard', function () {
 
-      it('Should call .updateFullCardInfo', function(){
+      it('Should call .updateFullCardInfo', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'updateFullCardInfo');
         deck.dropAllFromSideboard(card.multiverseid);
@@ -330,7 +327,7 @@ describe('Service: decks', function () {
         expect(deck.updateFullCardInfo).toHaveBeenCalled();
       });
 
-      it('Should drop all cards with given id from options.sideboard', function(){
+      it('Should drop all cards with given id from options.sideboard', function () {
         spyOn(deck, 'updateFullCardInfo');
 
         var card1 = cardsExcerpt[0];
@@ -349,9 +346,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.moveCardToSideboard', function(){
+    describe('deck.moveCardToSideboard', function () {
 
-      it('Should call deck.addCardToSideBoard', function(){
+      it('Should call deck.addCardToSideBoard', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'addCardToSideBoard');
 
@@ -361,7 +358,7 @@ describe('Service: decks', function () {
         expect(deck.addCardToSideBoard).toHaveBeenCalledWith(card.multiverseid);
       });
 
-      it('Should remove card from deck.options.cards and add to deck.options.sideboard', function(){
+      it('Should remove card from deck.options.cards and add to deck.options.sideboard', function () {
         var card = cardsExcerpt[0];
         deck.addCard(card.multiverseid);
 
@@ -373,9 +370,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.moveCardToMain', function(){
+    describe('deck.moveCardToMain', function () {
 
-      it('Should call deck.addCard', function(){
+      it('Should call deck.addCard', function () {
         var card = cardsExcerpt[0];
         spyOn(deck, 'addCard');
 
@@ -385,7 +382,7 @@ describe('Service: decks', function () {
         expect(deck.addCard).toHaveBeenCalledWith(card.multiverseid);
       });
 
-      it('Should remove card from deck.options.sideboard and add to deck.options.cards', function(){
+      it('Should remove card from deck.options.sideboard and add to deck.options.cards', function () {
         var card = cardsExcerpt[0];
         deck.addCardToSideBoard(card.multiverseid);
 
@@ -397,21 +394,21 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.getManaCurve', function(){
+    describe('deck.getManaCurve', function () {
 
-      it('Should always have at least 7 entries', function(){
+      it('Should always have at least 7 entries', function () {
         var manaCurve = deck.getManaCurve();
         expect(_.size(manaCurve)).toBe(7);
       });
 
-      it('Should always have 0 count for entries if no card is present', function(){
+      it('Should always have 0 count for entries if no card is present', function () {
         var manaCurve = deck.getManaCurve();
-        _.each(manaCurve, function(entry){
+        _.each(manaCurve, function (entry) {
           expect(entry).toBe(0);
         });
       });
 
-      it('Should return correct mana curve object', function(){
+      it('Should return correct mana curve object', function () {
         var card1 = cardsExcerpt[0];
         var card2 = cardsExcerpt[1];
         var card3 = cardsExcerpt[2];
@@ -433,9 +430,9 @@ describe('Service: decks', function () {
       });
     });
 
-    describe('deck.save', function(){
+    describe('deck.save', function () {
 
-      it('Should call localStorageService.get decks to fetch already existing decks', function(){
+      it('Should call localStorageService.get decks to fetch already existing decks', function () {
         spyOn(localStorageService, 'get');
         spyOn(localStorageService, 'set');
 
@@ -444,17 +441,17 @@ describe('Service: decks', function () {
         expect(localStorageService.get).toHaveBeenCalledWith('decks');
       });
 
-      it('Should call localStorageService.set decks if deck is not already in deck list', function(){
+      it('Should call localStorageService.set decks if deck is not already in deck list', function () {
         spyOn(localStorageService, 'get');
         spyOn(localStorageService, 'set');
 
         deck.save();
 
         var callArgs = localStorageService.set.calls.allArgs();
-        expect(callArgs[0]).toEqual(['decks', [ deck.options.id ]]);
+        expect(callArgs[0]).toEqual(['decks', [deck.options.id]]);
       });
 
-      it('Should call localStorageService.set decks if deck is not already in deck list', function(){
+      it('Should call localStorageService.set decks if deck is not already in deck list', function () {
         spyOn(localStorageService, 'get');
         spyOn(localStorageService, 'set');
 
@@ -462,10 +459,10 @@ describe('Service: decks', function () {
 
         var callArgs = localStorageService.set.calls.allArgs();
         expect(localStorageService.set.calls.count()).toBe(2);
-        expect(callArgs[0]).toEqual(['decks', [ deck.options.id ]]);
+        expect(callArgs[0]).toEqual(['decks', [deck.options.id]]);
       });
 
-      it('Should call localStorageService.set only ones if deck is is already present', function(){
+      it('Should call localStorageService.set only ones if deck is is already present', function () {
         spyOn(localStorageService, 'get').and.returnValue([deck.options.id]);
         spyOn(localStorageService, 'set');
 
@@ -474,7 +471,7 @@ describe('Service: decks', function () {
         expect(localStorageService.set.calls.count()).toBe(1);
       });
 
-      it('Should set save the correct values', function(){
+      it('Should set save the correct values', function () {
         spyOn(localStorageService, 'get').and.returnValue([deck.options.id]);
         spyOn(localStorageService, 'set');
 
@@ -482,6 +479,30 @@ describe('Service: decks', function () {
 
         var callArgs = localStorageService.set.calls.allArgs();
         expect(callArgs[0]).toEqual(['deck-' + deck.options.id, deck.options]);
+      });
+
+    });
+
+    describe('deck.getLegalities', function () {
+
+      it('Should return correct legality list of deck', function () {
+        deck.addCard(96);
+        deck.addCard(48);
+        expect(deck.getLegalities()).toEqual({
+          Standard: 'Legal',
+          Modern: 'Legal',
+          Vintage: 'Legal',
+          Legacy: 'Legal',
+          Commander: 'Legal'
+        });
+        deck.addCard(234);
+        expect(deck.getLegalities()).toEqual({
+          Standard: 'Legal',
+          Modern: 'Legal',
+          Vintage: 'Restricted',
+          Legacy: 'Banned',
+          Commander: 'Banned'
+        });
       });
 
     });

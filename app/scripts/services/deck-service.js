@@ -12,7 +12,15 @@ angular.module('mtgApp')
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
       });
-    }, tmpDecks = {}, lastChangeTimeStamp = null;
+    }, tmpDecks = {}, lastChangeTimeStamp = null,
+      COLOR_MAP = {
+        'White': 'w',
+        'Blue': 'u',
+        'Black': 'b',
+        'Red': 'r',
+        'Green': 'g',
+        'Colorless': 'c'
+      };
 
     function Deck(options) {
       this.options = {
@@ -87,20 +95,7 @@ angular.module('mtgApp')
         .uniq()
         .without(void 0)
         .map(function (color) {
-          switch (color) {
-            case 'White':
-              return 'w';
-            case 'Blue':
-              return 'u';
-            case 'Black':
-              return 'b';
-            case 'Red':
-              return 'r';
-            case 'Green':
-              return 'g';
-            default:
-              return 'c';
-          }
+          return COLOR_MAP[color];
         })
         .value();
       return colors;

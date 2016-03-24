@@ -35,7 +35,11 @@ angular.module('mtgApp')
       };
 
       $scope.ok = function () {
-        $uibModalInstance.close(_.filter($scope.decks, 'selected'));
+        var  selectedDecks = _.map(_.filter($scope.decks, 'selected'), function(deck){
+          var orgDeck = _.find(importDecks, { 'id': deck.id});
+          return _.assign({}, orgDeck, { 'name': deck.name });
+        });
+        $uibModalInstance.close({ decks: selectedDecks, cards: importCards });
       };
 
       $scope.cancel = function () {

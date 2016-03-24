@@ -1,31 +1,12 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DatabasesController', ['$scope', '$uibModal', 'decks', 'ownCards', function ($scope, $uibModal, decks, ownCards) {
+  .controller('DatabasesController', ['$scope', '$uibModal', 'backup', function ($scope, $uibModal, backup) {
 
     function readFile(file, callback) {
       var reader = new FileReader();
       reader.readAsText(file, 'UTF-8');
       reader.onload = callback;
-    }
-
-    function validateImport(data, field) {
-      var importData;
-      try {
-        importData = JSON.parse(data);
-        if (field) {
-          if (field === 'card') {
-            importData = _.has(importData, field) ? importData[field] : importData.ownCards;
-          } else {
-            importData = importData[field];
-          }
-        }
-      } catch (err) {
-        console.error('Cannot parse data');
-        console.error(err);
-      }
-
-      return importData || false;
     }
 
     function showImportDialog(cards, decks) {
@@ -45,28 +26,12 @@ angular.module('mtgApp')
 
     $scope.importComplete = function (event, files) {
       readFile(files[0], function (event) {
-        var validData = validateImport(event.target.result, null),
+        var validData = backup.getImportData(event.target.result),
           modalInstance;
 
         if (validData) {
-          var cards = validData.cards || validData.ownCards;
-          modalInstance = showImportDialog(cards, validData.decks);
-          modalInstance.result.then(function (selectedDecks) {
-            var decksToImport = _.map(selectedDecks, function (deck) {
-              var deckToImport = validData.decks[deck.id];
-              delete deckToImport.id;
-              deckToImport.name = deck.name;
-              return deckToImport;
-            });
-            decks.importData(decksToImport);
-            ownCards.importData(cards);
-
-            //Garbage Collector
-            modalInstance = null;
-            validData = null;
-          }, function () {
-            console.info('Modal dismissed at: ' + new Date());
-          });
+          modalInstance = showImportDialog(validData.cards, validData.decks);
+          modalInstance.result.then(backup.importData);
         } else {
 
         }
@@ -75,31 +40,22 @@ angular.module('mtgApp')
 
     $scope.importCards = function (event, files) {
       readFile(files[0], function (event) {
-        var validCards = validateImport(event.target.result, 'cards');
+        var validData = backup.getImportData(event.target.result);
 
-        if (validCards) {
-          ownCards.importData(validCards);
+        if (validData) {
+          delete validData.decks;
+          backup.importData(validData);
         }
       });
     };
 
     $scope.importDecks = function (event, files) {
       readFile(files[0], function (event) {
-        var validDecks = validateImport(event.target.result, 'decks'), modalInstance;
+        var validData = backup.getImportData(event.target.result), modalInstance;
 
-        if (validDecks) {
-          modalInstance = showImportDialog(null, validDecks);
-          modalInstance.result.then(function (selectedDecks) {
-            var decksToImport = _.map(selectedDecks, function (deck) {
-              var deckToImport = validDecks[deck.id];
-              delete deckToImport.id;
-              deckToImport.name = deck.name;
-              return deckToImport;
-            });
-            decks.importData(decksToImport);
-          }, function () {
-            console.info('Modal dismissed at: ' + new Date());
-          });
+        if (validData) {
+          modalInstance = showImportDialog(null, validData.decks);
+          modalInstance.result.then(backup.importData);
         } else {
 
         }

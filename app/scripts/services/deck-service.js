@@ -280,6 +280,12 @@ angular.module('mtgApp')
       lastChangeTimeStamp = new Date().getTime();
     }
 
+    function removeAll(){
+      getAll().forEach(function(deck){
+        removeDeck(deck.options.id);
+      });
+    }
+
     return {
       getAll: getAll,
       getById: getById,
@@ -288,6 +294,7 @@ angular.module('mtgApp')
       importData: importData,
       lastChange: lastChange,
       existsByName: existsByName,
-      removeDeck: removeDeck
+      removeDeck: removeDeck,
+      removeAll: removeAll
     };
   }]);

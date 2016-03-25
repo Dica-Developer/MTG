@@ -17,6 +17,8 @@ angular.module('mtgApp')
       C: false
     };
 
+    window.db = $scope.db;
+
     function filterCards(newValue, oldValue) {
       if (newValue !== null && newValue !== oldValue) {
         var searchQuery = {};

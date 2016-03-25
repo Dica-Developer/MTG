@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mtgApp')
-  .controller('DatabasesController', ['$scope', '$uibModal', 'backup', function ($scope, $uibModal, backup) {
+  .controller('DatabasesController', ['$scope', '$uibModal', 'backup', 'BACKUP_DATA_VERSION', function ($scope, $uibModal, backup, BACKUP_DATA_VERSION) {
 
     function readFile(file, callback) {
       var reader = new FileReader();
@@ -78,13 +78,14 @@ angular.module('mtgApp')
     }
 
     function startDownloadData(dataToExport, name) {
+      dataToExport.version = BACKUP_DATA_VERSION;
       var blob = new Blob([JSON.stringify(dataToExport)], {type: 'application/json;charset=utf-8'});
       saveAs(blob, name + '.json');
     }
 
     $scope.exportComplete = function () {
-      var allDecks = decks.exportData(),
-        allCards = ownCards.getAll(),
+      var allDecks = backup.getDecksForExport(),
+        allCards = backup.getCardsForExport(),
         modalInstance = showExportDialog(allCards, allDecks);
 
       modalInstance.result.then(function (data) {
@@ -104,7 +105,7 @@ angular.module('mtgApp')
     };
 
     $scope.exportCards = function () {
-      var allCards = ownCards.getAll(),
+      var allCards = backup.getCardsForExport(),
         modalInstance = showExportDialog(allCards, null);
 
       modalInstance.result.then(function (data) {
@@ -117,7 +118,7 @@ angular.module('mtgApp')
     };
 
     $scope.exportDecks = function () {
-      var allDecks = decks.exportData(),
+      var allDecks = backup.getDecksForExport(),
         modalInstance = showExportDialog(null, allDecks);
 
       modalInstance.result.then(function (data) {

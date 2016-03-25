@@ -75,9 +75,19 @@ angular.module('mtgApp')
       }
     }
 
+    function getDecksForExport(){
+      return decks.exportData();
+    }
+
+    function getCardsForExport(){
+      return ownCards.getAll();
+    }
+
     return {
       getImportData: getImportData,
-      importData: importData
-    }
+      importData: importData,
+      getDecksForExport: getDecksForExport,
+      getCardsForExport: getCardsForExport
+    };
 
   }]);

@@ -5,6 +5,11 @@
 
 ###Prerequisite
 
+We recommend following versions minimum as our tests runs with these.
+
+* `node v4.4.1` 
+* `npm v2.14.20`
+
 In order to get the best experience you need to download the some json files anf place it well.
 Add a folder named `dev_data` to the `src` folder.
 

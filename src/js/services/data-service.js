@@ -59,9 +59,12 @@ export default function dataService($http, $q, $log) {
         basePath = filePath.substring(0, filePath.indexOf('.nw') + 3);
         cardDataPath = path.join(basePath, 'AllSets-x.json');
         setDataPath = path.join(basePath, 'SET_LIST.json');
-    } else {
+    } else if (process.env.BUILD_MODE === 'DEV') {
         cardsPath = require('../../dev_data/AllSets-x.json');
         setsPath = require('../../dev_data/SET_LIST.json');
+    } else {
+        cardsPath = null;
+        setsPath = null;
     }
 
     function isAvailable() {
@@ -227,10 +230,12 @@ export default function dataService($http, $q, $log) {
                     defer.resolve(JSON.parse(content));
                 }
             });
-        } else {
+        } else if (process.env.BUILD_MODE === 'DEV') {
             $http.get(cardsPath).then(function (cardData) {
                 defer.resolve(cardData.data);
             });
+        } else {
+            defer.resolve('[]');
         }
 
         return defer.promise;
@@ -247,10 +252,12 @@ export default function dataService($http, $q, $log) {
                     defer.resolve(JSON.parse(content));
                 }
             });
-        } else {
+        } else if (process.env.BUILD_MODE === 'DEV') {
             $http.get(setsPath).then(function (setData) {
                 defer.resolve(setData.data);
             });
+        } else {
+            defer.resolve('[]');
         }
         return defer.promise;
     }

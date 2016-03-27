@@ -6,4 +6,4 @@ engines:
       - javascript
 ratings:
   paths:
-  - app/js/**/*.js
+  - src/js/**/*.js

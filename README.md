@@ -17,7 +17,7 @@ Add a folder named `dev_data` to the `src` folder.
 Download the card data [zip](http://mtgjson.com/json/AllSets-x.json.zip) and decrompress in `src/dev_data`.
 
 ####Set Data
-Download the set data [json](http://mtgjson.com/json/AllSets.json.zip) and copy to `src/dev_data`.
+Download the set data [json](http://mtgjson.com/json/SetList.json) and copy to `src/dev_data`.
 
 If you want to build a dist you need to have the [nw-builder](https://github.com/nwjs/nw-builder) installed.
 I recommend to install it globally as it is not registered to this package.

@@ -7,4 +7,3 @@ engines:
 ratings:
   paths:
   - app/js/**/*.js
-  - test/spec/**/*.js

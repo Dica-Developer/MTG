@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <label for="cardSearch">Search card: </label>
+  <input type="search" id="cardSearch" class="input-sm" ng-model="currentSearch" />
+</div>
+<div class="modal-body">
+  <div ng-if="cards" class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="card in cards track by $index">
+            <h4 class="list-group-item-heading">
+              <i class="ss ss-{{card.setCode}} ss-common" uib-tooltip="{{card.setName}}"></i>
+              {{card.name}} - {{card.type}}
+              <mana-cost x-mana-cost="{{card.manaCost}}" x-size="16"></mana-cost>
+              <span class="pull-right">
+                <button ng-disabled="alreadyInDeck(card.id)" class="btn btn-success btn-sm" ng-click="addCard(card.id)">Add</button>
+              </span>
+            </h4>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

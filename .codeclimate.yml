@@ -6,5 +6,5 @@ engines:
       - javascript
 ratings:
   paths:
-  - app/scripts/**/*.js
-  - test/spac/**/*.js
+  - app/js/**/*.js
+  - test/spec/**/*.js

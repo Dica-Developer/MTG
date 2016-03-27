@@ -1,9 +1,6 @@
 node_modules
 dist
-.tmp
-.sass-cache
 .idea
-bower_components
 test/coverage
 build
-app/data_bak
+src/dev_data

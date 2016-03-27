@@ -1,0 +1,17 @@
+<h2>Deck List</h2>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="list-group">
+      <h4>
+        <a ng-repeat="deck in deckList" ui-sref="deck-builder({deckId: deck.options.id})" class="list-group-item">
+          <i class="fa fa-fw fa-times-circle text-danger" ng-click="removeDeck($event, deck.options.id)"></i>
+          {{deck.options.name}}
+          <div class="pull-right">
+            <i ng-repeat="color in deck.getColors()" class="ms ms-cost ms-{{color}} "></i>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <button class="btn btn-default" ng-click="addDeck()">Add Deck</button>
+  </div>
+</div>

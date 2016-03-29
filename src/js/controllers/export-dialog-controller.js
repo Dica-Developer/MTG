@@ -1,3 +1,5 @@
+import {filter, each} from 'lodash';
+
 /*@ngInject*/
 export default function exportDialogController($scope, $uibModalInstance, exportCards, exportDecks) {
     $scope.fileName = 'mtg-app-data';
@@ -11,18 +13,12 @@ export default function exportDialogController($scope, $uibModalInstance, export
     }) : null;
 
     $scope.decksToExport = function () {
-        return _.filter($scope.decks, 'selected').length;
+        return filter($scope.decks, 'selected').length;
     };
 
-    $scope.deselectAll = function () {
-        _.forEach($scope.decks, function (deck) {
-            deck.selected = false;
-        });
-    };
-
-    $scope.selectAll = function () {
-        _.forEach($scope.decks, function (deck) {
-            deck.selected = true;
+    $scope.toggleSelected = (selected) => {
+        each($scope.decks, (deck) => {
+            deck.selected = selected;
         });
     };
 

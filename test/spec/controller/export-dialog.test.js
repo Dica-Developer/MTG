@@ -54,32 +54,32 @@ describe('Controller: ExportDialogController', function () {
         expect(scope.decks).to.be.null;
     });
 
-    it('$scope.deselectAll should set "selected" to all decks false', function () {
+    it('$scope.toggleSelected should set "selected" to all decks false', function () {
         controller('ExportDialogController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
             exportCards: cards,
             exportDecks: decks
         });
-        scope.deselectAll();
+        scope.toggleSelected(false);
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.false;
         });
     });
 
-    it('$scope.selectAll should set "selected" to all decks true', function () {
+    it('$scope.toggleSelected should set "selected" to all decks true', function () {
         controller('ExportDialogController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
             exportCards: cards,
             exportDecks: decks
         });
-        scope.deselectAll();
+        scope.toggleSelected(false);
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.false;
         });
 
-        scope.selectAll();
+        scope.toggleSelected(true);
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.true;
         });

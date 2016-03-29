@@ -40,6 +40,14 @@ export default function DeckService(localStorageService, cards) {
         return cards.db({ id: cardIds }).select(field);
     }
 
+    function getCardsOfDeck(deckId, mainCards) {
+        let deck = decksMap.get(deckId),
+            cardIds = mainCards ? deck.getCards() : deck.getSidedeckCards(),
+            uniqCardIds = uniq(cardIds);
+
+        return cards.filter({ id: uniqCardIds });
+    }
+
     this.getAll = () => {
         let deckIds = localStorageService.get('decks');
 
@@ -140,17 +148,11 @@ export default function DeckService(localStorageService, cards) {
     };
 
     this.getCardsOfDeck = (deckId) => {
-        let deck = decksMap.get(deckId),
-            cardIds = uniq(deck.getCards());
-
-        return cards.filter({ id: cardIds });
+        return getCardsOfDeck(deckId, true);
     };
 
     this.getSideboardCardsOfDeck = (deckId) => {
-        let deck = decksMap.get(deckId),
-            cardIds = uniq(deck.getSidedeckCards());
-
-        return cards.filter({ id: cardIds });
+        return getCardsOfDeck(deckId, false);
     };
 
     this.getCardTypeCountOfDeck = (deckId) => {

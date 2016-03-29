@@ -1,16 +1,19 @@
 /*@ngInject*/
 export default function deckListController($scope, $state, decks) {
     let allDecks = decks.getAll();
-    $scope.deckList = [];
 
-    allDecks.forEach((deck) => {
-        let info = {
-            name: deck.getName(),
-            id: deck.getId(),
-            colors: decks.getColorsOfDeck(deck.getId())
-        };
-        $scope.deckList.push(info);
-    });
+    function updateDeckList() {
+        $scope.deckList = [];
+        allDecks.forEach((deck) => {
+            let info = {
+                name: deck.getName(),
+                id: deck.getId(),
+                colors: decks.getColorsOfDeck(deck.getId())
+            };
+            $scope.deckList.push(info);
+        });
+    }
+
 
     $scope.removeDeck = function (event, deckId) {
         event.preventDefault();
@@ -24,17 +27,11 @@ export default function deckListController($scope, $state, decks) {
     };
 
     $scope.$watch(decks.lastChange, (newValue, oldValue) => {
-        if(typeof newValue !== 'undefined' && newValue !== oldValue) {
-            $scope.deckList = [];
+        if (typeof newValue !== 'undefined' && newValue !== oldValue) {
             allDecks = decks.getAll();
-            allDecks.forEach((deck) => {
-                let info = {
-                    name: deck.getName(),
-                    id: deck.getId(),
-                    colors: decks.getColorsOfDeck(deck.getId())
-                };
-                $scope.deckList.push(info);
-            });
+            updateDeckList();
         }
     });
+
+    updateDeckList();
 };

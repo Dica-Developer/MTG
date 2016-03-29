@@ -88,7 +88,7 @@ export default function DeckService(localStorageService, cards) {
         let exportData = {};
 
         decksMap.forEach((deck, deckId) => {
-            exportData[deckId] = deck;
+            exportData[deckId] = deck.options;
         });
 
         return exportData;

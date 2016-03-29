@@ -10,7 +10,7 @@ module.exports = function (config) {
 
     config.set({
         basePath: './',
-        frameworks: ['mocha', 'sinon-chai'],
+        frameworks: ['mocha', 'sinon-chai', 'es6-shim'],
         files: [
             'test/mock/**/*.js',
             'test/spec/runner.js'

@@ -61,7 +61,7 @@ export default function dataService($http, $q, $log) {
         setDataPath = path.join(basePath, 'SET_LIST.json');
     } else if (process.env.BUILD_MODE === 'DEV') {
         cardsPath = require('../../dev_data/AllSets-x.json');
-        setsPath = require('../../dev_data/SET_LIST.json');
+        setsPath = require('../../dev_data/SetList.json');
     } else {
         cardsPath = null;
         setsPath = null;

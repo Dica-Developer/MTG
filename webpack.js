@@ -93,7 +93,7 @@ module.exports = (function makeWebpackConfig() {
 
     // Initialize module
     config.module = {
-        postLoaders: [],
+        preLoaders: [],
         loaders: [{
             // JS LOADER
             // Reference: https://github.com/babel/babel-loader
@@ -134,7 +134,7 @@ module.exports = (function makeWebpackConfig() {
     // Instrument JS files with Isparta for subsequent code coverage reporting
     // Skips node_modules and files that end with .test.js
     if (TEST) {
-        config.module.postLoaders.push({
+        config.module.preLoaders.push({
             test: /\.js$/,
             exclude: [
                 /node_modules/,

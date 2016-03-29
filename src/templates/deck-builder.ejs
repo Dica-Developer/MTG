@@ -3,7 +3,7 @@
     <h3 ng-if="!editname">
       {{deck.options.name}} <i class="fa fa-pencil clickable" ng-click="editName()"></i>
       <span class="pull-right">
-        <i ng-repeat="color in deck.getColors()" class="ms ms-cost ms-{{color}} "></i>
+        <i ng-repeat="color in deckMeta.deckColors" class="ms ms-cost ms-{{color}} "></i>
       </span>
     </h3>
     <form ng-if="editname" class="form-inline" role="form">
@@ -26,13 +26,13 @@
       Main deck <i class="fa fa-flash"></i>: <span class="label" ng-class="{'label-warning': (deck.getCardCount() !== 60), 'label-success': (deck.getCardCount() === 60)}">{{deck.getCardCount()}}</span>
       Sideboard <i class="fa fa-shield"></i>: <span class="label" ng-class="{'label-warning': (deck.getSideboardCount() !== 15), 'label-success': (deck.getSideboardCount() === 15)}">{{deck.getSideboardCount()}}</span>
       <span class="pull-right">
-        <span class="label" ng-repeat="(type, legal) in deck.getLegalities()" style="margin: 0 1px;" ng-class="{'label-success': (legal === 'Legal'), 'label-warning': (legal === 'Restricted'), 'label-danger': (legal === 'Banned')}">
+        <span class="label" ng-repeat="(type, legal) in deckMeta.legalities" style="margin: 0 1px;" ng-class="{'label-success': (legal === 'Legal'), 'label-warning': (legal === 'Restricted'), 'label-danger': (legal === 'Banned')}">
           {{type}}
         </span>
       </span>
     </div>
     <div class="well well-sm">
-      <span class="label clickable" ng-class="{'label-success': typeFilter === type, 'label-info': typeFilter !== type}" ng-repeat="(type, count) in deck.getCountByCardType()" style="margin: 0 1px;" ng-click="filterByType(type)">
+      <span class="label clickable" ng-class="{'label-success': typeFilter === type, 'label-info': typeFilter !== type}" ng-repeat="(type, count) in deckMeta.cardTypeCount" style="margin: 0 1px;" ng-click="filterByType(type)">
         <i ng-repeat="typeIcon in type.split('-')" class="ms ms-fw ms-{{typeIcon.toLowerCase()}} " ></i> {{type}}: {{count}}
       </span>
     </div>

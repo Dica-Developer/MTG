@@ -1,7 +1,27 @@
 /*@ngInject*/
 export default function menuController($scope, decks) {
-    $scope.allDecks = decks.getAll();
-    $scope.$watch(decks.lastChange, function () {
-        $scope.allDecks = decks.getAll();
+    let allDecks = decks.getAll();
+    $scope.allDecks = [];
+
+    allDecks.forEach((deck) => {
+        let info = {
+            name: deck.getName(),
+            id: deck.getId()
+        };
+        $scope.allDecks.push(info);
+    });
+
+    $scope.$watch(decks.lastChange, (newValue, oldValue) => {
+        if(typeof newValue !== 'undefined' && newValue !== oldValue) {
+            $scope.allDecks = [];
+            allDecks = decks.getAll();
+            allDecks.forEach((deck) => {
+                let info = {
+                    name: deck.getName(),
+                    id: deck.getId()
+                };
+                $scope.allDecks.push(info);
+            });
+        }
     });
 };

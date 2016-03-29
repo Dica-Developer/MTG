@@ -1,4 +1,5 @@
 import CardModalTplUrl from '../../templates/card-modal.ejs';
+import {each} from 'lodash';
 
 /*@ngInject*/
 export default function deckBuilderController($scope, $stateParams, $uibModal, decks, cards, ownCards) {
@@ -6,32 +7,34 @@ export default function deckBuilderController($scope, $stateParams, $uibModal, d
     $scope.db = cards.db;
     $scope.ownCards = ownCards;
     $scope.deck = decks.getById($stateParams.deckId);
-    $scope.cards = $scope.deck.getFullCards();
-    $scope.saveDeck = $scope.deck.save.bind($scope.deck);
-    $scope.totalCardCount = $scope.deck.options.cards.length;
+    $scope.cards = decks.getCardsOfDeck($scope.deck.getId());
+    $scope.saveDeck = decks.saveDeckById;
+    $scope.totalCardCount = $scope.deck.getCardCount();
     $scope.sampleHand = [];
     $scope.typeFilter = '';
     $scope.orderPredicate = 'types';
     $scope.orderReverse = false;
-    $scope.sideboard = $scope.deck.getFullSideboard();
+    $scope.sideboard = decks.getSideboardCardsOfDeck($scope.deck.getId());
     $scope.editname = false;
+    $scope.deckMeta = decks.getMetaDataOfDeck($scope.deck.getId());
 
     $scope.editName = function () {
         $scope.editname = true;
     };
 
     $scope.saveName = function () {
-        $scope.saveDeck();
+        $scope.saveDeck($scope.deck.getId());
         $scope.editname = false;
     };
 
     var updateManaCurve = null,
         shuffleCount = 7;
 
-    $scope.$watch('totalCardCount', function (newValue) {
-        if (newValue) {
-            $scope.cards = $scope.deck.getFullCards();
-            $scope.sideboard = $scope.deck.getFullSideboard();
+    $scope.$watch('totalCardCount', (newValue, oldValue) => {
+        if (newValue && newValue !== oldValue) {
+            $scope.cards = decks.getCardsOfDeck($scope.deck.getId());
+            $scope.sideboard = decks.getSideboardCardsOfDeck($scope.deck.getId());
+            $scope.deckMeta = decks.getMetaDataOfDeck($scope.deck.getId());
             updateManaCurve();
         }
     });
@@ -39,49 +42,49 @@ export default function deckBuilderController($scope, $stateParams, $uibModal, d
     $scope.addCard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.addCard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.dropCard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.dropCard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.dropAll = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.dropAll(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.addCardToSideBoard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.addCardToSideBoard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.dropCardFromSideBoard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.dropCardFromSideBoard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.dropAllFromSideboard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.dropAllFromSideboard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.moveCardToSideboard = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.moveCardToSideboard(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.moveCardToMain = function (event, cardId) {
         event.stopPropagation();
         $scope.deck.moveCardToMain(cardId);
-        $scope.totalCardCount = $scope.deck.options.cards.length;
+        $scope.totalCardCount = $scope.deck.getCardCount();
     };
 
     $scope.filterByType = function (type) {
@@ -98,13 +101,13 @@ export default function deckBuilderController($scope, $stateParams, $uibModal, d
 
     $scope.shuffle = function () {
         shuffleCount = 7;
-        $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
+        $scope.sampleHand = decks.getShuffleOfDeck($scope.deck.getId(), shuffleCount);
     };
 
     $scope.mulligan = function () {
         if (shuffleCount > 1) {
             shuffleCount = shuffleCount - 1;
-            $scope.sampleHand = $scope.deck.getShuffle(shuffleCount);
+            $scope.sampleHand = decks.getShuffleOfDeck($scope.deck.getId(), shuffleCount);
         }
     };
 
@@ -168,7 +171,7 @@ export default function deckBuilderController($scope, $stateParams, $uibModal, d
             highlightStroke: 'rgba(220,220,220,1)',
             data: []
         };
-        _.each($scope.deck.getManaCurve(), function (count, mana) {
+        each($scope.deckMeta.manaCurve, function (count, mana) {
             if (mana !== 'undefined') {
                 $scope.manaCostData.labels.push('CMC ' + mana);
                 dataSet.data.push(count);

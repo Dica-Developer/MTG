@@ -1,70 +1,71 @@
 import App from '../../../src/js/app';
+import {size} from 'lodash';
 
-describe('Service: backup', function () {
+describe('Service: backup', () => {
 
     var backup, cards;
 
     beforeEach(angular.mock.module(App.name));
-    beforeEach(angular.mock.inject(function (_backup_, _cards_) {
+    beforeEach(angular.mock.inject((_backup_, _cards_) => {
         backup = _backup_;
         cards = _cards_;
         cards.db.insert(cardsExcerpt);
     }));
 
-    afterEach(function () {
+    afterEach(() => {
         window.localStorage.clear();
     });
 
-    describe('backup.getImportData', function () {
-        var data, oldData;
+    describe('backup.getImportData', () => {
+        let data, oldData;
 
-        beforeEach(function () {
+        beforeEach(() => {
             data = backup.getImportData(oldBackupSample);
             oldData = JSON.parse(oldBackupSample);
         });
 
-        it('Should return well structured data to display meta info in UI', function () {
+        it('Should return well structured data to display meta info in UI', () => {
             expect(data.decks).to.not.be.undefined;
             expect(data.cards).to.not.be.undefined;
         });
 
-        it('Should correct update data if it an old backup', function () {
-            var firstCardNew = cards.db({ id: data.cards[0].id }).get(),
+        it('Should correct update data if it an old backup', () => {
+            let firstCardNew = cards.db({ id: data.cards[0].id }).get(),
                 firstCardOld = cards.db({ multiverseid: Number(oldData.cards[0].multiverseid) }).get();
 
             expect(firstCardOld[0]).to.deep.equal(firstCardNew[0]);
         });
 
-        it('Should keep count of cards', function () {
+        it('Should keep count of cards', () => {
             expect(data.cards[0].count).to.equal(oldData.cards[0].count);
             expect(data.cards[1].count).to.equal(oldData.cards[1].count);
         });
 
-        it('Should return `false` if parsing fails', function () {
+        it('Should return `false` if parsing fails', () => {
             expect(backup.getImportData({})).to.be.false;
         });
 
     });
 
-    describe('backup.importData', function () {
+    describe('backup.importData', () => {
         var data, decks, ownCards;
-        beforeEach(inject(function (_decks_, _ownCards_) {
+        beforeEach(inject((_decks_, _ownCards_) => {
             decks = _decks_;
             ownCards = _ownCards_;
             data = backup.getImportData(oldBackupSample);
         }));
 
-        it('Should correct import data', function () {
+        it('Should correct import data', () => {
             var internalDecks, internalOwnCards;
             backup.importData(data);
             internalDecks = decks.getAll();
             internalOwnCards = ownCards.getAll();
 
-            expect(internalDecks).to.have.length(_.size(data.decks));
-            expect(internalOwnCards).to.have.length(data.cards.length);
+            expect(internalDecks.size).to.equal(size(data.decks));
+            expect(internalOwnCards).to.have.lengthOf(data.cards.length);
         });
 
-        it('Should import `cards` only', function () {
+        it('Should import `cards` only', () => {
             var internalOwnCards, internalDecks,
                 dataWithOutDecks = _.assign({}, { cards: data.cards });
 
@@ -74,8 +75,8 @@ describe('Service: backup', function () {
             internalOwnCards = ownCards.getAll();
             internalDecks = decks.getAll();
 
-            expect(internalOwnCards).to.have.length(data.cards.length);
-            expect(internalDecks).to.have.length(0);
+            expect(internalOwnCards).to.have.lengthOf(data.cards.length);
+            expect(internalDecks.size).to.equal(0);
         });
     });
 });

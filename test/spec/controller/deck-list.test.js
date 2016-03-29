@@ -43,13 +43,4 @@ describe('Controller: DeckListController', function () {
         expect(event.preventDefault).to.have.been.called;
         decks.removeDeck.restore();
     });
-
-    it('decks.getAll should called if a deck is removed', function () {
-        sinon.spy(decks, 'getAll');
-        var deck = decks.addNew();
-        scope.removeDeck(event, deck.options.id);
-        scope.$digest();
-        expect(decks.getAll).to.have.been.called;
-        decks.getAll.restore();
-    });
 });

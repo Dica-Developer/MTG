@@ -4,7 +4,7 @@ import backup from './backup-service';
 import cards from './cards-service';
 import cardColor from './color-service';
 import data from './data-service';
-import decks from './deck-service';
+import DeckService from './deck-service';
 import ownCards from './own-cards';
 import sets from './sets-service';
 
@@ -13,6 +13,6 @@ export default angular.module('Services', [])
     .service('cards', cards)
     .service('cardColor', cardColor)
     .service('data', data)
-    .service('decks', decks)
+    .service('decks', DeckService)
     .service('ownCards', ownCards)
     .service('sets', sets);

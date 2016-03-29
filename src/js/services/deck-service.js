@@ -1,299 +1,232 @@
-import {sampleSize} from 'lodash';
+import Deck from '../classes/Deck';
+import {without, uniq, includes, flatten, each, countBy, range} from 'lodash';
+
+const COLOR_MAP = {
+    'White': 'w',
+    'Blue': 'u',
+    'Black': 'b',
+    'Red': 'r',
+    'Green': 'g',
+    'Colorless': 'c'
+};
+
+const STANDARD_LEGALITIES = {
+    'Standard': 'Legal',
+    'Modern': 'Legal',
+    'Vintage': 'Legal',
+    'Legacy': 'Legal',
+    'Commander': 'Legal'
+};
+
 
 /*@ngInject*/
-export default function deckService(localStorageService, cards) {
+export default function DeckService(localStorageService, cards) {
+    let decksMap = new Map(),
+        lastChangeTimeStamp = null;
 
-    var generateUUID = function () {
-            var d = new Date().getTime();
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                /*jshint bitwise:false*/
-                var r = (d + Math.random() * 16) % 16 | 0;
-                d = Math.floor(d / 16);
-                return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
-            });
-        }, tmpDecks = {}, lastChangeTimeStamp = null,
-        COLOR_MAP = {
-            'White': 'w',
-            'Blue': 'u',
-            'Black': 'b',
-            'Red': 'r',
-            'Green': 'g',
-            'Colorless': 'c'
-        };
 
-    function Deck(options) {
-        this.options = {
-            id: options.id || generateUUID(),
-            name: options.name || '',
-            cards: options.cards || [],
-            sideboard: options.sideboard || []
-        };
-        this.cardsFull = [];
-        this.sideboardFull = [];
-        this.updateFullCardInfo();
-    }
-
-    Deck.prototype.save = function () {
-        var deckIds = localStorageService.get('decks') || [];
-        if (!_.includes(deckIds, this.options.id)) {
-            deckIds.push(this.options.id);
+    function updateDeckIds(deckId) {
+        let deckIds = localStorageService.get('decks') || [];
+        if (!includes(deckIds, deckId)) {
+            deckIds.push(deckId);
             localStorageService.set('decks', deckIds);
         }
-        localStorageService.set('deck-' + this.options.id, this.options);
+    }
+
+    function getFieldOfCardList(deckId, field) {
+        let deck = decksMap.get(deckId),
+            cardIds = uniq(deck.getCards());
+
+        return cards.db({ id: cardIds }).select(field);
+    }
+
+    this.getAll = () => {
+        let deckIds = localStorageService.get('decks');
+
+        if (deckIds && deckIds.length !== decksMap.size) {
+            deckIds.forEach(function (deckId) {
+                let deckOptions = localStorageService.get('deck-' + deckId);
+                decksMap.set(deckId, new Deck(deckOptions));
+            });
+        }
+        return decksMap;
+    };
+
+    this.getById = (id) => {
+        let deckOptions;
+        if (decksMap.has(id)) {
+            return decksMap.get(id);
+        }
+
+        deckOptions = localStorageService.get('deck-' + id);
+
+        if (deckOptions) {
+            let deck = new Deck(deckOptions);
+            decksMap.set(id, deck);
+            return deck;
+        }
+
+        return null;
+    };
+
+    this.addNew = () => {
+        let deck = new Deck();
+        decksMap.set(deck.getId(), deck);
+        lastChangeTimeStamp = new Date().getTime();
+        return deck;
+    };
+
+    this.exportData = () => {
+        let exportData = {};
+
+        decksMap.forEach((deck, deckId) => {
+            exportData[deckId] = deck;
+        });
+
+        return exportData;
+    };
+
+    this.importData = (decks) => {
+        each(decks, (deckOptions) => {
+            let deck = new Deck(deckOptions),
+                deckId = deck.getId();
+
+            decksMap.set(deckId, deck);
+            this.saveDeckById(deckId);
+        });
+    };
+
+    this.lastChange = () => {
+        return lastChangeTimeStamp;
+    };
+
+    this.existsByName = (name) => {
+        let found = false;
+
+        decksMap.forEach((deck) => {
+            if (deck.getName() === name) {
+                found = true;
+            }
+        });
+        return found;
+    };
+
+    this.removeDeck = (deckId) => {
+        let deckIds = localStorageService.get('decks');
+
+        deckIds = without(deckIds, deckId);
+        localStorageService.set('decks', deckIds);
+        localStorageService.remove('deck-' + deckId);
+        decksMap.delete(deckId);
         lastChangeTimeStamp = new Date().getTime();
     };
 
-    Deck.prototype.addCard = function (cardId) {
-        this.options.cards.push(cardId);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.dropCard = function (cardId) {
-        var cardIndex = _.lastIndexOf(this.options.cards, cardId);
-        this.options.cards.splice(cardIndex, 1);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.dropAll = function (cardId) {
-        this.options.cards = _.without(this.options.cards, cardId);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.addCardToSideBoard = function (cardId) {
-        this.options.sideboard.push(cardId);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.dropCardFromSideBoard = function (cardId) {
-        var cardIndex = _.lastIndexOf(this.options.sideboard, cardId);
-        this.options.sideboard.splice(cardIndex, 1);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.dropAllFromSideboard = function (cardId) {
-        this.options.sideboard = _.without(this.options.sideboard, cardId);
-        this.updateFullCardInfo();
-    };
-
-    Deck.prototype.setName = function (name) {
-        this.options.name = name;
-    };
-
-    Deck.prototype.getName = function () {
-        return this.options.name;
-    };
-
-    Deck.prototype.setType = function (type) {
-        this.options.type = type;
-    };
-
-    Deck.prototype.getColors = function () {
-        var colors = _.chain(this.cardsFull)
-            .map('colors')
-            .flatten()
-            .uniq()
-            .without(void 0)
-            .map(function (color) {
-                return COLOR_MAP[color];
-            })
-            .value();
-        return colors;
-    };
-
-    Deck.prototype.getFullCards = function () {
-        return this.cardsFull;
-    };
-
-    Deck.prototype.getFullSideboard = function () {
-        return this.sideboardFull;
-    };
-
-    Deck.prototype.moveCardToSideboard = function (cardId) {
-        var cardIndex = _.lastIndexOf(this.options.cards, cardId);
-        var card = this.options.cards.splice(cardIndex, 1);
-        this.addCardToSideBoard(card[0]);
-    };
-
-    Deck.prototype.moveCardToMain = function (cardId) {
-        var cardIndex = _.lastIndexOf(this.options.sideboard, cardId);
-        var card = this.options.sideboard.splice(cardIndex, 1);
-        this.addCard(card[0]);
-    };
-
-    Deck.prototype.getManaCurve = function () {
-        var generatedCurve = _.countBy(this.cardsFull, 'cmc');
-        _.range(1, 8).forEach(function (number) {
-            if (!generatedCurve[number]) {
-                generatedCurve[number] = 0;
-            }
+    this.removeAll = () => {
+        decksMap.forEach((deck) => {
+            this.removeDeck(deck.getId());
         });
-        if (!generatedCurve.undefined) {
-            delete generatedCurve.undefined;
+    };
+
+    this.saveDeckById = (deckId) => {
+        let deck;
+
+        if (!decksMap.has(deckId)) {
+            throw new Error(`'Deck with id ${deckId} not found.'`);
         }
-        return generatedCurve;
+
+        deck = decksMap.get(deckId);
+        localStorageService.set('deck-' + deckId, deck.options);
+        updateDeckIds(deckId);
     };
 
-    Deck.prototype.getShuffle = function (count) {
-        var cardIds = sampleSize(this.options.cards, count),
-            sample = [];
-        cardIds.forEach(function (cardId) {
-            sample.push(cards.filter({ id: cardId })[0]);
-        });
-        return sample;
+    this.getCardsOfDeck = (deckId) => {
+        let deck = decksMap.get(deckId),
+            cardIds = uniq(deck.getCards());
+
+        return cards.filter({ id: cardIds });
     };
 
-    Deck.prototype.getCountOf = function (cardId) {
-        return this.options.cards.filter(function (card) {
-            return card === cardId;
-        }).length;
+    this.getSideboardCardsOfDeck = (deckId) => {
+        let deck = decksMap.get(deckId),
+            cardIds = uniq(deck.getSidedeckCards());
+
+        return cards.filter({ id: cardIds });
     };
 
-    Deck.prototype.getSideboardCountOf = function (cardId) {
-        return this.options.sideboard.filter(function (card) {
-            return card === cardId;
-        }).length;
-    };
+    this.getCardTypeCountOfDeck = (deckId) => {
+        let types = {},
+            deck = decksMap.get(deckId),
+            cards = this.getCardsOfDeck(deckId);
 
-    Deck.prototype.getCardCount = function () {
-        return this.options.cards.length;
-    };
+        cards.forEach((card) => {
+            let cardTypesJoin = card.types.join('-');
 
-    Deck.prototype.getSideboardCount = function () {
-        return this.options.sideboard.length;
-    };
-
-    Deck.prototype.hasCard = function (cardId) {
-        return _.includes(this.options.cards, cardId);
-    };
-
-    Deck.prototype.getCountByCardType = function () {
-        var types = {},
-            _this = this;
-        this.cardsFull.forEach(function (card) {
-            if (!types[card.types.join('-')]) {
-                types[card.types.join('-')] = 0;
+            if (!types[cardTypesJoin]) {
+                types[cardTypesJoin] = 0;
             }
-            types[card.types.join('-')] = types[card.types.join('-')] + _this.getCountOf(card.id);
+
+            types[cardTypesJoin] = types[cardTypesJoin] + deck.getCountOf(card.id);
         });
         return types;
     };
 
-    Deck.prototype.updateFullCardInfo = function () {
-        this.cardsFull = cards.filter({ id: _.uniq(this.options.cards) });
-        this.sideboardFull = cards.filter({ id: _.uniq(this.options.sideboard) });
+    this.getColorsOfDeck = (deckId) => {
+        let colors = getFieldOfCardList(deckId, 'colors'),
+            flattened = flatten(colors),
+            uniqe = uniq(flattened),
+            withoutUndefined = without(uniqe, void 0);
+
+        return withoutUndefined.map((color) => {
+            return COLOR_MAP[color];
+        });
     };
 
-    Deck.prototype.getLegalities = function () {
-        var legaleties = {
-            'Standard': 'Legal',
-            'Modern': 'Legal',
-            'Vintage': 'Legal',
-            'Legacy': 'Legal',
-            'Commander': 'Legal'
-        };
-        var allCards = this.cardsFull.concat(this.sideboardFull);
-        var allCardLegalities = _.map(allCards, 'legalities');
+    this.getLegalitiesOfDeck = (deckId) => {
+        let allCardLegalities = getFieldOfCardList(deckId, 'legalities'),
+            standardLegalities = Object.assign({}, STANDARD_LEGALITIES);
+
         allCardLegalities.forEach(function (cardLegaleties) {
-            _.each(cardLegaleties, function (legalety) {
-                if (legaleties[legalety.format]) {
+            each(cardLegaleties, function (legalety) {
+                if (standardLegalities[legalety.format]) {
                     if (legalety.legality === 'Banned') {
-                        legaleties[legalety.format] = legalety.legality;
-                    } else if (legalety.legality === 'Restricted' && legaleties[legalety.format] !== 'Banned') {
-                        legaleties[legalety.format] = legalety.legality;
+                        standardLegalities[legalety.format] = legalety.legality;
+                    } else if (legalety.legality === 'Restricted' && standardLegalities[legalety.format] !== 'Banned') {
+                        standardLegalities[legalety.format] = legalety.legality;
                     }
                 }
             });
         });
-        return legaleties;
+        return standardLegalities;
     };
 
+    this.getShuffleOfDeck = (deckId, count) => {
+        let deck = decksMap.get(deckId),
+            shuffledCards = deck.getShuffle(count);
 
-    function getAll() {
-        var deckIds = localStorageService.get('decks'),
-            decks = [];
-        if (deckIds) {
-            deckIds.forEach(function (deckId) {
-                var deckOptions = localStorageService.get('deck-' + deckId);
-                decks.push(new Deck(deckOptions));
-            });
-        }
-        return decks;
-    }
+        return cards.filter({ id: shuffledCards });
+    };
 
-    function getById(id) {
-        var deck = tmpDecks[id] || null;
-        if (!deck) {
-            var deckOptions = localStorageService.get('deck-' + id);
-            deck = new Deck(deckOptions);
-        }
+    this.getManaCurveOfDeck = (deckId) => {
+        let cmcOfDeck = getFieldOfCardList(deckId, 'cmc'),
+            countedCmcOfDeck = countBy(cmcOfDeck);
 
-        return deck;
-    }
-
-    function addNew() {
-        var deck = new Deck({});
-        tmpDecks[deck.options.id] = deck;
-        lastChangeTimeStamp = new Date().getTime();
-        return deck;
-    }
-
-    function exportData() {
-        var deckIds = localStorageService.get('decks'),
-            decks = {};
-        if (deckIds) {
-            deckIds.forEach(function (deckId) {
-                decks[deckId] = localStorageService.get('deck-' + deckId);
-            });
-        }
-        return decks;
-    }
-
-    function importData(decks) {
-        _.each(decks, function (deckOptions) {
-            var deck = new Deck(deckOptions);
-            deck.save();
+        range(1, 8).forEach(function (number) {
+            if (!countedCmcOfDeck[number]) {
+                countedCmcOfDeck[number] = 0;
+            }
         });
-    }
-
-    function lastChange() {
-        return lastChangeTimeStamp;
-    }
-
-    function existsByName(name) {
-        var decks = getAll();
-        var filteredDecks = decks.filter(function (deck) {
-            return deck.getName() === name;
-        });
-
-        return filteredDecks.length > 0;
-    }
-
-    function removeDeck(deckId) {
-        var deckIds = localStorageService.get('decks');
-        deckIds = _.without(deckIds, deckId);
-        localStorageService.set('decks', deckIds);
-        localStorageService.remove('deck-' + deckId);
-        if (tmpDecks[deckId]) {
-            delete tmpDecks[deckId];
+        if (!countedCmcOfDeck.undefined) {
+            delete countedCmcOfDeck.undefined;
         }
-        lastChangeTimeStamp = new Date().getTime();
-    }
+        return countedCmcOfDeck;
+    };
 
-    function removeAll() {
-        getAll().forEach(function (deck) {
-            removeDeck(deck.options.id);
-        });
-    }
-
-    return {
-        getAll: getAll,
-        getById: getById,
-        addNew: addNew,
-        exportData: exportData,
-        importData: importData,
-        lastChange: lastChange,
-        existsByName: existsByName,
-        removeDeck: removeDeck,
-        removeAll: removeAll
+    this.getMetaDataOfDeck = (deckId) => {
+        return {
+            cardTypeCount: this.getCardTypeCountOfDeck(deckId),
+            deckColors: this.getColorsOfDeck(deckId),
+            legalities: this.getLegalitiesOfDeck(deckId),
+            manaCurve: this.getManaCurveOfDeck(deckId)
+        }
     };
 };

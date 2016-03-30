@@ -1,7 +1,5 @@
-import CardModalTplUrl from '../../templates/card-modal.ejs';
-
 /*@ngInject*/
-export default function cardExplorerController($scope, $uibModal, cards) {
+export default function cardExplorerController($scope, cardDetailsDialog, cards) {
     $scope.scope = $scope;
     $scope.db = cards.db;
     $scope.filteredCards = [];
@@ -16,18 +14,7 @@ export default function cardExplorerController($scope, $uibModal, cards) {
         $scope.totalItems = $scope.filteredCards.length;
     }
 
-    $scope.showCardModal = function (card) {
-        $uibModal.open({
-            templateUrl: CardModalTplUrl,
-            controller: 'CardModalController',
-            size: 'lg',
-            resolve: {
-                card: function () {
-                    return card;
-                }
-            }
-        });
-    };
+    $scope.showCardModal = cardDetailsDialog.show;
 
     $scope.$watch('currentPage', updateList);
     $scope.$watch('maxResultLength', updateList);

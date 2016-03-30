@@ -1,8 +1,7 @@
 import {taffy} from 'taffydb';
-import CardModalTplUrl from '../../templates/card-modal.ejs';
 
 /*@ngInject*/
-export default function ownCardsController($scope, $uibModal, cards, ownCards) {
+export default function ownCardsController($scope, cardDetailsDialog, cards, ownCards) {
     var ownCardsTmpDB = taffy();
     ownCardsTmpDB.insert(cards.filter({
         id: _.map(ownCards.getAll(), 'id')
@@ -21,19 +20,7 @@ export default function ownCardsController($scope, $uibModal, cards, ownCards) {
         $scope.totalItems = $scope.filteredCards.length;
     }
 
-    $scope.showCardModal = function (card) {
-
-        $uibModal.open({
-            templateUrl: CardModalTplUrl,
-            controller: 'CardModalController',
-            size: 'lg',
-            resolve: {
-                card: function () {
-                    return card;
-                }
-            }
-        });
-    };
+    $scope.showCardModal = cardDetailsDialog.show;
 
     $scope.$watch('currentPage', updateList);
     $scope.$watch('maxResultLength', updateList);

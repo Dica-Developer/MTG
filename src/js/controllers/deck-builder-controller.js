@@ -1,8 +1,7 @@
-import CardModalTplUrl from '../../templates/card-modal.ejs';
 import {each} from 'lodash';
 
 /*@ngInject*/
-export default function deckBuilderController($scope, $stateParams, $uibModal, decks, cards, ownCards) {
+export default function deckBuilderController($scope, $stateParams, cardDetailsDialog, decks, cards, ownCards) {
     $scope.scope = $scope;
     $scope.db = cards.db;
     $scope.ownCards = ownCards;
@@ -111,19 +110,7 @@ export default function deckBuilderController($scope, $stateParams, $uibModal, d
         }
     };
 
-    $scope.showCardModal = function (card) {
-
-        $uibModal.open({
-            templateUrl: CardModalTplUrl,
-            controller: 'CardModalController',
-            size: 'lg',
-            resolve: {
-                card: function () {
-                    return card;
-                }
-            }
-        });
-    };
+    $scope.showCardModal = cardDetailsDialog.show;
 
     //start add card tab
     $scope.cardsToAdd = [];

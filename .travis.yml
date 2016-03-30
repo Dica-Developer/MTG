@@ -9,8 +9,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-    code_climate:
-        repo_token: 8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035
+  code_climate:
+      repo_token: 8e2da258e26faa03ec8bd2763a17ac7766567d00f6513c03bb5bc4d6671ef035
 script: npm run travis
 after_script:
   - codeclimate-test-reporter < test/coverage/lcov.info

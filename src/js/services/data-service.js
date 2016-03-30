@@ -76,7 +76,23 @@ export default function dataService($http, $q, $log) {
         return true;
     }
 
-    //TODO reduce complexity
+    function unlink(path, promise) {
+        if (fs.existsSync(path)) {
+            fs.unlink(path, function (error) {
+                if (error) {
+                    $log.error(error);
+                    promise.reject();
+                } else {
+                    setProgress('cleanUp', 1);
+                    promise.resolve();
+                }
+            });
+        } else {
+            setProgress('cleanUp', 1);
+            promise.resolve();
+        }
+    }
+
     function cleanUpCurrentDataFolder() {
         var removeCardDataDefer = $q.defer(),
             removeSetDataDefer = $q.defer(),
@@ -85,35 +101,8 @@ export default function dataService($http, $q, $log) {
                 removeSetDataDefer
             ];
         setProgress('cleanUp');
-        if (fs.existsSync(cardDataPath)) {
-            fs.unlink(cardDataPath, function (error) {
-                if (error) {
-                    removeCardDataDefer.reject();
-                    $log.error(error);
-                } else {
-                    setProgress('cleanUp', 1);
-                    removeCardDataDefer.resolve();
-                }
-            });
-        } else {
-            setProgress('cleanUp', 1);
-            removeCardDataDefer.resolve();
-        }
-
-        if (fs.existsSync(setDataPath)) {
-            fs.unlink(setDataPath, function (error) {
-                if (error) {
-                    removeSetDataDefer.reject();
-                    $log.error(error);
-                } else {
-                    setProgress('cleanUp', 1);
-                    removeSetDataDefer.resolve();
-                }
-            });
-        } else {
-            setProgress('cleanUp', 1);
-            removeSetDataDefer.resolve();
-        }
+        unlink(cardDataPath, removeCardDataDefer);
+        unlink(setDataPath, removeSetDataDefer);
 
         return $q.all(deferredList);
     }
@@ -122,42 +111,37 @@ export default function dataService($http, $q, $log) {
         return $http.get(versionsPath);
     }
 
-    function fetchSetDataAndWriteToDisk() {
-        setProgress('fetchData');
-        var defer = $q.defer(),
-            writeStream = fs.createWriteStream(setDataPath),
-            req = request(setsPath)
+    function requestToWriteStream(url, streamDest, promise) {
+        var writeStream = fs.createWriteStream(streamDest),
+            req = request(url)
                 .pipe(writeStream);
 
         req.on('error', function (error) {
             $log.error(error);
-            defer.reject();
+            promise.reject();
         });
 
         writeStream.on('finish', function () {
             setProgress('fetchData', 1);
-            defer.resolve();
+            promise.resolve();
         });
+    }
+
+    function fetchSetDataAndWriteToDisk() {
+        var defer = $q.defer();
+
+        setProgress('fetchData');
+        requestToWriteStream(setsPath, setDataPath, defer);
 
         return defer.promise;
     }
 
     function fetchCardsDataZipAndWriteToDisk() {
+        var defer = $q.defer();
+
         setProgress('fetchData');
-        var defer = $q.defer(),
-            writeStream = fs.createWriteStream(cardDataPath + '.zip'),
-            req = request(cardsPath)
-                .pipe(writeStream);
+        requestToWriteStream(cardsPath, cardDataPath + '.zip', defer);
 
-        req.on('error', function (error) {
-            $log.error(error);
-            defer.reject();
-        });
-
-        writeStream.on('finish', function () {
-            setProgress('fetchData', 1);
-            defer.resolve();
-        });
         return defer.promise;
     }
 
@@ -218,17 +202,21 @@ export default function dataService($http, $q, $log) {
         return overAllProgressDefer.promise;
     }
 
+    function readFile(path, promise) {
+        fs.readFile(path, { encoding: 'UTF-8' }, function (error, content) {
+            if (error) {
+                $log.error(error);
+                promise.reject();
+            } else {
+                promise.resolve(JSON.parse(content));
+            }
+        });
+    }
+
     function getCardData() {
         var defer = $q.defer();
         if (process.env.BUILD_MODE === 'BUILD') {
-            fs.readFile(cardDataPath, { encoding: 'UTF-8' }, function (error, content) {
-                if (error) {
-                    $log.error(error);
-                    defer.reject();
-                } else {
-                    defer.resolve(JSON.parse(content));
-                }
-            });
+            readFile(cardDataPath, defer);
         } else if (process.env.BUILD_MODE === 'DEV') {
             $http.get(cardsPath).then(function (cardData) {
                 defer.resolve(cardData.data);
@@ -243,14 +231,7 @@ export default function dataService($http, $q, $log) {
     function getSetList() {
         var defer = $q.defer();
         if (process.env.BUILD_MODE === 'BUILD') {
-            fs.readFile(setDataPath, { encoding: 'UTF-8' }, function (error, content) {
-                if (error) {
-                    $log.error(error);
-                    defer.reject();
-                } else {
-                    defer.resolve(JSON.parse(content));
-                }
-            });
+            readFile(setDataPath, defer);
         } else if (process.env.BUILD_MODE === 'DEV') {
             $http.get(setsPath).then(function (setData) {
                 defer.resolve(setData.data);

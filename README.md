@@ -13,11 +13,11 @@ We recommend following versions minimum as our tests runs with these.
 In order to get the best experience you need to download the some json files anf place it well.
 Add a folder named `dev_data` to the `src` folder.
 
-####Card Data
-Download the card data [zip](http://mtgjson.com/json/AllSets-x.json.zip) and decrompress in `src/dev_data`.
+* Card Data
+    * Download the card data [zip](http://mtgjson.com/json/AllSets-x.json.zip) and decrompress in `src/dev_data`.
 
-####Set Data
-Download the set data [json](http://mtgjson.com/json/SetList.json) and copy to `src/dev_data`.
+* Set Data
+    * Download the set data [json](http://mtgjson.com/json/SetList.json) and copy to `src/dev_data`.
 
 If you want to build a dist you need to have the [nw-builder](https://github.com/nwjs/nw-builder) installed.
 I recommend to install it globally as it is not registered to this package.
@@ -31,3 +31,8 @@ I recommend to install it globally as it is not registered to this package.
 * `npm run test` does a single test run
 * `npm run test:live` starts a file watcher and keeps the test running
 * `npm run build` starts a single test run first, after success it will compile all source code and output to `dist` folder
+
+####Bundle
+_currently only available for MacOS 64_
+
+* `npm run bundle` will gather all files in `dist` and the `package.json` in `src/dev_data` to run the [nw-builder](https://github.com/nwjs/nw-builder) and bundle an application. The output folder is `build`

@@ -36,3 +36,10 @@ I recommend to install it globally as it is not registered to this package.
 _currently only available for MacOS 64_
 
 * `npm run bundle` will gather all files in `dist` and the `package.json` in `src/dev_data` to run the [nw-builder](https://github.com/nwjs/nw-builder) and bundle an application. The output folder is `build`
+
+
+##Thanks and props
+
+* thanks to [Wizard of the Coast](http://company.wizards.com/) for this awesome [Game](http://magic.wizards.com/)
+* thanks to [MTGjson](http://mtgjson.com/) which provides the base, the core, the underlaying data of this app
+* thanks to [Andrew Gioia](https://github.com/andrewgioia) who provides marvelous fonts for [mana](https://github.com/andrewgioia/Mana) and [set symbols](https://github.com/andrewgioia/Keyrune)

@@ -9,7 +9,9 @@
     "test": "NODE_ENV=TEST karma start --no-auto-watch --single-run",
     "test:live": "NODE_ENV=TEST karma start --auto-watch --no-single-run",
     "travis": "npm test && cat test/coverage/lcov.info | coveralls",
-    "clean": "rimraf dist build"
+    "clean": "rimraf dist build",
+    "bundle": "nwbuild dist -p osx64 -v latest",
+    "prebundle": "ncp src/dev_data/package.json dist/package.json"
   },
   "author": "",
   "license": "ISC",
@@ -64,7 +66,9 @@
     "karma-webpack": "^1.7.0",
     "lolex": "^1.4.0",
     "mocha": "^2.4.5",
+    "ncp": "^2.0.0",
     "null-loader": "^0.1.1",
+    "nw-builder": "^2.2.0",
     "phantomjs-prebuilt": "^2.1.7",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.3",

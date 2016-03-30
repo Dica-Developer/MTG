@@ -169,21 +169,9 @@ export default function dataService($http, $q, $log) {
 
     function removeCardDataZip() {
         var defer = $q.defer();
-        setProgress('removeZip');
 
-        if (fs.existsSync(cardDataPath + '.zip')) {
-            fs.unlink(cardDataPath + '.zip', function (error) {
-                if (error) {
-                    $log.error(error);
-                    defer.reject();
-                } else {
-                    setProgress('removeZip', 1);
-                    defer.resolve();
-                }
-            });
-        } else {
-            defer.resolve();
-        }
+        setProgress('removeZip');
+        unlink(cardDataPath + '.zip', defer);
 
         return defer.promise;
     }
@@ -213,32 +201,29 @@ export default function dataService($http, $q, $log) {
         });
     }
 
-    function getCardData() {
-        var defer = $q.defer();
+    function getData(filePath, url, promise) {
         if (process.env.BUILD_MODE === 'BUILD') {
-            readFile(cardDataPath, defer);
+            readFile(filePath, promise);
         } else if (process.env.BUILD_MODE === 'DEV') {
-            $http.get(cardsPath).then(function (cardData) {
-                defer.resolve(cardData.data);
+            $http.get(url).then(function (response) {
+                promise.resolve(response.data);
             });
         } else {
-            defer.resolve('[]');
+            promise.resolve('[]');
         }
+    }
 
+    function getCardData() {
+        var defer = $q.defer();
+
+        getData(cardDataPath, cardsPath, defer);
         return defer.promise;
     }
 
     function getSetList() {
         var defer = $q.defer();
-        if (process.env.BUILD_MODE === 'BUILD') {
-            readFile(setDataPath, defer);
-        } else if (process.env.BUILD_MODE === 'DEV') {
-            $http.get(setsPath).then(function (setData) {
-                defer.resolve(setData.data);
-            });
-        } else {
-            defer.resolve('[]');
-        }
+
+        getData(setDataPath, setsPath, defer);
         return defer.promise;
     }
 

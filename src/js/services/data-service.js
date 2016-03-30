@@ -51,12 +51,11 @@ export default function dataService($http, $q, $log) {
 
     //set required paths on startup
     if (process.env.BUILD_MODE === 'BUILD') {
-        var filePath = nw.process.mainModule.filename;
 
         path = nw.require('path');
         fs = nw.require('fs');
         request = nw.require('request');
-        basePath = filePath.substring(0, filePath.indexOf('.nw') + 3);
+        basePath = nw.App.dataPath;
         cardDataPath = path.join(basePath, 'AllSets-x.json');
         setDataPath = path.join(basePath, 'SET_LIST.json');
     } else if (process.env.BUILD_MODE === 'DEV') {

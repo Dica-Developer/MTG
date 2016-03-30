@@ -13,6 +13,10 @@
     "bundle": "nwbuild dist -p osx64 -v latest",
     "prebundle": "ncp src/dev_data/package.json dist/package.json"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Dica-Developer/MTG.git"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

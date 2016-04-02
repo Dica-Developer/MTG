@@ -38,7 +38,6 @@ export default function CardsService($q, data, cardColor) {
                     });
                     this.db.insert(cards);
                 });
-                this.db.sort('name');
                 defer.resolve();
             });
         } else {

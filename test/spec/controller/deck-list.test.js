@@ -1,12 +1,17 @@
 import App from '../../../src/js/app';
 
-describe('Controller: DeckListController', function () {
-    let state, scope, decks, event;
+describe.only('Controller: DeckListController', function () {
+    let state, scope, decks, event, deck1;
 
     beforeEach(angular.mock.module(App.name));
     beforeEach(angular.mock.inject(function ($controller, $rootScope, _decks_) {
         scope = $rootScope.$new();
         decks = _decks_;
+
+        deck1 = decks.addNew();
+        decks.addNew();
+        decks.addNew();
+
         state = {
             go: function () {
             }
@@ -42,5 +47,14 @@ describe('Controller: DeckListController', function () {
         expect(event.stopImmediatePropagation).to.have.been.called;
         expect(event.preventDefault).to.have.been.called;
         decks.removeDeck.restore();
+    });
+
+    it('$scope.removeDeck should update the deck list', function () {
+
+        scope.$apply();
+        expect(scope.deckList).to.have.lengthOf(3);
+        scope.removeDeck(event, deck1.getId());
+        scope.$apply();
+        expect(scope.deckList).to.have.lengthOf(2);
     });
 });

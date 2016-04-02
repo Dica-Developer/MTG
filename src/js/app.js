@@ -14,11 +14,6 @@ import Constants from './constants';
 import Filters from './filter';
 import Routes from './routes';
 
-//important for working with node-webkit
-if (typeof _ === 'undefined') {
-    window._ = require('lodash');
-}
-
 export default angular
     .module('mtgApp', [
         LocalStorageModule,

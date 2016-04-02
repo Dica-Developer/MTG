@@ -1,6 +1,6 @@
 import App from '../../../src/js/app';
 
-describe.only('Controller: DeckListController', function () {
+describe('Controller: DeckListController', function () {
     let state, scope, decks, event, deck1;
 
     beforeEach(angular.mock.module(App.name));

@@ -27,4 +27,15 @@ export default function ColorService(CARD_COLOR_REGEX, CARD_COLOR_BIT_MAP) {
         }, 0);
     };
 
+    this.getColorBitsCombinationFromMap = (colorMap) => {
+        var result = [];
+        result.push(this.getColorBitsFromMap(colorMap));
+        var keys = Object.keys(CARD_COLOR_BIT_MAP);
+        for(var i = 0; i < keys.length; i++) {
+            colorMap[keys[i]] = true;
+            result.push(this.getColorBitsFromMap(colorMap));
+        }
+        return result;
+    }
+
 };

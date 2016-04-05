@@ -6,6 +6,7 @@ export default function cardFilterController($scope, $timeout, data, cardColor, 
     $scope.filterUpdated = new Date().getTime();
     $scope.selectedSets = null;
     $scope.combinedManaCost = -1;
+    $scope.strict = true;
     $scope.colors = {
         W: false,
         B: false,
@@ -43,7 +44,17 @@ export default function cardFilterController($scope, $timeout, data, cardColor, 
                 searchQuery.cmc = cmc;
             }
 
-            searchQuery.cardColor = cardColor.getColorBitsFromMap($scope.colors);
+            if ($scope.strict) {
+                var cardColorBit = cardColor.getColorBitsFromMap($scope.colors);
+                if (cardColorBit > 0) {
+                    searchQuery.cardColor = cardColorBit;
+                }
+            } else {
+                var cardColorBits = cardColor.getColorBitsCombinationFromMap($scope.colors);
+                if (cardColorBits.length > 0) {
+                    searchQuery.cardColor = cardColorBits;
+                }
+            }
 
             $scope.filteredCards = $scope.db(searchQuery).get();
             $scope.filterUpdated = new Date().getTime();
@@ -54,6 +65,7 @@ export default function cardFilterController($scope, $timeout, data, cardColor, 
     $scope.$watch('selectedSets', filterCards);
     $scope.$watch('combinedManaCost', filterCards);
     $scope.$watch('colors', filterCards, true);
+    $scope.$watch('strict', filterCards, true);
 
     var getSetList = function () {
         if (!data.isAvailable()) {

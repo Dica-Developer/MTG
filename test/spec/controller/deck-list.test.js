@@ -49,12 +49,15 @@ describe('Controller: DeckListController', function () {
         decks.removeDeck.restore();
     });
 
-    it('$scope.removeDeck should update the deck list', function () {
+    it('$scope.removeDeck should update the deck list', function (done) {
 
         scope.$apply();
         expect(scope.deckList).to.have.lengthOf(3);
-        scope.removeDeck(event, deck1.getId());
-        scope.$apply();
-        expect(scope.deckList).to.have.lengthOf(2);
+        setTimeout(function(){
+            scope.removeDeck(event, deck1.getId());
+            scope.$apply();
+            expect(scope.deckList).to.have.lengthOf(2);
+            done();
+        }, 100);
     });
 });

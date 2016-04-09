@@ -30,11 +30,11 @@ describe('Controller: CardFilterController', function () {
         });
     }));
 
-    beforeEach(function(){
+    beforeEach(function () {
         sinon.spy(scope, 'db');
     });
 
-    afterEach(function(){
+    afterEach(function () {
         scope.db.restore();
     });
 
@@ -61,10 +61,7 @@ describe('Controller: CardFilterController', function () {
         scope.$apply(function () {
             scope.cardName = 'Test Creature';
         });
-        expect(scope.db).to.have.been.calledWith({
-            concatNames: Object({ likenocase: 'Test Creature' }),
-            cardColor: 0
-        });
+        expect(scope.db).to.have.been.calledWith({ concatNames: Object({ likenocase: 'Test Creature' }) });
         expect(scope.filterUpdated).to.be.a('Number');
     });
 
@@ -74,7 +71,7 @@ describe('Controller: CardFilterController', function () {
         scope.$apply(function () {
             scope.selectedSets = [scope.setList[0]];
         });
-        expect(scope.db).to.have.been.calledWith({ setCode: ['TEST'], cardColor: 0 });
+        expect(scope.db).to.have.been.calledWith({ setCode: ['TEST'] });
         expect(scope.filterUpdated).to.be.a('Number');
     });
 
@@ -95,7 +92,7 @@ describe('Controller: CardFilterController', function () {
         scope.$apply(function () {
             scope.combinedManaCost = 2;
         });
-        expect(scope.db).to.have.been.calledWith({ cmc: 2, cardColor: 0 });
+        expect(scope.db).to.have.been.calledWith({ cmc: 2 });
         expect(scope.filterUpdated).to.be.a('Number');
     });
 

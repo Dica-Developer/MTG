@@ -1,6 +1,6 @@
 import App from '../../../src/js/app';
 
-describe.only('Service: cardColor', function () {
+describe('Service: cardColor', function () {
 
     const DEFAULT_COLOR_MAP = {
         W: false,

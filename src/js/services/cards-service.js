@@ -20,7 +20,7 @@ export default function CardsService($q, data, cardColor) {
         if (this.db().count() === 0) {
             data.getCardData().then((cardData) => {
                 each(cardData, (mtgSet) => {
-                    let cards = _.map(mtgSet.cards, (card) => {
+                    let cards = map(mtgSet.cards, (card) => {
                         let foreignNames = card.foreignNames || [];
 
                         foreignNames.push({ name: card.name });

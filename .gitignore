@@ -5,3 +5,5 @@ test/coverage
 build
 /src/dev_data/SetList.json
 /src/dev_data/AllSets-x.json
+bower_components/
+.tmp/

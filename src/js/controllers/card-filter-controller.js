@@ -44,19 +44,22 @@ export default function cardFilterController($scope, $timeout, data, cardColor, 
                 searchQuery.cmc = cmc;
             }
 
-            if ($scope.strict) {
-                var cardColorBit = cardColor.getColorBitsFromMap($scope.colors);
-                if (cardColorBit > 0) {
+            var colorBitQuery = null;
+            var cardColorBit = cardColor.getColorBitsFromMap($scope.colors);
+            if (cardColorBit > 0) {
+                if ($scope.strict) {    
                     searchQuery.cardColor = cardColorBit;
-                }
-            } else {
-                var cardColorBits = cardColor.getColorBitsCombinationFromMap($scope.colors);
-                if (cardColorBits.length > 0) {
-                    searchQuery.cardColor = cardColorBits;
+                } else {
+                    colorBitQuery = function () {
+                        return (this.cardColor & cardColorBit) === cardColorBit;
+                    };
                 }
             }
-
-            $scope.filteredCards = $scope.db(searchQuery).get();
+            if (null === colorBitQuery) {
+                $scope.filteredCards = $scope.db(searchQuery).get();
+            } else {
+                $scope.filteredCards = $scope.db(searchQuery, colorBitQuery).get();
+            }
             $scope.filterUpdated = new Date().getTime();
         }
     }

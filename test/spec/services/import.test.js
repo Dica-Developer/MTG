@@ -1,7 +1,7 @@
 import App from '../../../src/js/app';
 import {size, each, filter} from 'lodash';
 
-describe.only('Service: import', function () {
+describe('Service: import', function () {
     let decks, cards, Importer;
 
     beforeEach(angular.mock.module(App.name));

@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h3 class="modal-title">Importing
+  <h3 class="modal-title">Restore
     <span ng-if="cards">{{cards.length}} cards</span>
     <span ng-if="cards && decksToImport() > 0"> and </span>
     <span ng-if="decksToImport() > 0">{{decksToImport()}}
       <ng-pluralize count="decksToImport()" when="{'1': 'deck', 'other': 'decks'}"> </ng-pluralize></span>!
   </h3>
 </div>
-<div class="modal-body import-dialog">
+<div class="modal-body backup-load-dialog">
   <h4>Decks to import... <span class="pull-right">
     <small>
       <a class="clickable" ng-click="selectAll()">all</a> /

@@ -2,7 +2,7 @@ import CardExplorerTplUrl from '../templates/card-explorer.ejs';
 import OwnCardsExplorerTplUrl from '../templates/own-cards.ejs';
 import DeckListTplUrl from '../templates/deck-list.ejs';
 import DeckBuilderTplUrl from '../templates/deck-builder.ejs';
-import BackupTplUrl from '../templates/databases.ejs';
+import BackupTplUrl from '../templates/backup.ejs';
 
 /*@ngInject*/
 export default function routes($stateProvider, $urlRouterProvider) {
@@ -30,9 +30,9 @@ export default function routes($stateProvider, $urlRouterProvider) {
             templateUrl: DeckBuilderTplUrl,
             controller: 'DeckBuilderController'
         })
-        .state('databases', {
-            url: '/databases',
+        .state('backup', {
+            url: '/backup',
             templateUrl: BackupTplUrl,
-            controller: 'DatabasesController'
+            controller: 'BackupController'
         });
 };

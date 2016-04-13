@@ -1,8 +1,8 @@
-import ImportDialogTplUrl from '../../templates/import-dialog.ejs';
-import ExportDialogTplUrl from '../../templates/export-dialog.ejs';
+import BackupLoadTplUrl from '../../templates/backup-load-dialog.ejs';
+import BackupSaveTplUrl from '../../templates/backup-save-dialog.ejs';
 
 /*@ngInject*/
-export default function databasesController($scope, $uibModal, backup, BACKUP_DATA_VERSION) {
+export default function BackupController($scope, $uibModal, backup, BACKUP_DATA_VERSION) {
 
     function readFile(file, callback) {
         var reader = new FileReader();
@@ -12,8 +12,8 @@ export default function databasesController($scope, $uibModal, backup, BACKUP_DA
 
     function showImportDialog(cards, decks) {
         return $uibModal.open({
-            templateUrl: ImportDialogTplUrl,
-            controller: 'ImportDialogController',
+            templateUrl: BackupLoadTplUrl,
+            controller: 'BackupLoadController',
             resolve: {
                 importCards: function () {
                     return cards;
@@ -65,8 +65,8 @@ export default function databasesController($scope, $uibModal, backup, BACKUP_DA
 
     function showExportDialog(cards, decks) {
         return $uibModal.open({
-            templateUrl: ExportDialogTplUrl,
-            controller: 'ExportDialogController',
+            templateUrl: BackupSaveTplUrl,
+            controller: 'BackupSaveController',
             resolve: {
                 exportCards: function () {
                     return cards;

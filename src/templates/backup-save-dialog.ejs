@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h3 class="modal-title">Exporting
+  <h3 class="modal-title">Backup
     <span ng-if="cards">{{cards.length}} cards</span>
     <span ng-if="cards && decksToExport() > 0"> and </span>
     <span ng-if="decksToExport() > 0">{{decksToExport()}}
       <ng-pluralize count="decksToExport()" when="{'1': 'deck', 'other': 'decks'}"> </ng-pluralize></span>!
   </h3>
 </div>
-<div class="modal-body export-dialog">
+<div class="modal-body backup-save-dialog">
   <div class="row">
     <div class="col-xs-12">
       <label for="fileName">Filename: </label>

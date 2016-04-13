@@ -1,9 +1,9 @@
 import App from '../../../src/js/app';
 
-describe('Controller: ExportDialogController', function () {
+describe('Controller: BackupLoadController', function () {
     let controller, scope, modalInstance,
         cards = {},
-        decks = [
+        importDecks = [
             {
                 name: 'test Deck 1',
                 id: '1'
@@ -16,7 +16,11 @@ describe('Controller: ExportDialogController', function () {
                 name: 'test Deck 3',
                 id: '3'
             }
-        ];
+        ],
+        decks = sinon.stub({
+            'existsByName': function () {
+            }
+        });
 
     beforeEach(angular.mock.module(App.name));
     beforeEach(angular.mock.inject(function ($controller, $rootScope) {
@@ -30,11 +34,12 @@ describe('Controller: ExportDialogController', function () {
     }));
 
     it('Should set decks correct values', function () {
-        controller('ExportDialogController', {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
+            decks: decks,
+            importCards: cards,
+            importDecks: importDecks
         });
 
         expect(scope.decks).to.have.length(3);
@@ -43,78 +48,68 @@ describe('Controller: ExportDialogController', function () {
         });
     });
 
-    it('Should set decks to null', function () {
-        controller('ExportDialogController', {
+    it('$scope.deselectAll should set "selected" to all decks false', function () {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: void 0
+            importCards: cards,
+            importDecks: importDecks
         });
-
-        expect(scope.decks).to.be.null;
-    });
-
-    it('$scope.toggleSelected should set "selected" to all decks false', function () {
-        controller('ExportDialogController', {
-            $scope: scope,
-            $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
-        });
-        scope.toggleSelected(false);
+        scope.deselectAll();
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.false;
         });
     });
 
-    it('$scope.toggleSelected should set "selected" to all decks true', function () {
-        controller('ExportDialogController', {
+    it('$scope.selectAll should set "selected" to all decks true', function () {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
+            importCards: cards,
+            importDecks: importDecks
         });
-        scope.toggleSelected(false);
+        scope.deselectAll();
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.false;
         });
 
-        scope.toggleSelected(true);
+        scope.selectAll();
         Object.keys(scope.decks).forEach(function (deck) {
             expect(scope.decks[deck].selected).to.be.true;
         });
     });
 
-    it('$scope.decksToExport should return correct length of all set with "selected = true"', function () {
-        controller('ExportDialogController', {
+    it('$scope.decksToImport should return correct length of all set with "selected = true"', function () {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
+            importCards: cards,
+            importDecks: importDecks
         });
-        expect(scope.decksToExport()).to.equal(3);
+
+        expect(scope.decksToImport()).to.equal(3);
 
         scope.decks[0].selected = false;
-        expect(scope.decksToExport()).to.equal(2);
+        expect(scope.decksToImport()).to.equal(2);
     });
 
     it('$scope.ok should call $uibModalInstance.close', function () {
-        controller('ExportDialogController', {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
+            importCards: cards,
+            importDecks: importDecks
         });
         scope.ok();
         expect(modalInstance.close).to.have.been.called;
     });
 
     it('$scope.cancel should call $uibModalInstance.dismiss', function () {
-        controller('ExportDialogController', {
+        controller('BackupLoadController', {
             $scope: scope,
             $uibModalInstance: modalInstance,
-            exportCards: cards,
-            exportDecks: decks
+            importCards: cards,
+            importDecks: importDecks
         });
         scope.cancel();
         expect(modalInstance.dismiss).to.have.been.called;

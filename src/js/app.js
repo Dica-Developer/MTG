@@ -8,7 +8,7 @@ import AngularSanitize from 'angular-sanitize';
 import AngularAnimate from 'angular-animate';
 import LocalStorageModule from 'angular-local-storage';
 import Controllers from './controllers';
-import Directives from './directive';
+import Directives from './directives';
 import Services from './services';
 import Constants from './constants';
 import Filters from './filter';

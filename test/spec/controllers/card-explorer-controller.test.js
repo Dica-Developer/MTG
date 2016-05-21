@@ -1,71 +1,55 @@
 import App from '../../../src/js/app';
-import {range, map} from 'lodash';
+import {range, map, noop} from 'lodash';
 
-describe('Controller: CardExplorerController', function () {
-    let scope, cards, modal;
+describe('Controller: CardExplorerController', () => {
+    const MOCK_CARDS = map(range(25), value => { 
+        return { multiverseid: value };
+    });
+    const cardDetailsDialog = sinon.stub({
+        show: noop
+    });
+    const cards = sinon.stub({
+        db: noop
+    });
+
+    let $scope;
 
     beforeEach(angular.mock.module(App.name));
-    beforeEach(angular.mock.inject(function ($controller, $rootScope, $uibModal, _cards_) {
-        scope = $rootScope.$new();
-        modal = $uibModal;
-        cards = _cards_;
-
-        scope.cardId = 23;
-        cards.db.insert(
-            map(range(100), function (value) {
-                return { multiverseid: value };
-            }));
+    beforeEach(angular.mock.inject(($controller, $rootScope) => {
+        $scope = $rootScope.$new();
         $controller('CardExplorerController', {
-            $scope: scope,
-            cards: cards,
-            $modal: modal
+            $scope,
+            cardDetailsDialog,
+            cards
         });
+        $scope.filteredCards = MOCK_CARDS; 
     }));
 
-    it('should have correct initial values', function () {
-        expect(scope.db).to.not.be.undefined;
-        expect(scope.filteredCards.length).to.equal(0);
-        expect(scope.maxResultLength).to.equal(20);
-        expect(scope.currentPage).to.equal(1);
-        expect(scope.cards.length).to.equal(0);
-        expect(scope.totalItems).to.equal(0);
-        expect(scope.filterCollapsed).to.ok;
+    it('should have correct initial values', () => {
+        expect($scope.maxResultLength).to.equal(20);
+        expect($scope.currentPage).to.equal(1);
     });
 
-    it('change scope.currentPage should update scope.cards and scope.totalItems', function () {
-        scope.$apply();
-        expect(scope.totalItems).to.equal(0);
-        scope.filteredCards = scope.db().get();
-        scope.currentPage = 2;
-        scope.$apply();
-        expect(scope.totalItems).to.equal(100);
-        expect(scope.cards.length).to.equal(scope.maxResultLength);
-        expect(scope.cards[0].multiverseid).to.equal(20);
+    it('should update cards if page has changed', () => {
+        $scope.currentPage = 2;
+        $scope.$apply();
+        expect($scope.cards[0].multiverseid).to.equal(20);
     });
 
-    it('change scope.maxResultLength should update scope.cards', function () {
-        scope.$apply();
-        scope.filteredCards = scope.db().get();
-        scope.maxResultLength = 23;
-        scope.$apply();
-        expect(scope.cards.length).to.equal(23);
-        expect(scope.cards[0].multiverseid).to.equal(0);
+    it('should update card amount if maxResultLength has changed', () => {
+        $scope.maxResultLength = 23;
+        $scope.$apply();
+        expect($scope.cards.length).to.equal(23);
     });
 
-    it('change scope.filterUpdateTimeStamp should update scope.cards', function () {
-        scope.$apply();
-        scope.filteredCards = scope.db().get();
-        scope.filterUpdateTimeStamp = new Date().getTime();
-        scope.currentPage = 4;
-        scope.$apply();
-        expect(scope.cards.length).to.equal(20);
-        expect(scope.cards[0].multiverseid).to.equal(60);
+    it('should update cards if filterUpdateTimeStamp has changed', () => {
+        $scope.filterUpdateTimeStamp = new Date().getTime();
+        $scope.$apply();
+        expect($scope.cards.length).to.equal(20);
     });
 
-    it('scope.showCardModal should call modal.open', function () {
-        sinon.spy(modal, 'open');
-        scope.showCardModal();
-        expect(modal.open).to.have.been.called;
-        modal.open.restore();
+    it('$scope.showCardModal should call cardDetailsDialog.show', () => {
+        $scope.showCardModal();
+        expect(cardDetailsDialog.show).to.have.been.called;
     });
 });

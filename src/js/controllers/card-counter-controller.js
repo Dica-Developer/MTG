@@ -1,6 +1,7 @@
 /*@ngInject*/
 export default function cardCounterController($scope, ownCards) {
     const { getCountOf, addCard, removeCard } = ownCards;
+    const getCount = () => getCountOf(id);
     
     let id = $scope.cardId;
     $scope.count = getCountOf(id);
@@ -17,10 +18,6 @@ export default function cardCounterController($scope, ownCards) {
         if ($scope.count > 0) {
             removeCard(id);
         }
-    };
-
-    const getCount = function () {
-        return getCountOf(id);
     };
 
     $scope.$watch(getCount, (newValue, oldValue) => {

@@ -1,37 +1,38 @@
 /*@ngInject*/
 export default function cardCounterController($scope, ownCards) {
+    const { getCountOf, addCard, removeCard } = ownCards;
+    
+    let id = $scope.cardId;
+    $scope.count = getCountOf(id);
 
-    var id = $scope.cardId;
-    $scope.count = ownCards.getCountOf(id);
-
-    $scope.addCard = function (event) {
+    $scope.addCard = (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
-        ownCards.addCard(id);
+        addCard(id);
     };
 
-    $scope.removeCard = function (event) {
+    $scope.removeCard = (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
         if ($scope.count > 0) {
-            ownCards.removeCard(id);
+            removeCard(id);
         }
     };
 
-    var getCount = function () {
-        return ownCards.getCountOf(id);
+    const getCount = function () {
+        return getCountOf(id);
     };
 
-    $scope.$watch(getCount, function (newValue, oldValue) {
+    $scope.$watch(getCount, (newValue, oldValue) => {
         if (newValue !== oldValue) {
             $scope.count = newValue;
         }
     });
 
-    $scope.$watch('cardId', function (newValue, oldValue) {
+    $scope.$watch('cardId', (newValue, oldValue) => {
         if (newValue && newValue !== oldValue) {
             id = newValue;
-            $scope.count = ownCards.getCountOf(id);
+            $scope.count = getCountOf(id);
         }
     });
 };

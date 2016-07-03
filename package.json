@@ -14,8 +14,8 @@
     "prebundle": "ncp src/dev_data/package.json dist/package.json"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Dica-Developer/MTG.git"
+    "type": "git",
+    "url": "https://github.com/Dica-Developer/MTG.git"
   },
   "author": "",
   "license": "ISC",
@@ -32,7 +32,7 @@
     "babel-runtime": "^6.6.1",
     "bootstrap": "^3.3.6",
     "css-loader": "^0.23.1",
-    "decompress-zip": "^0.2.0",
+    "decompress-zip": "^0.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
@@ -41,7 +41,7 @@
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.6.1",
-    "metismenu": "2.4.3",
+    "metismenu": "2.5.0",
     "ng-annotate-loader": "^0.1.0",
     "ngtemplate-loader": "^1.3.1",
     "raw-loader": "^0.5.1",
